@@ -1,0 +1,7 @@
+.docker/mongodb/data
+.vscode
+node_modules
+dist
+.swc
+.env
+coverage

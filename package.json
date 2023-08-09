@@ -4,7 +4,7 @@
     "main": "index.js",
     "license": "MIT",
     "author": "Enéas Almeida",
-    "repository": "github:venzel/customer-architecture",
+    "repository": "github:venzel/customer-stone",
     "engines": {
         "node": "18.x"
     },
