@@ -1,0 +1,8 @@
+{
+    "name": "customer-stone",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "git@github.com:venzel/customer-stone.git",
+    "author": "venzel <eneas.eng@yahoo.com>",
+    "license": "MIT"
+}
