@@ -6,7 +6,7 @@ export class CustomerFactory {
         return new Customer(null, document, name);
     }
 
-    static createWithId(id: Id, document: number, name: string) {
+    static createWithId(_id: Id, document: number, name: string) {
         return new Customer(null, document, name);
     }
 }

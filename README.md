@@ -44,6 +44,7 @@
 -   Além da técnica de http retry, outra técnica resiliência a exemplo do RateLimit;
 -   Swagger para documentar a aplicação;
 -   Loggers;
+-   Testes com Fakes em memória para deixar o código mais limpo.
 
 ## Etapas de desenvolvimento
 
@@ -53,6 +54,8 @@
     -   main (entrypoint da aplicação)
     -   commons
     -   infra/providers
+    -   infra/mappers
+    -   usecase/customer
 
 ## Pacotes
 

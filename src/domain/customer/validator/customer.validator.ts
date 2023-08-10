@@ -27,7 +27,7 @@ export class CustomerYupValidator implements ValidatorInterface<CustomerInterfac
 
             e.errors.forEach((error) => {
                 entity.notification.addError({
-                    context: 'product',
+                    context: 'costumer',
                     message: error,
                 });
             });
