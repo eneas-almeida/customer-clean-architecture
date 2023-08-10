@@ -1,17 +1,17 @@
 import { CustomerRepositoryInterface, RepositoryInterface } from '@/domain/@shared/contracts';
-import { Customer } from '@/domain/customer/entity/customer.entity';
 import {
+    CacheProviderInterface,
     PaymentProviderInterface,
     ProviderInterface,
-    ShippingProviderInterface,
 } from '@/infra/providers/@shared/contracts/provider';
 import { CreateCustomerUseCase } from './create-customer.usecase';
+import { CustomerFactory } from '@/domain/customer/factory/customer.factory';
 
 const MockRepository = (): RepositoryInterface => {
     const customers = [
-        new Customer(null, 202020, 'Tiago Campos'),
-        new Customer(null, 202021, 'Marcos Santos'),
-        new Customer(null, 202022, 'Cintia Mello'),
+        CustomerFactory.create(202020, 'Tiago Campos'),
+        CustomerFactory.create(202021, 'Marcos Santos'),
+        CustomerFactory.create(202022, 'Cintia Mello'),
     ];
 
     const mockCustomerRepository: CustomerRepositoryInterface = {
@@ -26,21 +26,20 @@ const MockRepository = (): RepositoryInterface => {
 };
 
 const MockProvider = (): ProviderInterface => {
-    const mockPaymentProvider: PaymentProviderInterface = {
-        pay: jest.fn(async (amount) => {
-            return 100 * amount;
-        }),
+    const mockCacheProvider: CacheProviderInterface = {
+        save: jest.fn(async (value, timeToExpires) => null),
+        findByKey: jest.fn(async (key) => null),
+        invalidate: jest.fn(async (key) => null),
+        clearAllCacheByPrefix: jest.fn(async (prefix) => null),
     };
 
-    const mockShippingProvider: ShippingProviderInterface = {
-        calculate: jest.fn(async (amount) => {
-            return 10 * amount;
-        }),
+    const mockPaymentProvider: PaymentProviderInterface = {
+        pay: jest.fn(async (amount) => null),
     };
 
     return {
+        cache: mockCacheProvider,
         payment: mockPaymentProvider,
-        shipping: mockShippingProvider,
     };
 };
 

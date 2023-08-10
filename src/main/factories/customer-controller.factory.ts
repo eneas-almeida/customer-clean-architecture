@@ -1,7 +1,7 @@
 import { AxiosHttpClient } from '@/commons/clients/axios-http.client';
 import { RepositoryInterface } from '@/domain/@shared/contracts';
 import { CustomerMongooseRepository } from '@/infra/database/repositories';
-import { FedexShippingProvider, StonePaymentProvider } from '@/infra/providers';
+import { IoRedisCacheProvider, StonePaymentProvider } from '@/infra/providers';
 import { ProviderInterface } from '@/infra/providers/@shared/contracts/provider';
 import { CustomerControllerInterface } from '@/presentation/@shared/contracts';
 import { CustomerController } from '@/presentation/controllers/customer.controller';
@@ -15,8 +15,8 @@ export const MakeCustomerController = async (): Promise<CustomerControllerInterf
     };
 
     const provider: ProviderInterface = {
+        cache: new IoRedisCacheProvider(),
         payment: new StonePaymentProvider(axiosInstance),
-        shipping: new FedexShippingProvider(axiosInstance),
     };
 
     const createCustomerUseCase = new CreateCustomerUseCase(repository, provider);

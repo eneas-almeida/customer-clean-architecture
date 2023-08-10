@@ -13,6 +13,12 @@ export const envs = {
         password: process.env.DB_PASSWORD || 'customer',
         name: process.env.DB_NAME || 'customer',
     },
+    redis: {
+        host: process.env.REDIS_HOST || 'localhost',
+        port: Number(process.env.REDIS_PORT) || 6379,
+        keyPrefix: process.env.REDIS_KEY_PREFIX || 'customer:',
+        password: process.env.REDIS_PASSWORD || 'customer',
+    },
     axios: {
         retryQtty: Number(process.env.AXIOS_RETRY_ATTEMPTS) || 1,
         baseDelay: Number(process.env.AXIOS_BASE_DELAY) || 1000,

@@ -16,12 +16,6 @@ export class CreateCustomerUseCase {
         try {
             let entity = CustomerMapper.dtoToEntity(input);
 
-            try {
-                await this.provider.payment.pay(10);
-            } catch (e) {
-                console.error(e.message || 'err');
-            }
-
             entity = await this.repository.customer.create(entity);
 
             return CustomerMapper.entityToDto(entity);

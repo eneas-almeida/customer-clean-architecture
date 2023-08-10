@@ -30,6 +30,7 @@
 -   Fail first;
 -   👉 [Estratégia de resiliência de chamadas http com o **axios retry**](./src/commons/clients/axios-http.client.ts);
 -   👉 [Estratégia de melhor gerencimanto do pool de conexões com o **agentkeepalive**](./src/commons/clients/axios-http.client.ts);
+-   TDD
 -   Testes de unidade utilizando mocks, poderia ter utilizado fakes, mas fiz a opção de utilizar mocks configurado com métricas de coverage;
 -   Indexes nas collections do mongo;
 -   Utilização do linter para padronizar o código;
