@@ -56,6 +56,7 @@
     -   infra/providers
     -   infra/mappers
     -   usecase/customer
+    -   infra/database
 
 ## Pacotes
 
