@@ -64,16 +64,6 @@
     -   main/adapters/controllers
     -   main/factories
 
-## Bibliotecas
-
--   **express**
--   **mongoose**
--   **husky**: conventional commits
--   **agentkeepalive**: pool de conexões
--   **axios-retry**: retry
--   **morgan**
--   **helmet**
-
 ## Pacotes
 
 ```bash
@@ -162,6 +152,16 @@ make up
 
 # Criar o build e rodar o server
 make build && make start
+```
+
+## Testes de unidade
+
+<img src="./media/testes.png" />
+
+## Como rodar os testes
+
+```bash
+make teste
 ```
 
 <hr />
