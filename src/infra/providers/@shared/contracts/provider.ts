@@ -1,5 +1,6 @@
-export interface PaymentProviderInterface {
-    pay(amount: number): Promise<number>;
+export interface TokenProviderInterface {
+    generateToken(): Promise<string>;
+    verifyToken(token: string, secret: string): Promise<boolean>;
 }
 
 export interface CacheProviderInterface {
@@ -9,7 +10,12 @@ export interface CacheProviderInterface {
     clearAllCacheByPrefix(prefix: string): Promise<void>;
 }
 
+export interface PaymentProviderInterface {
+    pay(amount: number): Promise<number>;
+}
+
 export interface ProviderInterface {
+    token?: TokenProviderInterface;
     cache?: CacheProviderInterface;
     payment?: PaymentProviderInterface;
 }

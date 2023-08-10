@@ -23,11 +23,20 @@ export const envs = {
         retryQtty: Number(process.env.AXIOS_RETRY_ATTEMPTS) || 1,
         baseDelay: Number(process.env.AXIOS_BASE_DELAY) || 1000,
         maxDelay: Number(process.env.AXIOS_MAX_DELAY) || 5000,
-        agent: {
-            maxSockets: Number(process.env.AXIOS_AGENT_MAX_SOCKETS) || 200,
-            maxFreeSockets: Number(process.env.AXIOS_AGENT_MAX_FREE_SOCKETS) || 20,
-            timeout: Number(process.env.AXIOS_AGENT_TIMEOUT) || 60000,
-            freeSocketTimeout: Number(process.env.AXIOS_AGENT_FREE_SOCKET_TIMEOUT) || 30000,
-        },
+    },
+    agentKeepAlive: {
+        maxSockets: Number(process.env.AXIOS_AGENT_MAX_SOCKETS) || 200,
+        maxFreeSockets: Number(process.env.AXIOS_AGENT_MAX_FREE_SOCKETS) || 20,
+        timeout: Number(process.env.AXIOS_AGENT_TIMEOUT) || 60000,
+        freeSocketTimeout: Number(process.env.AXIOS_AGENT_FREE_SOCKET_TIMEOUT) || 30000,
+    },
+    vitta: {
+        baseUrl: process.env.VITTA_BASE_URL,
+        grantType: process.env.VITTA_GRANT_TYPE,
+        clientId: process.env.VITTA_CLIENT_ID,
+        clientSecret: process.env.VITTA_CLIENT_SECRET,
+        username: process.env.VITTA_USERNAME,
+        password: process.env.VITTA_PASSWORD,
+        scope: process.env.VITTA_SCOPE,
     },
 };

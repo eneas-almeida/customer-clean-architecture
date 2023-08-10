@@ -1,14 +1,14 @@
 import axios, { AxiosInstance } from 'axios';
 import axiosRetry from 'axios-retry';
-import Agent from 'agentkeepalive';
+import AgentKeepAlive from 'agentkeepalive';
 import { envs } from '@/main/configs';
 
 export class AxiosHttpClient {
     getInstance(): AxiosInstance {
-        const { maxSockets, maxFreeSockets, timeout, freeSocketTimeout } = envs.axios.agent;
+        const { maxSockets, maxFreeSockets, timeout, freeSocketTimeout } = envs.agentKeepAlive;
 
         const axiosInstance = axios.create({
-            httpAgent: new Agent({
+            httpAgent: new AgentKeepAlive({
                 maxSockets,
                 maxFreeSockets,
                 timeout,
