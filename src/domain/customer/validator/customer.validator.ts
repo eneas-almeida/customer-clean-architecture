@@ -6,6 +6,10 @@ export class CustomerYupValidator implements ValidatorInterface<CustomerInterfac
         try {
             yup.object()
                 .shape({
+                    document: yup
+                        .number()
+                        .positive('O documento não pode ser negativo')
+                        .required('O documento é requerido'),
                     name: yup
                         .string()
                         .max(20, 'O nome não pode conter mais de 20 caracteres')
@@ -13,6 +17,7 @@ export class CustomerYupValidator implements ValidatorInterface<CustomerInterfac
                 })
                 .validateSync(
                     {
+                        document: entity.document,
                         name: entity.name,
                     },
                     { abortEarly: false }
