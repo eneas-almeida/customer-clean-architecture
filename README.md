@@ -11,6 +11,40 @@
 -   Docker (MongoDB, Redis);
 -   Jest;
 
+## Técnicas utilizadas
+
+-   Modelagem do domínio (DDD);
+-   Desenvolvimento guiado a contratos;
+-   Tratamento de exceções personalizados utilizando middlewares;
+-   Notification pattern para validação de entidades;
+-   Adapter pattern para o express;
+-   Barrel pattern para agilidade na importação dos pacotes e clareza do código;
+-   Factory pattern para criar a árvore de depedências (injection/invesion dependecy);
+-   Build pattern para configurar o entrypoint da aplicação;
+-   DTO;
+-   Data Mapper pattern para realizar as conversões de dados, técnica bastante utilizada no java;
+-   Fail first;
+-   Estratégia de resiliência de chamadas http com o axios retry;
+-   Estratégia de melhor gerencimanto do pool de conexões com o superagent;
+-   Testes de unidade utilizando mocks, poderia ter utilizado fakes, mas fiz a opção de utilizar mocks configurado com métricas de coverage;
+-   Indexes nas collections do mongo;
+-   Utilização do linter para padronizar o código;
+-   Utilização do pacote swc para transpilação mais rápida;
+-   Docker-compose para criaçãod dos containers mongo e redis;
+-   Modelagem da camada de providers para ilustração como acessar as camadas externas da aplicação;
+-   Makefile para criar aliases de command line;
+-   Padronização de commits (conventional commits);
+
+## Não utilizei
+
+-   Injeções de dependência com decorators com biblioteca, a exemplo da da tsyringe, pois, acredito que as notações tornam as aplicações mais dependente. Outro motivo é o fato do Golang não possuir notações, dessa forma, não seria possível replicar o mesmo contexto na tecnologia Go.
+
+## O que poderia utilizar
+
+-   Além da técnica de http retry, outra técnica resiliência a exemplo do RateLimit;
+-   Swagger para documentar a aplicação;
+-   Loggers;
+
 ## Pacotes
 
 ```bash
