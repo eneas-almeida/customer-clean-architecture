@@ -58,6 +58,7 @@
     -   usecase/customer
     -   infra/database
     -   main/adapters/controllers
+    -   main/factories
 
 ## Pacotes
 
