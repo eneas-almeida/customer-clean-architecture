@@ -64,6 +64,37 @@
     -   main/adapters/controllers
     -   main/factories
 
+## Endpoints
+
+| URI                   | Método | Token | Role | Descrição           |
+| --------------------- | ------ | ----- | ---- | ------------------- |
+| **CUSTOMERS**         |
+| api/v1/customers      | POST   |       | ALL  | Cria o customer     |
+| api/v1/customers/{id} | PATCH  |       | ALL  | Atualiza o customer |
+| api/v1/customers/{id} | GET    |       | ALL  | Obtém um customer   |
+
+### Body das requisições
+
+#### Criar um customer
+
+```bash
+# api/v1/customers (POST)
+{
+  "document": 202020,
+  "name": "xico"
+}
+```
+
+#### Atualizar um customer
+
+```bash
+# api/v1/customers (PATCH)
+{
+  "document": 202020,
+  "name": "xico"
+}
+```
+
 ## Pacotes
 
 ```bash
