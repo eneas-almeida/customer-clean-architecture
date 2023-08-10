@@ -4,12 +4,14 @@ import {
     findOneControllerAdapter,
     updateControllerAdapter,
 } from '../adapters/controllers/customer-controller.adapter';
-import { MakeCustomerController } from '../factories';
+import { MakeCustomerController } from '../containers';
+import { MakeAuthorization } from '../containers/authorization.container';
 
 export default async (router: Router): Promise<void> => {
+    const authorization = MakeAuthorization();
     const customerController = await MakeCustomerController();
 
-    router.post('/customers', createControllerAdapter(customerController));
-    router.patch('/customers/:id', updateControllerAdapter(customerController));
-    router.get('/customers/:id', findOneControllerAdapter(customerController));
+    router.post('/customers', authorization, createControllerAdapter(customerController));
+    router.patch('/customers/:id', authorization, updateControllerAdapter(customerController));
+    router.get('/customers/:id', authorization, findOneControllerAdapter(customerController));
 };

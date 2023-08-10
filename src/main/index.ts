@@ -1,4 +1,11 @@
-import { app, bannerConfig, routesConfig, dbConfig, serverConfig, exceptionConfig } from '@/main/configs';
+import {
+    app,
+    bannerConfig,
+    routesConfig,
+    mongodbConfig,
+    serverConfig,
+    exceptionConfig,
+} from '@/main/configs';
 
 export class Main {
     initBanner() {
@@ -7,7 +14,7 @@ export class Main {
     }
 
     async initDB() {
-        await dbConfig();
+        await mongodbConfig();
         return this;
     }
 

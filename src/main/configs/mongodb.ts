@@ -1,8 +1,8 @@
 import mongoose, { ConnectOptions } from 'mongoose';
 import { envs } from './envs';
 
-export const dbConfig = async () => {
-    const { user, password, host, port, name } = envs.db;
+export const mongodbConfig = async () => {
+    const { user, password, host, port, name } = envs.mongodb;
 
     const uri = `mongodb://${user}:${password}@${host}:${port}/${name}`;
 

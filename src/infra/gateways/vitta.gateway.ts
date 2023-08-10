@@ -13,12 +13,12 @@ export class VittaGateway {
     }
 
     async getAccessToken(): Promise<string | null> {
-        const { baseUrl, grantType, clientId, clientSecret, username, password, scope } = envs.vitta;
+        const { baseUrl, grantType, clientId, username, password, scope } = envs.vitta;
 
         const body = {
             grant_type: grantType,
             client_id: clientId,
-            client_secret: clientSecret,
+            client_secret: envs.api.tokenSecret,
             username,
             password,
             scope,

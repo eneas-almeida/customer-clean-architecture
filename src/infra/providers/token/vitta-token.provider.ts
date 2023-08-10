@@ -25,6 +25,10 @@ export class VittaTokenProvider implements TokenProviderInterface {
     }
 
     async verifyToken(token: string, secret: string): Promise<boolean> {
-        return true;
+        try {
+            return false;
+        } catch (e) {
+            throw e;
+        }
     }
 }

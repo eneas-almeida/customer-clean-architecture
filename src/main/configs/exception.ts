@@ -1,6 +1,7 @@
 import { Express } from 'express';
-import { exception } from '@/main/middlewares';
+import { ExceptionMiddleware } from '@/main/middlewares';
 
 export const exceptionConfig = (app: Express) => {
-    app.use(exception);
+    const exception = new ExceptionMiddleware();
+    app.use(exception.handle);
 };

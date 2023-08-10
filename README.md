@@ -30,6 +30,7 @@
 -   Fail first;
 -   👉 [Estratégia de resiliência de chamadas http com o **axios retry**](./src/commons/clients/axios-http.client.ts);
 -   👉 [Estratégia de melhor gerencimanto do pool de conexões com o **agentkeepalive**](./src/commons/clients/axios-http.client.ts);
+-   Proxy pattern, utilizando o redis para verificar se já existe um token gerado em memória
 -   TDD
 -   Testes de unidade utilizando mocks, poderia ter utilizado fakes, mas fiz a opção de utilizar mocks configurado com métricas de coverage;
 -   Indexes nas collections do mongo;
@@ -49,7 +50,8 @@
 -   Além da técnica de http retry, outra técnica resiliência a exemplo do RateLimit;
 -   Swagger para documentar a aplicação;
 -   Loggers;
--   Testes com Fakes em memória para deixar o código mais limpo.
+-   Testes com Fakes em memória para deixar o código mais limpo;
+-   Strategy pattern para o chaveamento de providers.
 
 ## Etapas de desenvolvimento
 

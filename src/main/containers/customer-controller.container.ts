@@ -1,9 +1,9 @@
 import { AxiosHttpClient } from '@/commons/clients/axios-http.client';
 import { RepositoryInterface } from '@/domain/@shared/contracts';
 import { CustomerMongooseRepository } from '@/infra/database/repositories';
-import { StonePaymentProvider } from '@/infra/providers/payment/stone-payment.provider';
 import { ProviderInterface } from '@/infra/providers/@shared/contracts/provider';
 import { IoRedisCacheProvider } from '@/infra/providers/cache/ioredis-cache.provider';
+import { StonePaymentProvider } from '@/infra/providers/payment/stone-payment.provider';
 import { CustomerControllerInterface } from '@/presentation/@shared/contracts';
 import { CustomerController } from '@/presentation/controllers/customer.controller';
 import { CreateCustomerUseCase, FindOneCustomerUseCase, UpdateCustomerUseCase } from '@/usecase/customer';
