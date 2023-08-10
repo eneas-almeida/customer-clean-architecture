@@ -5,7 +5,7 @@ export const envs = {
         name: process.env.APP_NAME || 'customer-api',
         ambient: process.env.APP_AMBIENT || 'development',
         port: process.env.API_PORT || 3000,
-        tokenSecret: process.env.APP_TOKEN_SECRET,
+        tokenSecret: process.env.API_TOKEN_SECRET,
     },
     mongodb: {
         host: process.env.MONGODB_HOST || 'localhost',

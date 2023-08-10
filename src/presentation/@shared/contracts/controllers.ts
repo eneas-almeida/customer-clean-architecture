@@ -4,6 +4,10 @@ import { InputCreateCustomerDto, OutputCreateCustomerDto } from '@/usecase/custo
 import { InputUpdateCustomerDto, OutputUpdateCustomerDto } from '@/usecase/customer/update';
 import { InputFindOneCustomerDto, OutputFindOneCustomerDto } from '@/usecase/customer/findone';
 
+export interface AccountControllerInterface {
+    generateToken: () => Promise<HttpResponse<string>>;
+}
+
 export interface CustomerControllerInterface {
     create: (input: InputCreateCustomerDto) => Promise<HttpResponse<OutputCreateCustomerDto>>;
     update: (id: string, input: InputUpdateCustomerDto) => Promise<HttpResponse<OutputUpdateCustomerDto>>;

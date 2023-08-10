@@ -3,9 +3,8 @@ import {
     createControllerAdapter,
     findOneControllerAdapter,
     updateControllerAdapter,
-} from '../adapters/controllers/customer-controller.adapter';
-import { MakeCustomerController } from '../containers';
-import { MakeAuthorization } from '../containers/authorization.container';
+} from '../adapters/controllers';
+import { MakeAuthorization, MakeCustomerController } from '../containers';
 
 export default async (router: Router): Promise<void> => {
     const authorization = MakeAuthorization();

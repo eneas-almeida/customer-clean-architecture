@@ -5,6 +5,16 @@ const ENDPOINTS = {
     generateToken: '/auth/realms/careers/protocol/openid-connect/token',
 };
 
+export interface OutputVittaTokenDto {
+    access_token: string;
+    expires_in: number;
+    refresh_expires: number;
+    token_type: string;
+    'not-before-policy': number;
+    scope: string;
+    id_token: string;
+}
+
 export class VittaGateway {
     private readonly httpsClient: AxiosInstance;
 
@@ -12,7 +22,7 @@ export class VittaGateway {
         this.httpsClient = httpsClient;
     }
 
-    async getAccessToken(): Promise<string | null> {
+    async getAccessToken(): Promise<OutputVittaTokenDto | null> {
         const { baseUrl, grantType, clientId, username, password, scope } = envs.vitta;
 
         const body = {
@@ -34,7 +44,7 @@ export class VittaGateway {
 
         try {
             const response = await this.httpsClient.post(endpoint, body, configs);
-            return response?.data?.access_token;
+            return response?.data as OutputVittaTokenDto;
         } catch (e) {
             throw e;
         }
