@@ -2,7 +2,7 @@ import 'dotenv/config';
 
 export const envs = {
     app: {
-        name: process.env.APP_NAME || 'customer-stone',
+        name: process.env.APP_NAME || 'customer-api',
         ambient: process.env.APP_AMBIENT || 'development',
         port: process.env.API_PORT || 3000,
     },

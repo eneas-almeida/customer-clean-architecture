@@ -1,8 +1,8 @@
-# Customer Stone
+# Customer API
 
-[![NPM](https://img.shields.io/npm/l/react)](https://github.com/venzel/customer-stone/blob/master/LICENSE)
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/venzel/customer-api/blob/master/LICENSE)
 
-> **Customer Stone** é uma API Rest estruturada com Clean Architecture e modelagem de entidade utilizando conceitos de DDD.
+> **Customer API** é uma API Rest estruturada com Clean Architecture e modelagem de entidade utilizando conceitos de DDD.
 
 ## Stack
 
@@ -167,10 +167,10 @@ yarn add @types/express \
 
 ```bash
 # Clona o repositório
-git clone https://github.com/venzel/customer-stone.git
+git clone https://github.com/venzel/customer-api.git
 
 # Acessa a pasta do repositório clonado
-cd customer-stone
+cd customer-api
 
 # Instala os pacotes do NodeJs
 make packages

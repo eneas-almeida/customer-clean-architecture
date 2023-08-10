@@ -1,10 +1,10 @@
 {
-    "name": "customer-stone",
+    "name": "customer-api",
     "version": "1.0.0",
     "main": "index.js",
     "license": "MIT",
     "author": "Enéas Almeida",
-    "repository": "github:venzel/customer-stone",
+    "repository": "github:venzel/customer-api",
     "engines": {
         "node": "18.x"
     },
