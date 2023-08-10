@@ -6,6 +6,6 @@ import { InputFindOneCustomerDto, OutputFindOneCustomerDto } from '@/usecase/cus
 
 export interface CustomerControllerInterface {
     create: (input: InputCreateCustomerDto) => Promise<HttpResponse<OutputCreateCustomerDto>>;
-    update: (input: InputUpdateCustomerDto) => Promise<HttpResponse<OutputUpdateCustomerDto>>;
+    update: (id: string, input: InputUpdateCustomerDto) => Promise<HttpResponse<OutputUpdateCustomerDto>>;
     findOne: (input: InputFindOneCustomerDto) => Promise<HttpResponse<OutputFindOneCustomerDto>>;
 }

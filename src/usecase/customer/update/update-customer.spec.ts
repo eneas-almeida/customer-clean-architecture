@@ -59,13 +59,14 @@ describe('Update Customer Unity', () => {
 
         const updateCustomerUseCase = new UpdateCustomerUseCase(MockRepository(), MockProvider());
 
+        const id = '202020';
+
         const inputUpdateCustomerDto = {
-            id: '202020',
             document: 202020,
             name: 'Tiago de Freitas',
         };
 
-        const output = await updateCustomerUseCase.execute(inputUpdateCustomerDto);
+        const output = await updateCustomerUseCase.execute(id, inputUpdateCustomerDto);
 
         expect(output.name).toEqual(inputUpdateCustomerDto.name);
     });

@@ -1,8 +1,8 @@
 import { RepositoryInterface } from '@/domain/@shared/contracts';
+import { AppError } from '@/domain/@shared/errors';
 import { CustomerMapper } from '@/infra/mappers';
 import { ProviderInterface } from '@/infra/providers/@shared/contracts/provider';
 import { InputUpdateCustomerDto, OutputUpdateCustomerDto } from './update-customer.dto';
-import { AppError } from '@/domain/@shared/errors';
 
 export class UpdateCustomerUseCase {
     private repository: RepositoryInterface;
@@ -13,17 +13,18 @@ export class UpdateCustomerUseCase {
         this.provider = provider;
     }
 
-    async execute(input: InputUpdateCustomerDto): Promise<OutputUpdateCustomerDto> {
+    async execute(id: string, input: InputUpdateCustomerDto): Promise<OutputUpdateCustomerDto> {
         try {
-            let entity = CustomerMapper.dtoToEntity(input);
+            const existsEntity = await this.repository.customer.findOneById(id);
 
-            const hasEntity = await this.repository.customer.findOneById(input.id);
-
-            if (!hasEntity) {
+            if (!existsEntity) {
                 throw new AppError('Customer not found', 412);
             }
 
-            entity = await this.repository.customer.update(hasEntity);
+            existsEntity.setName(input.name);
+            existsEntity.setDocument(input.document);
+
+            const entity = await this.repository.customer.update(existsEntity);
 
             return CustomerMapper.entityToDto(entity);
         } catch (e) {

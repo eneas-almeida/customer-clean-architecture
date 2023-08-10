@@ -21,9 +21,9 @@ export class CustomerController implements CustomerControllerInterface {
         }
     }
 
-    async update(input: InputUpdateCustomerDto): Promise<HttpResponse<OutputUpdateCustomerDto>> {
+    async update(id: string, input: InputUpdateCustomerDto): Promise<HttpResponse<OutputUpdateCustomerDto>> {
         try {
-            const output = await this.updateCustomerUseCase.execute(input);
+            const output = await this.updateCustomerUseCase.execute(id, input);
             return ok(output);
         } catch (e) {
             throw e;
