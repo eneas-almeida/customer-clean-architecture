@@ -45,6 +45,14 @@
 -   Swagger para documentar a aplicação;
 -   Loggers;
 
+## Etapas de desenvolvimento
+
+-   Criação do setup inicial (package.json, eslint, jest, swc, makefile)
+-   Camadas:
+    -   domain
+    -   main (entrypoint da aplicação)
+    -   commons
+
 ## Pacotes
 
 ```bash
