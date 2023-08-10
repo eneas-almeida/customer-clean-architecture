@@ -1,4 +1,9 @@
-import { CustomerInterface } from './entities';
+import { AccountInterface, CustomerInterface } from './entities';
+
+export interface AccountRepositoryInterface {
+    signUp(entity: AccountInterface): Promise<AccountInterface>;
+    signIn(email: string, password: string): Promise<AccountInterface>;
+}
 
 export interface CustomerRepositoryInterface {
     create(entity: CustomerInterface): Promise<CustomerInterface>;
@@ -7,5 +12,6 @@ export interface CustomerRepositoryInterface {
 }
 
 export interface RepositoryInterface {
+    account?: AccountRepositoryInterface;
     customer?: CustomerRepositoryInterface;
 }
