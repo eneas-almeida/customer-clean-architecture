@@ -11,21 +11,25 @@
 -   Docker (MongoDB, Redis);
 -   Jest;
 
+## Arquitetura
+
+<img src="./media/clean-architecture.png" />
+
 ## Técnicas utilizadas
 
--   Modelagem do domínio (DDD);
+-   👉 [Modelagem do domínio (DDD)](./src/domain/customer);
 -   Desenvolvimento guiado a contratos;
--   Tratamento de exceções personalizados utilizando middlewares;
--   Notification pattern para validação de entidades;
--   Adapter pattern para o express;
+-   👉 [Tratamento de exceções personalizados utilizando middlewares](./src/main/middlewares/exception.ts);
+-   👉 [Notification pattern para validação de entidades](./src/domain/@shared/notification/notification.ts);
+-   👉 [Adapter pattern para o express](./src/main/adapters/controllers/customer-controller.adapter.ts);
 -   Barrel pattern para agilidade na importação dos pacotes e clareza do código;
--   Factory pattern para criar a árvore de depedências (injection/invesion dependecy);
--   Build pattern para configurar o entrypoint da aplicação;
+-   👉 [Factory pattern para criar a árvore de depedências (injection/invesion dependecy)](./src/main/factories/customer-controller.factory.ts);
+-   👉 [Build pattern para configurar o entrypoint da aplicação](./src/main/index.ts);
 -   DTO;
--   Data Mapper pattern para realizar as conversões de dados, técnica bastante utilizada no java;
+-   👉 [Data Mapper pattern para realizar as conversões de dados, técnica bastante utilizada no java](./src/infra/mappers//customer.mapper.ts);
 -   Fail first;
--   Estratégia de resiliência de chamadas http com o axios retry;
--   Estratégia de melhor gerencimanto do pool de conexões com o superagent;
+-   👉 [Estratégia de resiliência de chamadas http com o **axios retry**](./src/commons/clients/axios-http.client.ts);
+-   👉 [Estratégia de melhor gerencimanto do pool de conexões com o **superagent**](./src/commons/clients/axios-http.client.ts);
 -   Testes de unidade utilizando mocks, poderia ter utilizado fakes, mas fiz a opção de utilizar mocks configurado com métricas de coverage;
 -   Indexes nas collections do mongo;
 -   Utilização do linter para padronizar o código;
@@ -59,6 +63,16 @@
     -   infra/database
     -   main/adapters/controllers
     -   main/factories
+
+## Bibliotecas
+
+-   **express**
+-   **mongoose**
+-   **husky**: conventional commits
+-   **agentkeepalive**: pool de conexões
+-   **axios-retry**: retry
+-   **morgan**
+-   **helmet**
 
 ## Pacotes
 
