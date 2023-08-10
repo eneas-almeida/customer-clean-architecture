@@ -57,6 +57,7 @@
     -   infra/mappers
     -   usecase/customer
     -   infra/database
+    -   main/adapters/controllers
 
 ## Pacotes
 
