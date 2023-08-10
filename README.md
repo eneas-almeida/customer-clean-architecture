@@ -29,7 +29,7 @@
 -   👉 [Data Mapper pattern para realizar as conversões de dados, técnica bastante utilizada no java](./src/infra/mappers//customer.mapper.ts);
 -   Fail first;
 -   👉 [Estratégia de resiliência de chamadas http com o **axios retry**](./src/commons/clients/axios-http.client.ts);
--   👉 [Estratégia de melhor gerencimanto do pool de conexões com o **superagent**](./src/commons/clients/axios-http.client.ts);
+-   👉 [Estratégia de melhor gerencimanto do pool de conexões com o **agentkeepalive**](./src/commons/clients/axios-http.client.ts);
 -   Testes de unidade utilizando mocks, poderia ter utilizado fakes, mas fiz a opção de utilizar mocks configurado com métricas de coverage;
 -   Indexes nas collections do mongo;
 -   Utilização do linter para padronizar o código;
@@ -81,7 +81,7 @@
 # api/v1/customers (POST)
 {
   "document": 202020,
-  "name": "xico"
+  "name": "Tiago Mattos"
 }
 ```
 
@@ -91,7 +91,7 @@
 # api/v1/customers (PATCH)
 {
   "document": 202020,
-  "name": "xico"
+  "name": "Tiago Mattos Alencar"
 }
 ```
 
