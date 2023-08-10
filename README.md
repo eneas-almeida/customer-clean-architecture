@@ -52,6 +52,7 @@
     -   domain
     -   main (entrypoint da aplicação)
     -   commons
+    -   infra/providers
 
 ## Pacotes
 
