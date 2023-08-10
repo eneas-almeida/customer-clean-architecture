@@ -1,6 +1,6 @@
 export interface TokenProviderInterface {
     generateToken(): Promise<string>;
-    verifyToken(token: string, secret: string): Promise<boolean>;
+    verifyToken(token: string, secret: string): boolean;
 }
 
 export interface CacheProviderInterface {

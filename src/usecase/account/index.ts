@@ -1,1 +1,1 @@
-export * from './generate-token.usecase.ts/generate-token.usecase';
+export * from './generate-token.usecase';

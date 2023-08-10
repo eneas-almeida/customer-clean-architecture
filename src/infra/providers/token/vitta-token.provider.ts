@@ -1,4 +1,5 @@
 import { AxiosInstance } from 'axios';
+import { verify, sign } from 'jsonwebtoken';
 import { CacheProviderInterface, TokenProviderInterface } from '../@shared/contracts/provider';
 import { VittaGateway } from '@/infra/gateways/vitta.gateway';
 import { AppError } from '@/domain/@shared/errors';
@@ -14,7 +15,7 @@ export class VittaTokenProvider implements TokenProviderInterface {
 
     async generateToken(): Promise<string> {
         try {
-            const existsToken = await this.cacheProvider.findByKey('tokenx');
+            const existsToken = await this.cacheProvider.findByKey('token');
 
             if (existsToken) {
                 return existsToken;
@@ -23,12 +24,12 @@ export class VittaTokenProvider implements TokenProviderInterface {
             const generateToken = await this.vittaGateway.getAccessToken();
 
             if (!generateToken) {
-                throw new AppError('Error on generate token', 400);
+                throw new AppError('Erro em gerar o token', 400);
             }
 
             const { access_token, expires_in } = generateToken;
 
-            await this.cacheProvider.save('tokenx', access_token, expires_in);
+            await this.cacheProvider.save('token', access_token, expires_in);
 
             return access_token;
         } catch (e) {
@@ -36,9 +37,13 @@ export class VittaTokenProvider implements TokenProviderInterface {
         }
     }
 
-    async verifyToken(token: string, secret: string): Promise<boolean> {
+    verifyToken(token: string, secret: string): boolean {
         try {
-            return false;
+            const payload = sign(token, secret, { algorithm: 'HS256' });
+
+            verify(payload, secret, { algorithms: ['HS256'] });
+
+            return true;
         } catch (e) {
             throw e;
         }

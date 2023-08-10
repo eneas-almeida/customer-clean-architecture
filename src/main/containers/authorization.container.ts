@@ -11,5 +11,5 @@ export const MakeAuthorization = (): any => {
 
     const middleware = new AuthorizationMiddleware(vittaTokenProvider);
 
-    return middleware.handle;
+    return middleware.handle.bind(middleware);
 };

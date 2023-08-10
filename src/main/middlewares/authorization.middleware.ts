@@ -14,25 +14,25 @@ export class AuthorizationMiddleware {
         const schemaToken = req.headers.authorization;
 
         if (!schemaToken) {
-            throw new AppError('Token not provided!', 404);
+            throw new AppError('Token não fornecido', 404);
         }
 
         const parts = schemaToken.split(' ');
 
         if (parts.length !== 2) {
-            throw new AppError('Token parts invalid!', 403);
+            throw new AppError('Estrutura do token inválida', 403);
         }
 
         const [schema, token] = parts;
 
         if (schema !== 'Bearer') {
-            throw new AppError('Token parts invalid!', 403);
+            throw new AppError('Estrutura do token inválida', 403);
         }
 
         const isValidToken = this.tokenProvider.verifyToken(token, envs.api.tokenSecret);
 
         if (!isValidToken) {
-            throw new AppError('Token invalid!', 403);
+            throw new AppError('Token inválido', 403);
         }
 
         next();
