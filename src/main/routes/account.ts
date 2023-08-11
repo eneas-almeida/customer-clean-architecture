@@ -5,5 +5,5 @@ import { MakeAccountController } from '../containers/account-controller.containe
 export default async (router: Router): Promise<void> => {
     const accountController = await MakeAccountController();
 
-    router.get('/account/token', generateTokenControllerAdapter(accountController));
+    router.get('/accounts/token', generateTokenControllerAdapter(accountController));
 };

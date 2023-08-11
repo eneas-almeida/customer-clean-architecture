@@ -1,8 +1,8 @@
-# Customer API
+# Customer API (Microserviço)
 
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/venzel/customer-api/blob/master/LICENSE)
 
-> **Customer API** é uma API Rest estruturada com Clean Architecture e modelagem de entidade utilizando conceitos de DDD.
+> **Customer API** é um microserviço que utiliza um padrão arquitetural Clean Architecture e modelagem de entidade utilizando conceitos de DDD.
 
 ## Stack
 
@@ -11,9 +11,48 @@
 -   Docker (MongoDB, Redis);
 -   Jest;
 
-## Arquitetura
+## Padrão arquitetural (Clean Architecture)
 
-<img src="./media/clean-architecture.png" />
+<p align="center">
+    <img src="./media/clean-archicteture.excalidraw.png" width="500" />
+</>
+
+A escolha do padrão **Clean Architecture** para um projeto de software pode trazer diversos benefícios, mas é importante ressaltar que a escolha de uma arquitetura depende muito das necessidades específicas do projeto, das características da equipe de desenvolvimento e das metas a serem alcançadas.
+
+**Principais vantagens:**
+
+-   Separação de responsabilidades;
+-   Independência de frameworks e bibliotecas;
+-   Testabilidade;
+-   Adaptabilidade a mudanças;
+-   Escalabilidade;
+-   Longevidade do software;
+-   Compreensão e colaboração.
+
+## Diagramas BPMN do microserviço
+
+<img src="./media/diagrama-4-v1.png" />
+
+| Descrição          | Data de modificação  | Versão | Link de download                                         |
+| :----------------- | :------------------- | :----- | :------------------------------------------------------- |
+| Arquivo .drawio v1 | 11 de agosto de 2023 | v1     | [Download](./media/customer-microservico-bpmn.drawio)    |
+| Arquivo .drawio v2 | 12 de agosto de 2023 | v2     | [Download](./media/customer-microservico-bpmn-v2.drawio) |
+
+<img src="./media/customer-v1.excalidraw-v1.png" />
+
+| Descrição          | Data de modificação  | Versão | Link de download                                 |
+| :----------------- | :------------------- | :----- | :----------------------------------------------- |
+| Arquivo .drawio v1 | 12 de agosto de 2023 | v1     | [Download](./media/customer-v1.excalidraw-v1.md) |
+
+## Metodologia de desenvolvimento
+
+1. Entendimento do problema, escopo e prazos;
+2. Levantamento dos requisitos funcionais;
+3. Definição do padrão arquitetural a ser utilizado;
+4. Definição das atribuições e cronograma de estimativas no desenvolvimento das atividades para cumprimiento dos prazos de entrega;
+5. Criação dos diagramas;
+6. Desenvolvimento do código, guiado a testes (TDD);
+7. Ajustes no código e diagramas.
 
 ## Técnicas utilizadas
 
@@ -41,10 +80,6 @@
 -   Makefile para criar aliases de command line;
 -   Padronização de commits (conventional commits);
 
-## Não utilizei
-
--   Injeções de dependência com decorators com biblioteca, a exemplo da da tsyringe, pois, acredito que as notações tornam as aplicações mais dependente. Outro motivo é o fato do Golang não possuir notações, dessa forma, não seria possível replicar o mesmo contexto na tecnologia Go.
-
 ## O que poderia utilizar
 
 -   Além da técnica de http retry, outra técnica resiliência a exemplo do RateLimit;
@@ -53,65 +88,160 @@
 -   Testes com Fakes em memória para deixar o código mais limpo;
 -   Strategy pattern para o chaveamento de providers.
 
-## Etapas de desenvolvimento
+## Cronograma
 
--   Criação do setup inicial (package.json, eslint, jest, swc, makefile)
--   Camadas:
-    -   domain
-    -   main (entrypoint da aplicação)
-    -   commons
-    -   infra/providers
-    -   infra/mappers
-    -   usecase/customer
-    -   infra/database
-    -   main/adapters/controllers
-    -   main/factories
+| Atividade                                    | Esforço (Fibonacci) | Finalizado? | Execução |
+| -------------------------------------------- | ------------------- | ----------- | -------- |
+| Levantamento do escopo mediante os prazos    | 1                   | 🔥          | 100%     |
+| Levantamento dos requisitos funcionais       | 1                   | 🔥          | 100%     |
+| Criação da documentação no Git               | 1                   | 🔥          | 100%     |
+| Criação dos diagramas e README.md            | 1                   | 🔥          | 100%     |
+| Desenvolvimento do código                    | 3                   | 🔥          | 100%     |
+| Ajustes finais no código e documentação      | 1                   | 🔥          | 100%     |
+| Implementações (swagger, ratelimit, loggers) | 2                   | -           | 0%       |
 
-## Endpoints
+**Total:** 10 pontos
 
-### Autenticação
+### Escala considerada
 
-| URI                                                                                                                                         | Método                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| :------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Endpoint                                                                                                                                    | /auth/realms/careers/protocol/openid-connect/token                                                                                                                                                                                                                                                                                                                                                                                 |
-| Method                                                                                                                                      | POST                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| Header                                                                                                                                      | Content-Type: application/x-www-form-urlencoded                                                                                                                                                                                                                                                                                                                                                                                    |
-| Request<br /><br /><br /><br /><br /><br />                                                                                                 | grant_type<br />client_id<br />client_secret<br />username<br />password<br />scope                                                                                                                                                                                                                                                                                                                                                |
-| Response<br /><br /><br /><br /><br /><br /><br />                                                                                          | access_token<br />expires_in<br />refresh_expires_in<br />token_type<br />not-before-policy<br />scope<br />id_token                                                                                                                                                                                                                                                                                                               |
-| &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |
+-   **Esforço 1** - Representa >= 1 hora e <= 4 horas.
+-   **Esforço 2** - Representa > 4 hora e <= 10 horas.
+-   **Esforço 3** - Representa > 10 horas e <= 20 horas.
+-   **Esforço 5** - Representa > 20 horas e <= 34 horas.
+-   **Esforço 8** - Representa > 34 horas e <= 40 horas.
+-   **Esforço 13** - Representa > 40 horas e <= 80 horas.
 
 ## Endpoints
 
-| URI                   | Método | Token | Role | Descrição           |
-| --------------------- | ------ | ----- | ---- | ------------------- |
-| **CUSTOMERS**         |
-| api/v1/customers      | POST   |       | ALL  | Cria o customer     |
-| api/v1/customers/{id} | PATCH  |       | ALL  | Atualiza o customer |
-| api/v1/customers/{id} | GET    |       | ALL  | Obtém um customer   |
+### Resumo de todas as rotas disponíveis na API
 
-### Body das requisições
+| Endpoint                         | Método | Bearer Token | Descrição           |
+| :------------------------------- | :----- | :----------: | :------------------ |
+| **http://localhost:3005/api/v1** |
+| **CUSTOMERS**                    |
+| /customers                       | POST   |      x       | Cria o customer     |
+| /customers/:id                   | PATCH  |      x       | Atualiza o customer |
+| /customers/:id                   | GET    |      x       | Obtém um customer   |
+| **ACCOUNTS**                     |
+| /accounts/token                  | GET    |              | Obtém um token      |
 
-#### Criar um customer
+## Download do projeto no Insomnia
 
-```bash
-# api/v1/customers (POST)
-{
-  "document": 202020,
-  "name": "Tiago Mattos"
-}
-```
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Customer-Api&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fvenzel%2Fcustomer-api%2Fmain%2./media/Insomnia_2023-08-12.json)
 
-#### Atualizar um customer
+**Importante:** o arquvivo do insomnia já está configurado para ao requisitar alguma rota de customers (POST, PATCH, GET), automaticamente, gerar um token previamente através da rota accounts/token e inserir no header/Authorization das rotas.
 
-```bash
-# api/v1/customers (PATCH)
-{
-  "document": 202020,
-  "name": "Tiago Mattos Alencar"
-}
-```
+### Gateway para obtenção do token
 
-## Pacotes
+| Endpoint                                           |                                                                                                                      |
+| :------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------- |
+| **https://accounts.seguros.vitta.com.br**          |                                                                                                                      |
+| URI                                                | /auth/realms/careers/protocol/openid-connect/token                                                                   |
+| Method                                             | POST                                                                                                                 |
+| Header                                             | Content-Type: application/x-www-form-urlencoded                                                                      |
+| Request<br /><br /><br /><br /><br /><br />        | grant_type<br />client_id<br />client_secret<br />username<br />password<br />scope                                  |
+| Response<br /><br /><br /><br /><br /><br /><br /> | access_token<br />expires_in<br />refresh_expires_in<br />token_type<br />not-before-policy<br />scope<br />id_token |
+
+### Diagrama BPMN com estratégias de obtenção de token
+
+<img src="./media/geracao-token-v1.png" />
+
+| Descrição           | Data de modificação  | Versão | Link de download                                |
+| :------------------ | :------------------- | :----- | :---------------------------------------------- |
+| Arquivo .excalidraw | 12 de agosto de 2023 | v1     | [Download](./media/geracao-token-v1.excalidraw) |
+
+**Acima são apresentados 2 cenários:**
+
+**Cenário 1**: Necessidade de realizar uma transação por token, ideal para manter a transação mais segura.<br />
+**Cenário 2**: Necessidade da utilização de um token para multiplas transações.<br />
+
+No código atual, foi implementado a estratégia do cenário 2.
+
+### Endpoint para gerar um token na API
+
+| Endpoint                         |                                |
+| :------------------------------- | :----------------------------- |
+| **http://localhost:3005/api/v1** |                                |
+| URI                              | /accounts/token                |
+| Method                           | GET                            |
+| Header                           | Content-Type: application/json |
+| Request                          |                                |
+| Response                         | token                          |
+
+### Diagrama de sequência de criação do customer
+
+<img src="./media/diagrama-1-v1.png" />
+
+### Endpoint para criar um customer na API
+
+| Endpoint                               |                                                                 |
+| :------------------------------------- | :-------------------------------------------------------------- |
+| **http://localhost:3005/api/v1**       |                                                                 |
+| URI                                    | /customers                                                      |
+| Method                                 | POST                                                            |
+| Header<br /><br />                     | Content-Type: application/json<br />Authorization: Bearer Token |
+| Request<br /><br />                    | document<br />name                                              |
+| Response<br /><br /><br /><br /><br /> | id<br />document<br />name<br />createdAt<br />updatedAt<br />  |
+
+### Diagrama de sequência de atualização do customer
+
+<img src="./media/diagrama-2-v1.png" />
+
+### Endpoint para atualizar um customer na API
+
+| Endpoint                               |                                                                 |
+| :------------------------------------- | :-------------------------------------------------------------- |
+| **http://localhost:3005/api/v1**       |                                                                 |
+| URI                                    | /customers/:id                                                  |
+| Method                                 | PATH                                                            |
+| Header<br /><br />                     | Content-Type: application/json<br />Authorization: Bearer Token |
+| Request<br /><br />                    | document<br />name                                              |
+| Response<br /><br /><br /><br /><br /> | id<br />document<br />name<br />createdAt<br />updatedAt<br />  |
+
+### Diagrama de sequência de obtenção do customer
+
+<img src="./media/diagrama-3-v1.png" />
+
+### Endpoint para obter customer na API
+
+| Endpoint                               |                                                                 |
+| :------------------------------------- | :-------------------------------------------------------------- |
+| **http://localhost:3005/api/v1**       |                                                                 |
+| URI                                    | /customers/:id                                                  |
+| Method                                 | GET                                                             |
+| Header<br /><br />                     | Content-Type: application/json<br />Authorization: Bearer Token |
+| Request                                |                                                                 |
+| Response<br /><br /><br /><br /><br /> | id<br />document<br />name<br />createdAt<br />updatedAt<br />  |
+
+## Padronização de commits (Conventional Commits)
+
+### Flags utilizadas:
+
+| Flag         | Descrição                                                                                                |
+| :----------- | :------------------------------------------------------------------------------------------------------- |
+| **fix**      | Correção de bug para o usuário.                                                                          |
+| **feat**     | Desenvolvimento de uma nova funcionalidade.                                                              |
+| **docs**     | Alterações na documentação.                                                                              |
+| **refactor** | Refatoração de um bloco de código.                                                                       |
+| **style**    | Formatação, falta de ponto e vírgula, etc.                                                               |
+| **perf**     | Uma mudança de código que melhora o desempenho.                                                          |
+| **build**    | Alterações que afetam o sistema de compilação ou dependências externas (escopos de exemplo: gulp e npm). |
+| **ci**       | Alterações em arquivos e scripts de configuração de CI (escopos de exemplo: Travis, Circle e Codeship).  |
+| **test**     | Adicionando testes ausentes ou corrigindo testes existentes.                                             |
+
+## Como instalar e rodar o projeto
+
+### Pré-requisitos
+
+-   NodeJs v18.12.1
+-   Yarn 1.22.19
+-   Docker version 24.0.5, build ced0996
+-   docker-compose version 1.29.2, build 5becea4c
+
+### Passo a passo
+
+<details>
+<summary>Pacotes utilizados</summary>
 
 ```bash
 yarn add express \
@@ -122,6 +252,8 @@ yarn add express \
     express \
     express-async-errors \
     helmet \
+    ioredis \
+    jsonwebtoken \
     mongoose \
     morgan \
     reflect-metadata \
@@ -135,6 +267,7 @@ yarn add @types/express \
     @swc/jest \
     @types/express \
     @types/jest \
+    @types/jsonwebtoken \
     @types/morgan \
     @types/node \
     @types/uuid \
@@ -155,60 +288,68 @@ yarn add @types/express \
     typescript -D
 ```
 
-## Padronização de commits (Conventional Commits)
-
-### Flags utilizadas:
-
-| Ícone | Flag         | Descrição                                                                                                |
-| ----- | ------------ | -------------------------------------------------------------------------------------------------------- |
-| 🪲    | **fix**      | Correção de bug para o usuário.                                                                          |
-| ☂️    | **feat**     | Desenvolvimento de uma nova funcionalidade.                                                              |
-| 📃    | **docs**     | Alterações na documentação.                                                                              |
-| ✂️    | **refactor** | Refatoração de um bloco de código.                                                                       |
-| 💅    | **style**    | Formatação, falta de ponto e vírgula, etc.                                                               |
-| 🔧    | **perf**     | Uma mudança de código que melhora o desempenho.                                                          |
-| 🔨    | **build**    | Alterações que afetam o sistema de compilação ou dependências externas (escopos de exemplo: gulp e npm). |
-| 🪀    | **ci**       | Alterações em arquivos e scripts de configuração de CI (escopos de exemplo: Travis, Circle e Codeship).  |
-| 🧪    | **test**     | Adicionando testes ausentes ou corrigindo testes existentes.                                             |
-
-## Pré-requisitos
-
--   NodeJs v18.12.1
--   Yarn 1.22.19
--   Docker version 24.0.5, build ced0996
--   docker-compose version 1.29.2, build 5becea4c
--   Make
-
-## Como instalar o projeto
+</details>
 
 ```bash
-# Clona o repositório
+# Passo 1: Clona o repositório
 git clone https://github.com/venzel/customer-api.git
 
-# Acessa a pasta do repositório clonado
+# Passo 2: Acessa a pasta do repositório clonado
 cd customer-api
 
-# Instala os pacotes do NodeJs
-make packages
+# Passo 3: Instala os pacotes do NodeJs
+yarn install
 
-# Cria o .env e edita, se for a primeira vez executando
+# Passo 4: Cria o .env e edita
+# ATENÇÃO: Não esquecer de preencher todas as variáveis
 cp -r .env.example .env
 
-# Sobe os containers do docker
-make up
+# Passo 5: Sobe os containers do docker
+docker-compose up -d
 
-# Criar o build e rodar o server
-make build && make start
+# Passo 6: Criar o build e rodar o server
+yarn build && yarn start
+
+# Pronto, o projeto deve estar rodando nas seguintes portas:
+#
+# API: 3005
+# MONGO: 27025
+# REDIS: 6385
 ```
 
 ## Testes de unidade
 
-<img src="./media/testes.png" />
+<img src="./media/testes-v1.png" width="600" />
 
 ## Como rodar os testes
 
 ```bash
-make teste
+yarn teste
+```
+
+## Alias do Makefile
+
+```bash
+# Instala o projeto
+make install
+
+# Sobe o container
+make up
+
+# Derruba o container
+make down
+
+# Transpila o projeto para javascript
+make build
+
+# Rodar os testes
+make test
+
+# Roda o projeto transpilado
+make start
+
+# Add, Commit e Push na main
+make ammend
 ```
 
 <hr />

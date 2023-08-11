@@ -1,0 +1,176 @@
+{
+    "_type": "export",
+    "__export_format": 4,
+    "__export_date": "2023-08-12T20:33:10.859Z",
+    "__export_source": "insomnia.desktop.app:v2021.7.2",
+    "resources": [
+        {
+            "_id": "req_df2506cdfe954252a7454281251db0ea",
+            "parentId": "fld_797208826e70457782b6d508142e740d",
+            "modified": 1691871642665,
+            "created": 1691703906047,
+            "url": "http://localhost:3005/api/v1/accounts/token",
+            "name": "generateToken",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [],
+            "authentication": {},
+            "metaSortKey": -1679825333082.5,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_797208826e70457782b6d508142e740d",
+            "parentId": "wrk_66f40853af1a468eb3c085b757292338",
+            "modified": 1691703403872,
+            "created": 1691703403872,
+            "name": "customer-api",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1691703403872,
+            "_type": "request_group"
+        },
+        {
+            "_id": "wrk_66f40853af1a468eb3c085b757292338",
+            "parentId": null,
+            "modified": 1688340953241,
+            "created": 1579018079635,
+            "name": "Venzel",
+            "description": "",
+            "scope": "collection",
+            "_type": "workspace"
+        },
+        {
+            "_id": "req_2e2a929029ba4885b14eb2a07b3c6cb7",
+            "parentId": "fld_eb320fb85f8d4d85ae4eb576eb8cb7c1",
+            "modified": 1691872308327,
+            "created": 1608834214435,
+            "url": "http://localhost:3005/api/v1/customers",
+            "name": "create",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"document\": 3030303030,\n\t\"name\": \"Tiago Rizzo\"\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "description": "",
+                    "id": "pair_82f0297389ee47e6ad5bc7fd11097936"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{% response 'body', 'req_df2506cdfe954252a7454281251db0ea', 'b64::JC4=::46b', 'no-history', 60 %}",
+                "prefix": ""
+            },
+            "metaSortKey": -1679825332932.5,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_eb320fb85f8d4d85ae4eb576eb8cb7c1",
+            "parentId": "fld_797208826e70457782b6d508142e740d",
+            "modified": 1691703977112,
+            "created": 1691703974100,
+            "name": "customer",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1679825333032.5,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_ce1b6043979e4746b4d713baa08b5383",
+            "parentId": "fld_eb320fb85f8d4d85ae4eb576eb8cb7c1",
+            "modified": 1691871803189,
+            "created": 1691704179168,
+            "url": "http://localhost:3005/api/v1/customers/64d56dd184ea6b0e51af5688",
+            "name": "update",
+            "description": "",
+            "method": "PATCH",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"document\": 3030303030,\n\t\"name\": \"Tiago Rizzo\"\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json",
+                    "description": "",
+                    "id": "pair_82f0297389ee47e6ad5bc7fd11097936"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{% response 'body', 'req_df2506cdfe954252a7454281251db0ea', 'b64::JC4=::46b', 'no-history', 60 %}",
+                "prefix": ""
+            },
+            "metaSortKey": -1677867507815.375,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_4cd37a16fd204d50993b4c20431d75ab",
+            "parentId": "fld_eb320fb85f8d4d85ae4eb576eb8cb7c1",
+            "modified": 1691871805926,
+            "created": 1691704130024,
+            "url": "http://localhost:3005/api/v1/customers/64d56dd184ea6b0e51af5688",
+            "name": "findOne",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [],
+            "authentication": {
+                "type": "bearer",
+                "token": "{% response 'body', 'req_df2506cdfe954252a7454281251db0ea', 'b64::JC4=::46b', 'no-history', 60 %}",
+                "prefix": ""
+            },
+            "metaSortKey": -1675909682698.25,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "spc_77a4a8c2a63d466d8d57021180c55050",
+            "parentId": "wrk_66f40853af1a468eb3c085b757292338",
+            "modified": 1608577196863,
+            "created": 1608577196863,
+            "fileName": "Insomnia",
+            "contents": "",
+            "contentType": "yaml",
+            "_type": "api_spec"
+        }
+    ]
+}

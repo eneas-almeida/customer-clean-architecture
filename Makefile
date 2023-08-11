@@ -16,4 +16,7 @@ up:
 down:
 	docker-compose down
 
-.PHONY: packages build start test up down
+ammend:
+	git add --all && git commit --amend --no-edit && git push origin main -f
+
+.PHONY: packages build start test up down ammend
