@@ -8,12 +8,12 @@ export class CustomerYupValidator implements ValidatorInterface<CustomerInterfac
                 .shape({
                     document: yup
                         .number()
-                        .positive('O documento não pode ser negativo')
-                        .required('O documento é requerido'),
+                        .positive('propriedade document não pode ser negativo')
+                        .required('propriedade document requerida'),
                     name: yup
                         .string()
-                        .max(20, 'O nome não pode conter mais de 20 caracteres')
-                        .required('O nome é requerido'),
+                        .max(20, 'propiedade nome não pode conter mais de 20 caracteres')
+                        .required('propridade name requerida'),
                 })
                 .validateSync(
                     {
@@ -27,7 +27,7 @@ export class CustomerYupValidator implements ValidatorInterface<CustomerInterfac
 
             e.errors.forEach((error) => {
                 entity.notification.addError({
-                    context: 'costumer',
+                    context: 'customer',
                     message: error,
                 });
             });

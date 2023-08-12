@@ -122,14 +122,10 @@ A escolha do padrão **Clean Architecture** para um projeto de software pode tra
 | /customers                       | POST   |      x       | Cria o customer     |
 | /customers/:id                   | PATCH  |      x       | Atualiza o customer |
 | /customers/:id                   | GET    |      x       | Obtém um customer   |
-| **ACCOUNTS**                     |
-| /accounts/token                  | GET    |              | Obtém um token      |
 
 ## Download do projeto no Insomnia
 
 [![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Customer-Api&uri=https%3A%2F%2Fraw.githubusercontent.com%2Fvenzel%2Fcustomer-api%2Fmain%2./media/Insomnia_2023-08-12.json)
-
-**Importante:** o arquvivo do insomnia já está configurado para ao requisitar alguma rota de customers (POST, PATCH, GET), automaticamente, gerar um token previamente através da rota accounts/token e inserir no header/Authorization das rotas.
 
 ### Gateway para obtenção do token
 
@@ -155,18 +151,7 @@ A escolha do padrão **Clean Architecture** para um projeto de software pode tra
 **Cenário 1**: Necessidade de realizar uma transação por token, ideal para manter a transação mais segura.<br />
 **Cenário 2**: Necessidade da utilização de um token para multiplas transações.<br />
 
-No código atual, foi implementado a estratégia do cenário 2.
-
-### Endpoint para gerar um token na API
-
-| Endpoint                         |                                |
-| :------------------------------- | :----------------------------- |
-| **http://localhost:3005/api/v1** |                                |
-| URI                              | /accounts/token                |
-| Method                           | GET                            |
-| Header                           | Content-Type: application/json |
-| Request                          |                                |
-| Response                         | token                          |
+No código atual, foi implementado a estratégia do cenário 1.
 
 ### Diagrama de sequência de criação do customer
 

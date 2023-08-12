@@ -3,7 +3,7 @@ import { RepositoryInterface } from '@/domain/@shared/contracts';
 import { CustomerMongooseRepository } from '@/infra/database/repositories';
 import { ProviderInterface } from '@/infra/providers/@shared/contracts/provider';
 import { IoRedisCacheProvider } from '@/infra/providers/cache/ioredis-cache.provider';
-import { StonePaymentProvider } from '@/infra/providers/payment/stone-payment.provider';
+import { VittaTokenProvider } from '@/infra/providers/token/vitta-token.provider';
 import { CustomerControllerInterface } from '@/presentation/@shared/contracts';
 import { CustomerController } from '@/presentation/controllers/customer.controller';
 import { CreateCustomerUseCase, FindOneCustomerUseCase, UpdateCustomerUseCase } from '@/usecase/customer';
@@ -16,8 +16,8 @@ export const MakeCustomerController = async (): Promise<CustomerControllerInterf
     };
 
     const provider: ProviderInterface = {
+        token: new VittaTokenProvider(axiosInstance),
         cache: new IoRedisCacheProvider(),
-        payment: new StonePaymentProvider(axiosInstance),
     };
 
     const createCustomerUseCase = new CreateCustomerUseCase(repository, provider);

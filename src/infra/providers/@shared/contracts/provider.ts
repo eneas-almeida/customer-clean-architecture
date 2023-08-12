@@ -1,6 +1,15 @@
+export interface OutputTokenDto {
+    access_token: string;
+    expires_in: number;
+    refresh_expires: number;
+    token_type: string;
+    'not-before-policy': number;
+    scope: string;
+    id_token: string;
+}
+
 export interface TokenProviderInterface {
-    generateToken(): Promise<string>;
-    verifyToken(token: string, secret: string): boolean;
+    generateToken(): Promise<OutputTokenDto>;
 }
 
 export interface CacheProviderInterface {
@@ -10,12 +19,7 @@ export interface CacheProviderInterface {
     clearAllCacheByPrefix(prefix: string): Promise<void>;
 }
 
-export interface PaymentProviderInterface {
-    pay(amount: number): Promise<number>;
-}
-
 export interface ProviderInterface {
     token?: TokenProviderInterface;
     cache?: CacheProviderInterface;
-    payment?: PaymentProviderInterface;
 }

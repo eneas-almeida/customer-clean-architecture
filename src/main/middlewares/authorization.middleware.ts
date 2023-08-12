@@ -1,40 +1,42 @@
 import { NextFunction, Request, Response } from 'express';
 import { AppError } from '@/domain/@shared/errors';
-import { TokenProviderInterface } from '@/infra/providers/@shared/contracts/provider';
-import { envs } from '@/main/configs';
+import { CacheProviderInterface, TokenProviderInterface } from '@/infra/providers/@shared/contracts/provider';
 
 export class AuthorizationMiddleware {
     private readonly tokenProvider: TokenProviderInterface;
+    private readonly cacheProvider: CacheProviderInterface;
 
-    constructor(tokenProvider: TokenProviderInterface) {
+    constructor(tokenProvider: TokenProviderInterface, cacheProvider: CacheProviderInterface) {
         this.tokenProvider = tokenProvider;
+        this.cacheProvider = cacheProvider;
     }
 
-    handle(req: Request, _: Response, next: NextFunction): void {
-        const schemaToken = req.headers.authorization;
+    async handle(req: Request, _: Response, next: NextFunction): Promise<void> {
+        try {
+            const existsToken = await this.cacheProvider.findByKey('token');
 
-        if (!schemaToken) {
-            throw new AppError('Token não fornecido', 404);
+            if (existsToken) {
+                req.headers.Authorization = existsToken;
+                next();
+            }
+
+            const generateToken = await this.tokenProvider.generateToken();
+
+            if (!generateToken) {
+                if (!generateToken) {
+                    throw new AppError('não autorizado', 401);
+                }
+            }
+
+            const { access_token, expires_in } = generateToken;
+
+            req.headers.Authorization = access_token;
+
+            await this.cacheProvider.save('token', access_token, expires_in);
+
+            next();
+        } catch (e) {
+            throw e;
         }
-
-        const parts = schemaToken.split(' ');
-
-        if (parts.length !== 2) {
-            throw new AppError('Estrutura do token inválida', 403);
-        }
-
-        const [schema, token] = parts;
-
-        if (schema !== 'Bearer') {
-            throw new AppError('Estrutura do token inválida', 403);
-        }
-
-        const isValidToken = this.tokenProvider.verifyToken(token, envs.api.tokenSecret);
-
-        if (!isValidToken) {
-            throw new AppError('Token inválido', 403);
-        }
-
-        next();
     }
 }

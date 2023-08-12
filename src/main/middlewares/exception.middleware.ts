@@ -14,6 +14,7 @@ export class ExceptionMiddleware {
             return res.status(400).json({
                 statusCode: 400,
                 message: err.message,
+                description: err.description,
             });
         }
 

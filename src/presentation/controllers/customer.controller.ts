@@ -3,7 +3,7 @@ import { InputCreateCustomerDto, OutputCreateCustomerDto } from '@/usecase/custo
 import { InputFindOneCustomerDto, OutputFindOneCustomerDto } from '@/usecase/customer/findone';
 import { InputUpdateCustomerDto, OutputUpdateCustomerDto } from '@/usecase/customer/update';
 import { CustomerControllerInterface } from '../@shared/contracts';
-import { HttpResponse, ok } from '../@shared/helpers';
+import { HttpResponse, ok, create } from '../@shared/helpers';
 
 export class CustomerController implements CustomerControllerInterface {
     constructor(
@@ -15,7 +15,7 @@ export class CustomerController implements CustomerControllerInterface {
     async create(input: InputCreateCustomerDto): Promise<HttpResponse<OutputCreateCustomerDto>> {
         try {
             const output = await this.createCustomerUseCase.execute(input);
-            return ok(output);
+            return create(output);
         } catch (e) {
             throw e;
         }

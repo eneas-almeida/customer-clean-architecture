@@ -5,11 +5,11 @@ import { IoRedisCacheProvider } from '@/infra/providers/cache/ioredis-cache.prov
 
 export const MakeAuthorization = (): any => {
     const axiosInstance = new AxiosHttpClient().getInstance();
+
+    const vittaTokenProvider = new VittaTokenProvider(axiosInstance);
     const ioRedisCacheProvider = new IoRedisCacheProvider();
 
-    const vittaTokenProvider = new VittaTokenProvider(axiosInstance, ioRedisCacheProvider);
-
-    const middleware = new AuthorizationMiddleware(vittaTokenProvider);
+    const middleware = new AuthorizationMiddleware(vittaTokenProvider, ioRedisCacheProvider);
 
     return middleware.handle.bind(middleware);
 };
