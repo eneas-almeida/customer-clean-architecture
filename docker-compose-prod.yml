@@ -25,9 +25,7 @@ services:
             - customer-prod-network
     api:
         container_name: ${API_NAME}
-        build: .
-        volumes:
-            - .:/app
+        image: venzel/customer-api
         ports:
             - ${API_PORT}:3000
         depends_on:

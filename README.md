@@ -310,6 +310,8 @@ yarn add @types/express \
 
 </details>
 
+### Development
+
 ```bash
 # Passo 1: Clona o repositório
 git clone https://github.com/venzel/customer-api.git
@@ -317,24 +319,42 @@ git clone https://github.com/venzel/customer-api.git
 # Passo 2: Acessa a pasta do repositório clonado
 cd customer-api
 
-# Passo 3: Instala os pacotes do NodeJs
-yarn install
-
-# Passo 4: Cria o .env e edita
+# Passo 3: Cria o arquivo .env e edita
 # ATENÇÃO: Não esquecer de preencher todas as variáveis
-cp -r .env.example .env
+cp -r .prod.env .env
 
-# Passo 5: Sobe os containers do docker
+# Passo 4: Sobe os containers do docker
 docker-compose up -d
-
-# Passo 6: Rodar o servidor localmente sem transpilar
-yarn dev
-
+#
 # Pronto, o projeto deve estar rodando nas seguintes portas:
 #
-# API: 3005
-# MONGO: 27025
-# REDIS: 6385
+# API: 3000
+# MONGO: 27017
+# REDIS: 6379
+```
+
+### Production
+
+```bash
+# Passo 1: Clona o repositório
+git clone https://github.com/venzel/customer-api.git
+
+# Passo 2: Acessa a pasta do repositório clonado
+cd customer-api
+
+# Passo: 3 preenche todas as variáveis do arquivos .prod.env
+
+# Passo 4: cria o build da imagem
+docker build -t venzel/customer-api:alpine -f Dockerfile.prod .
+
+# Paso 5: sobe os containers de prod
+docker-compose --env-file .prod.env -f docker-compose-prod.yml up -d
+#
+# Pronto, o projeto deve estar rodando nas seguintes portas:
+#
+# API: 3000
+# MONGO: 27017
+# REDIS: 6379
 ```
 
 ## Testes de unidade
@@ -350,26 +370,17 @@ yarn teste
 ## Alias do Makefile
 
 ```bash
-# Instala o projeto
-make install
-
-# Roda o programa no ambiente de dev
-make dev
-
-# Sobe o container
+# Subir o ambiente de dev
 make up
 
-# Derruba o container
+# Derrubar ambiente de dev
 make down
 
-# Transpila o projeto para javascript
-make build
+# Subir ambient de prod
+make prod && make up/prod
 
-# Rodar os testes
-make test
-
-# Roda o projeto transpilado
-make start
+# Derrubar ambiente de prod
+make down/prod
 
 # Add, Commit e Push na main
 make ammend

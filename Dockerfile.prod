@@ -1,0 +1,18 @@
+FROM node:18
+
+WORKDIR /app
+
+COPY . ./temp
+
+RUN cd ./temp && rm -rf node_modules
+RUN cd ./temp && yarn ci
+RUN cd ./temp && yarn build
+
+RUN cp -r ./temp/dist ./src
+RUN cp -r ./temp/node_modules ./
+RUN cp -r ./temp/package.json ./
+RUN cp -r ./temp/.prod.env ./.env
+
+RUN rm -rf temp
+
+CMD ["yarn", "start"]
