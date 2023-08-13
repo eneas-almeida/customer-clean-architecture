@@ -1,6 +1,9 @@
 packages:
 	yarn install
 
+dev:
+	yarn dev
+
 build:
 	yarn build
 
@@ -19,4 +22,4 @@ down:
 ammend:
 	git add --all && git commit --amend --no-edit && git push origin main -f
 
-.PHONY: packages build start test up down ammend
+.PHONY: packages dev build start test up down ammend

@@ -267,7 +267,9 @@ yarn add @types/express \
     husky \
     jest \
     lint-staged \
+    npm-run-all \
     ts-jest \
+    ts-node-dev" \
     tsconfig-paths \
     tscpaths \
     typescript -D
@@ -292,8 +294,8 @@ cp -r .env.example .env
 # Passo 5: Sobe os containers do docker
 docker-compose up -d
 
-# Passo 6: Criar o build e rodar o server
-yarn build && yarn start
+# Passo 6: Rodar o servidor localmente sem transpilar
+yarn dev
 
 # Pronto, o projeto deve estar rodando nas seguintes portas:
 #
