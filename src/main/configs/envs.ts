@@ -39,4 +39,7 @@ export const envs = {
         password: process.env.VITTA_PASSWORD,
         scope: process.env.VITTA_SCOPE,
     },
+    strategy: {
+        token: process.env.STRATEGY_TOKEN || 'cache',
+    },
 };
