@@ -4,6 +4,10 @@
 
 > **Customer API** é um microserviço que utiliza um padrão arquitetural Clean Architecture e modelagem de entidade utilizando conceitos de DDD.
 
+## Considerações iniciais
+
+1. Para tornar o microserviço mais didático, foi utilizado o mongodb como persistência de dados e o redis como estratégia de cache.
+
 ## Stack
 
 -   NodeJs/Express;
@@ -28,6 +32,18 @@ A escolha do padrão **Clean Architecture** para um projeto de software pode tra
 -   Escalabilidade;
 -   Longevidade do software;
 -   Compreensão e colaboração.
+
+## Entidades
+
+### Customer
+
+| Campos    | Tipo   | Validações                                                                           |
+| :-------- | :----- | :----------------------------------------------------------------------------------- |
+| id        | string | N/A                                                                                  |
+| document  | number | propriedade document requerida<br />propriedade document não pode ser negativa       |
+| name      | string | propridade name requerida<br />propiedade nome não pode conter mais de 20 caracteres |
+| createdAt | Date   | N/A                                                                                  |
+| updatedAt | Date   | N/A                                                                                  |
 
 ## Diagramas BPMN do microserviço
 
@@ -69,13 +85,12 @@ A escolha do padrão **Clean Architecture** para um projeto de software pode tra
 -   Fail first;
 -   👉 [Estratégia de resiliência de chamadas http com o **axios retry**](./src/commons/clients/axios-http.client.ts);
 -   👉 [Estratégia de melhor gerencimanto do pool de conexões com o **agentkeepalive**](./src/commons/clients/axios-http.client.ts);
--   Proxy pattern, utilizando o redis para verificar se já existe um token gerado em memória
 -   TDD
--   Testes de unidade utilizando mocks, poderia ter utilizado fakes, mas fiz a opção de utilizar mocks configurado com métricas de coverage;
+-   Testes de unidade utilizando mocks;
 -   Indexes nas collections do mongo;
 -   Utilização do linter para padronizar o código;
 -   Utilização do pacote swc para transpilação mais rápida;
--   Docker-compose para criaçãod dos containers mongo e redis;
+-   Docker-compose para criação dos containers mongo e redis;
 -   Modelagem da camada de providers para ilustração como acessar as camadas externas da aplicação;
 -   Makefile para criar aliases de command line;
 -   Padronização de commits (conventional commits);
@@ -120,7 +135,7 @@ A escolha do padrão **Clean Architecture** para um projeto de software pode tra
 | **http://localhost:3005/api/v1** |
 | **CUSTOMERS**                    |
 | /customers                       | POST   |      x       | Cria o customer     |
-| /customers/:id                   | PATCH  |      x       | Atualiza o customer |
+| /customers/:id                   | PUT    |      x       | Atualiza o customer |
 | /customers/:id                   | GET    |      x       | Obtém um customer   |
 
 ## Download do projeto no Insomnia
@@ -129,14 +144,26 @@ A escolha do padrão **Clean Architecture** para um projeto de software pode tra
 
 ### Gateway para obtenção do token
 
-| Endpoint                                           |                                                                                                                      |
-| :------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------- |
-| **https://accounts.seguros.vitta.com.br**          |                                                                                                                      |
-| URI                                                | /auth/realms/careers/protocol/openid-connect/token                                                                   |
-| Method                                             | POST                                                                                                                 |
-| Header                                             | Content-Type: application/x-www-form-urlencoded                                                                      |
-| Request<br /><br /><br /><br /><br /><br />        | grant_type<br />client_id<br />client_secret<br />username<br />password<br />scope                                  |
-| Response<br /><br /><br /><br /><br /><br /><br /> | access_token<br />expires_in<br />refresh_expires_in<br />token_type<br />not-before-policy<br />scope<br />id_token |
+| Endpoint                                    |                                                                                     |
+| :------------------------------------------ | :---------------------------------------------------------------------------------- |
+| **https://accounts.seguros.vitta.com.br**   |                                                                                     |
+| URI                                         | /auth/realms/careers/protocol/openid-connect/token                                  |
+| Method                                      | POST                                                                                |
+| Header                                      | Content-Type: application/x-www-form-urlencoded                                     |
+| Request<br /><br /><br /><br /><br /><br /> | grant_type<br />client_id<br />client_secret<br />username<br />password<br />scope |
+| Response                                    | DTO de resposta do token                                                            |
+
+#### DTO de resposta do token
+
+| Campos             | Tipo   |
+| :----------------- | :----- |
+| access_token       | string |
+| expires_in         | number |
+| refresh_expires_in | number |
+| token_type         | string |
+| not-before-policy  | number |
+| scope              | string |
+| id_token           | string |
 
 ### Diagrama BPMN com estratégias de obtenção de token
 
@@ -159,14 +186,14 @@ No código atual, foi implementado a estratégia do cenário 1.
 
 ### Endpoint para criar um customer na API
 
-| Endpoint                               |                                                                 |
-| :------------------------------------- | :-------------------------------------------------------------- |
-| **http://localhost:3005/api/v1**       |                                                                 |
-| URI                                    | /customers                                                      |
-| Method                                 | POST                                                            |
-| Header<br /><br />                     | Content-Type: application/json<br />Authorization: Bearer Token |
-| Request<br /><br />                    | document<br />name                                              |
-| Response<br /><br /><br /><br /><br /> | id<br />document<br />name<br />createdAt<br />updatedAt<br />  |
+| Endpoint                         |                                                                                                                      |
+| :------------------------------- | :------------------------------------------------------------------------------------------------------------------- |
+| **http://localhost:3005/api/v1** |                                                                                                                      |
+| URI                              | /customers                                                                                                           |
+| Method                           | POST                                                                                                                 |
+| Header<br /><br />               | Content-Type: application/json<br />Authorization: Bearer Token                                                      |
+| Request body<br /><br />         | document<br />name                                                                                                   |
+| Response<br /><br /><br /><br /> | HTTP 201 (Customer)<br />HTTP 401 - não autorizado<br />HTTP 400 - request inválida<br />HTTP 502 - sso indisponível |
 
 ### Diagrama de sequência de atualização do customer
 
@@ -174,14 +201,17 @@ No código atual, foi implementado a estratégia do cenário 1.
 
 ### Endpoint para atualizar um customer na API
 
-| Endpoint                               |                                                                 |
-| :------------------------------------- | :-------------------------------------------------------------- |
-| **http://localhost:3005/api/v1**       |                                                                 |
-| URI                                    | /customers/:id                                                  |
-| Method                                 | PATH                                                            |
-| Header<br /><br />                     | Content-Type: application/json<br />Authorization: Bearer Token |
-| Request<br /><br />                    | document<br />name                                              |
-| Response<br /><br /><br /><br /><br /> | id<br />document<br />name<br />createdAt<br />updatedAt<br />  |
+| Endpoint                                     |                                                                                                                                                                                         |
+| :------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **http://localhost:3005/api/v1**             |                                                                                                                                                                                         |
+| URI                                          | /customers/:id                                                                                                                                                                          |
+| Method                                       | PUT                                                                                                                                                                                     |
+| Header<br /><br />                           | Content-Type: application/json<br />Authorization: Bearer Token                                                                                                                         |
+| Request params<br /><br />                   | id                                                                                                                                                                                      |
+| Request body<br /><br />                     | document<br />name                                                                                                                                                                      |
+| Response<br /><br /><br /><br /><br /><br /> | HTTP 200 (Customer)<br />HTTP 401 - não autorizado<br />HTTP 400 - request inválida<br />HTTP 204 - cliente inexistente<br />HTTP 409 - conflito de ID<br />HTTP 502 - sso indisponível |
+
+**Observação 2:** considerei em utilizar o status 204 e não o 404 quando não encontra um customer.
 
 ### Diagrama de sequência de obtenção do customer
 
@@ -189,14 +219,17 @@ No código atual, foi implementado a estratégia do cenário 1.
 
 ### Endpoint para obter customer na API
 
-| Endpoint                               |                                                                 |
-| :------------------------------------- | :-------------------------------------------------------------- |
-| **http://localhost:3005/api/v1**       |                                                                 |
-| URI                                    | /customers/:id                                                  |
-| Method                                 | GET                                                             |
-| Header<br /><br />                     | Content-Type: application/json<br />Authorization: Bearer Token |
-| Request                                |                                                                 |
-| Response<br /><br /><br /><br /><br /> | id<br />document<br />name<br />createdAt<br />updatedAt<br />  |
+| Endpoint                               |                                                                                                                                                          |
+| :------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **http://localhost:3005/api/v1**       |                                                                                                                                                          |
+| URI                                    | /customers/:id                                                                                                                                           |
+| Method                                 | GET                                                                                                                                                      |
+| Header<br /><br />                     | Content-Type: application/json<br />Authorization: Bearer Token                                                                                          |
+| Request params<br /><br />             | id                                                                                                                                                       |
+| Request body                           | N/A                                                                                                                                                      |
+| Response<br /><br /><br /><br /><br /> | HTTP 200 (Customer)<br />HTTP 401 - não autorizado<br />HTTP 400 - request inválida<br />HTTP 204 - cliente inexistente<br />HTTP 502 - sso indisponível |
+
+**Observação 2:** considerei em utilizar o status 204 e não o 404 para quando tenta atualizar um customer.
 
 ## Padronização de commits (Conventional Commits)
 
@@ -319,6 +352,9 @@ yarn teste
 ```bash
 # Instala o projeto
 make install
+
+# Roda o programa no ambiente de dev
+make dev
 
 # Sobe o container
 make up

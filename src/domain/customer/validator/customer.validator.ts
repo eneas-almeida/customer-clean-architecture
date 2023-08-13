@@ -8,7 +8,7 @@ export class CustomerYupValidator implements ValidatorInterface<CustomerInterfac
                 .shape({
                     document: yup
                         .number()
-                        .positive('propriedade document não pode ser negativo')
+                        .positive('propriedade document não pode ser negativa')
                         .required('propriedade document requerida'),
                     name: yup
                         .string()

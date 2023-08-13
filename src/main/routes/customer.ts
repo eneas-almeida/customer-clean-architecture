@@ -12,6 +12,6 @@ export default async (router: Router): Promise<void> => {
     const customerController = await MakeCustomerController();
 
     router.post('/customers', authorization, createControllerAdapter(customerController));
-    router.patch('/customers/:id', authorization, updateControllerAdapter(customerController));
+    router.put('/customers/:id', authorization, updateControllerAdapter(customerController));
     router.get('/customers/:id', authorization, findOneControllerAdapter(customerController));
 };

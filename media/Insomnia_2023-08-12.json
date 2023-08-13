@@ -79,7 +79,7 @@
             "url": "http://localhost:3005/api/v1/customers/64d56dd184ea6b0e51af5688",
             "name": "update",
             "description": "",
-            "method": "PATCH",
+            "method": "PUT",
             "body": {
                 "mimeType": "application/json",
                 "text": "{\n\t\"document\": 3030303030,\n\t\"name\": \"Tiago Rizzo\"\n}"
