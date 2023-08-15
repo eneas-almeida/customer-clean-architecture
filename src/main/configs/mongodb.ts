@@ -12,14 +12,17 @@ export const mongodbConfig = async () => {
         sslCA: null,
     };
 
-    console.log('Testando a conexão com o banco de dados...');
+    console.log('Tentando conexão com o mongodb...');
 
     await mongoose
         .connect(uri, options)
         .then((_) => {
-            console.log(`Banco de dados conectado na porta ${port}`);
+            console.log(`[ok] Banco de dados conectado na porta ${port}`);
         })
         .catch((e) => {
+            console.log(`[--] erro em conectar com o banco de dados ${port}`);
             throw e;
         });
+
+    console.log('----------------------------------------');
 };

@@ -14,4 +14,8 @@ export default async (router: Router): Promise<void> => {
     router.post('/customers', authorization, createControllerAdapter(customerController));
     router.put('/customers/:id', authorization, updateControllerAdapter(customerController));
     router.get('/customers/:id', authorization, findOneControllerAdapter(customerController));
+
+    console.log(`[ok] /customers (POST)`);
+    console.log(`[ok] /customers/:id (PUT)`);
+    console.log(`[ok] /customers/:id (GET)`);
 };

@@ -13,7 +13,7 @@ services:
             - ./.docker/mongodb/entrypoints/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
             - ./.docker/mongodb/data:/data/db
         networks:
-            - customer-prod-network
+            - customer-dev-network
     redis:
         container_name: ${API_NAME}-redis
         image: redis:alpine
@@ -22,7 +22,7 @@ services:
             - ${REDIS_PORT}:6379
         command: redis-server --requirepass ${REDIS_PASSWORD}
         networks:
-            - customer-prod-network
+            - customer-dev-network
     api:
         container_name: ${API_NAME}
         build: .
@@ -34,6 +34,6 @@ services:
             - mongodb
             - redis
         networks:
-            - customer-prod-network
+            - customer-dev-network
 networks:
-    customer-prod-network:
+    customer-dev-network:

@@ -3,6 +3,7 @@ import { Main } from './main';
 const main = new Main();
 
 main.initBanner()
+    .initEnvs()
     .initDB()
     .then((res) => {
         res.initRoutes()

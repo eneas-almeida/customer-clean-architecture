@@ -1,5 +1,7 @@
 import {
     app,
+    envsValidate,
+    envs,
     bannerConfig,
     routesConfig,
     mongodbConfig,
@@ -10,6 +12,11 @@ import {
 export class Main {
     initBanner() {
         bannerConfig();
+        return this;
+    }
+
+    initEnvs() {
+        envsValidate();
         return this;
     }
 

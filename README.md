@@ -132,7 +132,7 @@ A escolha do padrão **Clean Architecture** para um projeto de software pode tra
 
 | Endpoint                         | Método | Bearer Token | Descrição           |
 | :------------------------------- | :----- | :----------: | :------------------ |
-| **http://localhost:3005/api/v1** |
+| **http://localhost:3000/api/v1** |
 | **CUSTOMERS**                    |
 | /customers                       | POST   |      x       | Cria o customer     |
 | /customers/:id                   | PUT    |      x       | Atualiza o customer |
@@ -188,7 +188,7 @@ No código atual, foi implementado a estratégia do cenário 1.
 
 | Endpoint                         |                                                                                                                      |
 | :------------------------------- | :------------------------------------------------------------------------------------------------------------------- |
-| **http://localhost:3005/api/v1** |                                                                                                                      |
+| **http://localhost:3000/api/v1** |                                                                                                                      |
 | URI                              | /customers                                                                                                           |
 | Method                           | POST                                                                                                                 |
 | Header<br /><br />               | Content-Type: application/json<br />Authorization: Bearer Token                                                      |
@@ -203,7 +203,7 @@ No código atual, foi implementado a estratégia do cenário 1.
 
 | Endpoint                                     |                                                                                                                                                                                         |
 | :------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **http://localhost:3005/api/v1**             |                                                                                                                                                                                         |
+| **http://localhost:3000/api/v1**             |                                                                                                                                                                                         |
 | URI                                          | /customers/:id                                                                                                                                                                          |
 | Method                                       | PUT                                                                                                                                                                                     |
 | Header<br /><br />                           | Content-Type: application/json<br />Authorization: Bearer Token                                                                                                                         |
@@ -221,7 +221,7 @@ No código atual, foi implementado a estratégia do cenário 1.
 
 | Endpoint                               |                                                                                                                                                          |
 | :------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **http://localhost:3005/api/v1**       |                                                                                                                                                          |
+| **http://localhost:3000/api/v1**       |                                                                                                                                                          |
 | URI                                    | /customers/:id                                                                                                                                           |
 | Method                                 | GET                                                                                                                                                      |
 | Header<br /><br />                     | Content-Type: application/json<br />Authorization: Bearer Token                                                                                          |
@@ -262,8 +262,7 @@ No código atual, foi implementado a estratégia do cenário 1.
 <summary>Pacotes utilizados</summary>
 
 ```bash
-yarn add express \
-    agentkeepalive \
+yarn add agentkeepalive \
     axios \
     axios-retry \
     dotenv \
@@ -279,8 +278,7 @@ yarn add express \
     yup
 
 # Development
-yarn add @types/express \
-    @swc/cli \
+yarn add @swc/cli \
     @swc/core \
     @swc/jest \
     @types/express \
@@ -302,7 +300,7 @@ yarn add @types/express \
     lint-staged \
     npm-run-all \
     ts-jest \
-    ts-node-dev" \
+    ts-node-dev \
     tsconfig-paths \
     tscpaths \
     typescript -D
@@ -320,18 +318,66 @@ git clone https://github.com/venzel/customer-api.git
 cd customer-api
 
 # Passo 3: Cria o arquivo .env e edita
-# ATENÇÃO: Não esquecer de preencher todas as variáveis
+# Atenção 1: Não esquecer de preencher todas as variáveis no arquivo .env que será criado
 cp -r .prod.env .env
 
 # Passo 4: Sobe os containers do docker
 docker-compose up -d
-#
-# Pronto, o projeto deve estar rodando nas seguintes portas:
-#
-# API: 3000
-# MONGO: 27017
-# REDIS: 6379
+
+# Verifica se a api subiu corretamente no docker
+docker logs customer-dev-api
 ```
+
+<details>
+<summary>Logs de inicialização da API</summary>
+
+```bash
+----------------------------------------
+CUSTOMER-API
+v1.0.0
+----------------------------------------
+Carregando variáveis de ambiente...
+[ok] api.name -> customer-dev-api
+[ok] api.ambient -> development
+[ok] api.port -> 3000
+[ok] api.tokenSecret -> ...
+[ok] mongodb.host -> customer-dev-api-mongodb
+[ok] mongodb.port -> 27017
+[ok] mongodb.user -> customer
+[ok] mongodb.password -> customer
+[ok] mongodb.name -> customer
+[ok] redis.host -> customer-dev-api-redis
+[ok] redis.port -> 6379
+[ok] redis.keyPrefix -> customer
+[ok] redis.password -> customer
+[ok] axios.retryQtty -> 20
+[ok] axios.baseDelay -> 1000
+[ok] axios.maxDelay -> 3000
+[ok] agentKeepAlive.maxSockets -> 2000
+[ok] agentKeepAlive.maxFreeSockets -> 20
+[ok] agentKeepAlive.timeout -> 60000
+[ok] agentKeepAlive.freeSocketTimeout -> 30000
+[ok] vitta.baseUrl -> ...
+[ok] vitta.grantType -> ...
+[ok] vitta.clientId -> ...
+[ok] vitta.username -> ...
+[ok] vitta.password -> ...
+[ok] vitta.scope -> ...
+[ok] strategy.token -> nocache
+----------------------------------------
+Tentando conexão com o mongodb...
+[ok] Banco de dados conectado na porta 27017
+----------------------------------------
+Carregando rotas...
+[ok] /customers (POST)
+[ok] /customers/:id (PUT)
+[ok] /customers/:id (GET)
+----------------------------------------
+Escutando na porta 3000
+----------------------------------------
+```
+
+</details>
 
 ### Production
 
@@ -345,7 +391,7 @@ cd customer-api
 # Passo: 3 preenche todas as variáveis do arquivos .prod.env
 
 # Passo 4: cria o build da imagem
-docker build -t venzel/customer-api:alpine -f Dockerfile.prod .
+docker build -t venzel/customer-api:latest -f Dockerfile.prod .
 
 # Paso 5: sobe os containers de prod
 docker-compose --env-file .prod.env -f docker-compose-prod.yml up -d

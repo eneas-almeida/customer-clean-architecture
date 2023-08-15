@@ -3,8 +3,9 @@
         "target": "es2021",
         "module": "commonjs",
         "incremental": false,
+        "resolveJsonModule": true,
         "outDir": "./dist",
-        "rootDir": "./src",
+        "rootDir": "./",
         "sourceMap": false,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
@@ -19,6 +20,6 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true
     },
-    "include": ["src/**/*.ts"],
+    "include": ["./src"],
     "exclude": ["node_modules", "dist"]
 }

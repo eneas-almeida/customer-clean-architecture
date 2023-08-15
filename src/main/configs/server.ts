@@ -5,6 +5,8 @@ export const serverConfig = (app: Express) => {
     const { port } = envs.api;
 
     app.listen(port, () => {
-        console.log(`listening on ${port}`);
+        console.log('----------------------------------------');
+        console.log(`Escutando na porta ${port}`);
+        console.log('----------------------------------------');
     });
 };

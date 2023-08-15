@@ -3,15 +3,21 @@ import { readdirSync } from 'fs';
 import { join } from 'path';
 
 export const routesConfig = async (app: Express): Promise<void> => {
-    const router = Router();
+    try {
+        console.log('Carregando rotas...');
 
-    app.use('/api/v1', router);
+        const router = Router();
 
-    const filePath = join(__dirname, '../routes');
+        const version = '/api/v1';
 
-    for (const fileName of readdirSync(filePath)) {
-        (await import(`../routes/${fileName}`)).default(router);
+        app.use(version, router);
+
+        const filePath = join(__dirname, '../routes');
+
+        for (const fileName of readdirSync(filePath)) {
+            (await import(`../routes/${fileName}`)).default(router);
+        }
+    } catch (e) {
+        throw e;
     }
-
-    console.log('Routes ok');
 };
