@@ -1,6 +1,7 @@
 import { Express, Router } from 'express';
 import { readdirSync } from 'fs';
 import { join } from 'path';
+import { envs } from '@/main/configs';
 
 export const routesConfig = async (app: Express): Promise<void> => {
     try {
@@ -8,9 +9,7 @@ export const routesConfig = async (app: Express): Promise<void> => {
 
         const router = Router();
 
-        const version = '/api/v1';
-
-        app.use(version, router);
+        app.use(envs.api.version, router);
 
         const filePath = join(__dirname, '../routes');
 

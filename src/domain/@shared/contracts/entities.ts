@@ -13,4 +13,5 @@ export interface CustomerInterface {
     setName(value: string): void;
     setCreatedAt(value: Date): void;
     setUpdatedAt(value: Date): void;
+    validate(): void;
 }

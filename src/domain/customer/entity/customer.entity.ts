@@ -1,6 +1,5 @@
 import { CustomerInterface } from '@/domain/@shared/contracts';
 import { Entity } from '@/domain/@shared/entity/entity.abstract';
-import { NotificationError } from '@/domain/@shared/errors';
 import { Id } from '@/domain/@shared/types/id.type';
 import { CustomerValidatorFactory } from '../factory/customer-validator.factory';
 
@@ -12,12 +11,7 @@ export class Customer extends Entity implements CustomerInterface {
         super(id);
         this._document = document;
         this._name = name;
-
         this.validate();
-
-        if (this.notification.hasErrors()) {
-            throw new NotificationError(400, this.notification.getErrors());
-        }
     }
 
     get document(): number {
@@ -26,7 +20,6 @@ export class Customer extends Entity implements CustomerInterface {
 
     setDocument(value: number): void {
         this._document = value;
-        this.validate();
     }
 
     get name(): string {
@@ -35,7 +28,6 @@ export class Customer extends Entity implements CustomerInterface {
 
     setName(value: string): void {
         this._name = value;
-        this.validate();
     }
 
     validate() {

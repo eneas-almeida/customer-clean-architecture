@@ -1,6 +1,8 @@
 import { CustomerInterface } from '@/domain/@shared/contracts';
 import { CustomerFactory } from '@/domain/customer/factory/customer.factory';
-import { InputCreateCustomerDto, OutputCreateCustomerDto } from '@/usecase/customer/create';
+import { envs } from '@/main/configs';
+import { api } from '@/main/utils';
+import { InputCreateCustomerDto, OutputCustomerDto } from '@/usecase/customer/@shared/contracts/customer.dto';
 
 export class CustomerMapper {
     static dataToDto(data: any): InputCreateCustomerDto {
@@ -14,14 +16,28 @@ export class CustomerMapper {
         return CustomerFactory.create(input.document, input.name);
     }
 
-    static entityToDto(entity: CustomerInterface): OutputCreateCustomerDto {
-        return {
+    static entityToDto(entity: CustomerInterface): OutputCustomerDto {
+        const url = `${api}/customers`;
+
+        const output: OutputCustomerDto = {
             id: entity.id,
             document: entity.document,
             name: entity.name,
             createdAt: entity.createdAt,
             updatedAt: entity.updatedAt,
         };
+
+        if (envs.api.hateosActivated) {
+            const hateos = [
+                { method: 'post', url, description: 'Create a new customer' },
+                { method: 'put', url: `${url}/:id`, description: 'Update a customer' },
+                { method: 'get', url: `${url}/:id`, description: 'Find a customer' },
+            ];
+
+            output['_links'] = hateos;
+        }
+
+        return output;
     }
 
     static entityToSchemaData(entity: CustomerInterface) {

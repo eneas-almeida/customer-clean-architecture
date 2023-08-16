@@ -4,9 +4,9 @@ import {
     ProviderInterface,
     TokenProviderInterface,
 } from '@/infra/providers/@shared/contracts/provider';
-import { CreateCustomerUseCase } from '../create';
 import { UpdateCustomerUseCase } from './update-customer.usecase';
 import { CustomerFactory } from '@/domain/customer/factory/customer.factory';
+import { CreateCustomerUseCase } from '../create/create-customer.usecase';
 
 const MockRepository = (): RepositoryInterface => {
     const customers = [

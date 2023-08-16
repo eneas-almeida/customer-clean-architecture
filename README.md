@@ -86,6 +86,7 @@ A escolha do padrão **Clean Architecture** para um projeto de software pode tra
 -   👉 [Estratégia de resiliência de chamadas http com o **axios retry**](./src/commons/clients/axios-http.client.ts);
 -   👉 [Estratégia de melhor gerencimanto do pool de conexões com o **agentkeepalive**](./src/commons/clients/axios-http.client.ts);
 -   TDD
+-   HATEOS
 -   Testes de unidade utilizando mocks;
 -   Indexes nas collections do mongo;
 -   Utilização do linter para padronizar o código;

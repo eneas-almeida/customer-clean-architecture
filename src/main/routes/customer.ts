@@ -11,11 +11,13 @@ export default async (router: Router): Promise<void> => {
     const authorization = MakeAuthorization();
     const customerController = await MakeCustomerController();
 
-    router.post('/customers', authorization, createControllerAdapter(customerController));
-    router.put('/customers/:id', authorization, updateControllerAdapter(customerController));
-    router.get('/customers/:id', authorization, findOneControllerAdapter(customerController));
+    const base = '/customers';
 
-    console.log(`[ok] /customers (POST)`);
-    console.log(`[ok] /customers/:id (PUT)`);
-    console.log(`[ok] /customers/:id (GET)`);
+    router.post(base, authorization, createControllerAdapter(customerController));
+    router.put(`${base}/:id`, authorization, updateControllerAdapter(customerController));
+    router.get(`${base}/:id`, authorization, findOneControllerAdapter(customerController));
+
+    console.log(`[ok] ${base} (POST) (AUTH)`);
+    console.log(`[ok] ${base}:id (PUT) (AUTH)`);
+    console.log(`[ok] ${base}:id (GET) (AUTH)`);
 };

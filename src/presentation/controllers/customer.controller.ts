@@ -1,9 +1,12 @@
 import { CreateCustomerUseCase, FindOneCustomerUseCase, UpdateCustomerUseCase } from '@/usecase/customer';
-import { InputCreateCustomerDto, OutputCreateCustomerDto } from '@/usecase/customer/create';
-import { InputFindOneCustomerDto, OutputFindOneCustomerDto } from '@/usecase/customer/findone';
-import { InputUpdateCustomerDto, OutputUpdateCustomerDto } from '@/usecase/customer/update';
+import {
+    InputCreateCustomerDto,
+    InputFindOneCustomerDto,
+    InputUpdateCustomerDto,
+    OutputCustomerDto,
+} from '@/usecase/customer/@shared/contracts/customer.dto';
 import { CustomerControllerInterface } from '../@shared/contracts';
-import { HttpResponse, ok, create } from '../@shared/helpers';
+import { HttpResponse, create, ok } from '../@shared/helpers';
 
 export class CustomerController implements CustomerControllerInterface {
     constructor(
@@ -12,7 +15,7 @@ export class CustomerController implements CustomerControllerInterface {
         private readonly findOneCustomerUseCase: FindOneCustomerUseCase
     ) {}
 
-    async create(input: InputCreateCustomerDto): Promise<HttpResponse<OutputCreateCustomerDto>> {
+    async create(input: InputCreateCustomerDto): Promise<HttpResponse<OutputCustomerDto>> {
         try {
             const output = await this.createCustomerUseCase.execute(input);
             return create(output);
@@ -21,7 +24,7 @@ export class CustomerController implements CustomerControllerInterface {
         }
     }
 
-    async update(id: string, input: InputUpdateCustomerDto): Promise<HttpResponse<OutputUpdateCustomerDto>> {
+    async update(id: string, input: InputUpdateCustomerDto): Promise<HttpResponse<OutputCustomerDto>> {
         try {
             const output = await this.updateCustomerUseCase.execute(id, input);
             return ok(output);
@@ -30,7 +33,7 @@ export class CustomerController implements CustomerControllerInterface {
         }
     }
 
-    async findOne(input: InputFindOneCustomerDto): Promise<HttpResponse<OutputFindOneCustomerDto>> {
+    async findOne(input: InputFindOneCustomerDto): Promise<HttpResponse<OutputCustomerDto>> {
         try {
             const output = await this.findOneCustomerUseCase.execute(input);
             return ok(output);

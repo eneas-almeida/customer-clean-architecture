@@ -2,7 +2,8 @@ import { RepositoryInterface } from '@/domain/@shared/contracts';
 import { AppError } from '@/domain/@shared/errors';
 import { CustomerMapper } from '@/infra/mappers';
 import { ProviderInterface } from '@/infra/providers/@shared/contracts/provider';
-import { InputUpdateCustomerDto, OutputUpdateCustomerDto } from './update-customer.dto';
+import { validateMongoId } from '@/usecase/@shared/helper';
+import { InputUpdateCustomerDto, OutputCustomerDto } from '../@shared/contracts/customer.dto';
 
 export class UpdateCustomerUseCase {
     private repository: RepositoryInterface;
@@ -13,16 +14,23 @@ export class UpdateCustomerUseCase {
         this.provider = provider;
     }
 
-    async execute(id: string, input: InputUpdateCustomerDto): Promise<OutputUpdateCustomerDto> {
+    async execute(id: string, input: InputUpdateCustomerDto): Promise<OutputCustomerDto> {
         try {
+            const isValidId = validateMongoId(id);
+
+            if (!isValidId) {
+                throw new AppError('id do parâmetro inválido', 400);
+            }
+
             const existsEntity = await this.repository.customer.findOneById(id);
 
             if (!existsEntity) {
-                throw new AppError('Customer not found', 412);
+                throw new AppError('cliente inexistente', 204);
             }
 
-            existsEntity.setName(input.name);
             existsEntity.setDocument(input.document);
+            existsEntity.setName(input.name);
+            existsEntity.validate();
 
             const entity = await this.repository.customer.update(existsEntity);
 

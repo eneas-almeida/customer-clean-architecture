@@ -30,6 +30,9 @@ export const envs = {
         ambient: env.API_AMBIENT,
         port: env.API_PORT,
         tokenSecret: env.API_TOKEN_SECRET,
+        baseUrl: env.API_BASE_URL,
+        version: env.API_VERSION,
+        hateosActivated: env.API_HATEOS_ACTIVATED ? parseTo(env.API_HATEOS_ACTIVATED, Type.BOOLEAN) : null,
     },
     mongodb: {
         host: env.MONGODB_HOST,
@@ -97,7 +100,7 @@ export const envsValidate = () => {
     const error: any[] = [];
 
     Object.entries(flatten(envs)).forEach(([key, value]) => {
-        if (value) {
+        if (value !== null) {
             ok.push({ key, value });
         } else {
             error.push({ key, value });

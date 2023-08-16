@@ -1,7 +1,7 @@
 import { RepositoryInterface } from '@/domain/@shared/contracts';
 import { CustomerMapper } from '@/infra/mappers';
-import { InputCreateCustomerDto, OutputCreateCustomerDto } from './create-customer.dto';
 import { ProviderInterface } from '@/infra/providers/@shared/contracts/provider';
+import { InputCreateCustomerDto, OutputCustomerDto } from '../@shared/contracts/customer.dto';
 
 export class CreateCustomerUseCase {
     private repository: RepositoryInterface;
@@ -12,7 +12,7 @@ export class CreateCustomerUseCase {
         this.provider = provider;
     }
 
-    async execute(input: InputCreateCustomerDto): Promise<OutputCreateCustomerDto> {
+    async execute(input: InputCreateCustomerDto): Promise<OutputCustomerDto> {
         try {
             let entity = CustomerMapper.dtoToEntity(input);
 

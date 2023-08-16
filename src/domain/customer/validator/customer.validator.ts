@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import { NotificationError } from '@/domain/@shared/errors';
 import { CustomerInterface, ValidatorInterface } from '@/domain/@shared/contracts';
 
 export class CustomerYupValidator implements ValidatorInterface<CustomerInterface> {
@@ -12,6 +13,7 @@ export class CustomerYupValidator implements ValidatorInterface<CustomerInterfac
                         .required('propriedade document requerida'),
                     name: yup
                         .string()
+                        .min(3, 'propriedade nome deve conter no mínimo 3 caracteres')
                         .max(20, 'propiedade nome não pode conter mais de 20 caracteres')
                         .required('propridade name requerida'),
                 })
@@ -22,15 +24,16 @@ export class CustomerYupValidator implements ValidatorInterface<CustomerInterfac
                     },
                     { abortEarly: false }
                 );
-        } catch (errors) {
-            const e = errors as yup.ValidationError;
+        } catch (e) {
+            const yupErrors = e as yup.ValidationError;
 
-            e.errors.forEach((error) => {
-                entity.notification.addError({
-                    context: 'customer',
-                    message: error,
-                });
+            yupErrors.errors.forEach((error) => {
+                entity.notification.addError({ context: 'customer', message: error });
             });
+
+            if (yupErrors.errors.length) {
+                throw new NotificationError(400, entity.notification.getErrors());
+            }
         }
     }
 }
