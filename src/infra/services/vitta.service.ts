@@ -6,10 +6,10 @@ const ENDPOINTS = {
     generateToken: '/auth/realms/careers/protocol/openid-connect/token',
 };
 
-export class VittaGateway {
+export class VittaService {
     private readonly httpsClient: AxiosInstance;
 
-    constructor(httpsClient?: AxiosInstance) {
+    constructor(httpsClient: AxiosInstance) {
         this.httpsClient = httpsClient;
     }
 

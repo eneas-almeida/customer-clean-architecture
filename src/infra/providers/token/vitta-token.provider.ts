@@ -1,18 +1,18 @@
 import { AxiosInstance } from 'axios';
 import { OutputTokenDto, TokenProviderInterface } from '../@shared/contracts/provider';
-import { VittaGateway } from '@/infra/gateways/vitta.gateway';
+import { VittaService } from '@/infra/services/vitta.service';
 import { AppError } from '@/domain/@shared/errors';
 
 export class VittaTokenProvider implements TokenProviderInterface {
-    private readonly vittaGateway: VittaGateway;
+    private readonly vittaService: VittaService;
 
     constructor(httpsClient: AxiosInstance) {
-        this.vittaGateway = new VittaGateway(httpsClient);
+        this.vittaService = new VittaService(httpsClient);
     }
 
-    async generateToken(): Promise<OutputTokenDto> {
+    async getAccessToken(): Promise<OutputTokenDto> {
         try {
-            const token = await this.vittaGateway.getAccessToken();
+            const token = await this.vittaService.getAccessToken();
 
             if (!token) {
                 throw new AppError('token não gerado', 400);

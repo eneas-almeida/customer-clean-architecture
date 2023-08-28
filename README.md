@@ -47,18 +47,20 @@ A escolha do padrão **Clean Architecture** para um projeto de software pode tra
 
 ## Diagramas BPMN do microserviço
 
-<img src="./media/diagrama-4-v1.png" />
+<img src="./media/microservico-v3.png" />
 
 | Descrição          | Data de modificação  | Versão | Link de download                                         |
 | :----------------- | :------------------- | :----- | :------------------------------------------------------- |
 | Arquivo .drawio v1 | 11 de agosto de 2023 | v1     | [Download](./media/customer-microservico-bpmn.drawio)    |
 | Arquivo .drawio v2 | 12 de agosto de 2023 | v2     | [Download](./media/customer-microservico-bpmn-v2.drawio) |
+| Arquivo .drawio v3 | 28 de agosto de 2023 | v3     | [Download](./media/customer-microservico-bpmn-v3.drawio) |
 
-<img src="./media/customer-v1.excalidraw-v1.png" />
+<img src="./media/customer-v2.excalidraw.png" />
 
 | Descrição          | Data de modificação  | Versão | Link de download                                 |
 | :----------------- | :------------------- | :----- | :----------------------------------------------- |
 | Arquivo .drawio v1 | 12 de agosto de 2023 | v1     | [Download](./media/customer-v1.excalidraw-v1.md) |
+| Arquivo .drawio v2 | 28 de agosto de 2023 | v2     | [Download](./media/customer-v1.excalidraw-v2.md) |
 
 ## Metodologia de desenvolvimento
 
@@ -168,11 +170,12 @@ A escolha do padrão **Clean Architecture** para um projeto de software pode tra
 
 ### Diagrama BPMN com estratégias de obtenção de token
 
-<img src="./media/geracao-token-v1.png" />
+<img src="./media/token-v2.png" />
 
 | Descrição           | Data de modificação  | Versão | Link de download                                |
 | :------------------ | :------------------- | :----- | :---------------------------------------------- |
 | Arquivo .excalidraw | 12 de agosto de 2023 | v1     | [Download](./media/geracao-token-v1.excalidraw) |
+| Arquivo .excalidraw | 28 de agosto de 2023 | v2     | [Download](./media/token-v1.excalidraw)         |
 
 **Acima são apresentados 2 cenários:**
 

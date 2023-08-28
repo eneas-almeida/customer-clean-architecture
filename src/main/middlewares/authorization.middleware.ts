@@ -29,7 +29,7 @@ export class AuthorizationMiddleware {
 
     private async getTokenWithoutCache(): Promise<string | null> {
         try {
-            const token = await this.tokenProvider.generateToken();
+            const token = await this.tokenProvider.getAccessToken();
 
             if (!token || !token.access_token) return null;
 
@@ -45,7 +45,7 @@ export class AuthorizationMiddleware {
 
             if (existsToken) return existsToken;
 
-            const token = await this.tokenProvider.generateToken();
+            const token = await this.tokenProvider.getAccessToken();
 
             if (!token || !token.access_token) return null;
 
