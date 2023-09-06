@@ -8,7 +8,7 @@ export const createControllerAdapter = (controller: CustomerControllerInterface)
 
         const httpResponse = await controller.create(inputCreateCustomerDto);
 
-        res.status(httpResponse.statusCode).json(httpResponse.data);
+        res.status(httpResponse.statusCode).json(httpResponse.body);
     };
 };
 
@@ -20,7 +20,7 @@ export const updateControllerAdapter = (controller: CustomerControllerInterface)
 
         const httpResponse = await controller.update(id, inputUpdateCustomerDto);
 
-        res.status(httpResponse.statusCode).json(httpResponse.data);
+        res.status(httpResponse.statusCode).json(httpResponse.body);
     };
 };
 
@@ -30,6 +30,6 @@ export const findOneControllerAdapter = (controller: CustomerControllerInterface
 
         const httpResponse = await controller.findOne({ id });
 
-        res.status(httpResponse.statusCode).json(httpResponse.data);
+        res.status(httpResponse.statusCode).json(httpResponse.body);
     };
 };

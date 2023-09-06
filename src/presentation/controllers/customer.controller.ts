@@ -5,8 +5,8 @@ import {
     InputUpdateCustomerDto,
     OutputCustomerDto,
 } from '@/usecase/customer/@shared/contracts/customer.dto';
-import { CustomerControllerInterface } from '../@shared/contracts';
-import { HttpResponse, create, ok } from '../@shared/helpers';
+import { CustomerControllerInterface, HttpResponse } from '../@shared/contracts';
+import { create, ok, serverError } from '../@shared/helpers';
 
 export class CustomerController implements CustomerControllerInterface {
     constructor(
@@ -17,28 +17,25 @@ export class CustomerController implements CustomerControllerInterface {
 
     async create(input: InputCreateCustomerDto): Promise<HttpResponse<OutputCustomerDto>> {
         try {
-            const output = await this.createCustomerUseCase.execute(input);
-            return create(output);
+            return create(await this.createCustomerUseCase.execute(input));
         } catch (e) {
-            throw e;
+            return serverError(e);
         }
     }
 
     async update(id: string, input: InputUpdateCustomerDto): Promise<HttpResponse<OutputCustomerDto>> {
         try {
-            const output = await this.updateCustomerUseCase.execute(id, input);
-            return ok(output);
+            return ok(await this.updateCustomerUseCase.execute(id, input));
         } catch (e) {
-            throw e;
+            return serverError(e);
         }
     }
 
     async findOne(input: InputFindOneCustomerDto): Promise<HttpResponse<OutputCustomerDto>> {
         try {
-            const output = await this.findOneCustomerUseCase.execute(input);
-            return ok(output);
+            return ok(await this.findOneCustomerUseCase.execute(input));
         } catch (e) {
-            throw e;
+            return serverError(e);
         }
     }
 }

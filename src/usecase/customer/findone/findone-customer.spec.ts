@@ -1,9 +1,5 @@
 import { CustomerRepositoryInterface, RepositoryInterface } from '@/domain/@shared/contracts';
-import {
-    CacheProviderInterface,
-    ProviderInterface,
-    TokenProviderInterface,
-} from '@/infra/providers/@shared/contracts/provider';
+import { CacheProviderInterface, ProviderInterface } from '@/infra/providers/@shared/contracts/provider';
 import { CreateCustomerUseCase } from '../create/create-customer.usecase';
 import { FindOneCustomerUseCase } from './findone-customer.usecase';
 import { CustomerFactory } from '@/domain/customer/factory/customer.factory';
@@ -34,12 +30,7 @@ const MockProvider = (): ProviderInterface => {
         clearAllCacheByPrefix: jest.fn(async (prefix) => null),
     };
 
-    const mockTokenProvider: TokenProviderInterface = {
-        generateToken: jest.fn(async () => null),
-    };
-
     return {
-        token: mockTokenProvider,
         cache: mockCacheProvider,
     };
 };
