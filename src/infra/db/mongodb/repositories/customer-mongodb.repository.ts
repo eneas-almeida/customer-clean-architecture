@@ -2,7 +2,7 @@ import { CustomerMapper } from '@/infra/mappers/customer.mapper';
 import { CustomerInterface, CustomerRepositoryInterface } from '@/domain/@shared/contracts';
 import { CustomerSchema } from '../schemas';
 
-export class CustomerMongooseRepository implements CustomerRepositoryInterface {
+export class CustomerMongodbRepository implements CustomerRepositoryInterface {
     async create(entity: CustomerInterface): Promise<CustomerInterface> {
         const data = CustomerMapper.entityToSchemaData(entity);
 

@@ -1,6 +1,6 @@
 import { AxiosHttpClient } from '@/commons/clients/axios-http.client';
 import { RepositoryInterface } from '@/domain/@shared/contracts';
-import { CustomerMongooseRepository } from '@/infra/database/repositories';
+import { CustomerMongodbRepository } from '@/infra/db/mongodb/repositories';
 import { ProviderInterface } from '@/infra/providers/@shared/contracts/provider';
 import { IoRedisCacheProvider } from '@/infra/providers/cache/ioredis-cache.provider';
 import { VittaTokenProvider } from '@/infra/providers/token/vitta-token.provider';
@@ -12,7 +12,7 @@ export const MakeCustomerController = async (): Promise<CustomerControllerInterf
     const axiosInstance = new AxiosHttpClient().getInstance();
 
     const repository: RepositoryInterface = {
-        customer: new CustomerMongooseRepository(),
+        customer: new CustomerMongodbRepository(),
     };
 
     const provider: ProviderInterface = {
