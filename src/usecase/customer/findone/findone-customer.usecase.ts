@@ -1,20 +1,18 @@
 import { RepositoryInterface } from '@/domain/@shared/contracts';
 import { AppError } from '@/domain/@shared/errors';
-import { CustomerMapper } from '@/infra/mappers';
-import { validateMongoId } from '@/usecase/@shared/helper';
-import { InputFindOneCustomerDto, OutputCustomerDto } from '../@shared/contracts/customer.dto';
+import { CustomerMapper } from '@/main/mappers';
+import { InputFindOneCustomerDto, OutputCustomerDto } from '../../contracts/customer';
+import { ProviderInterface } from '@/infra/providers/contracts';
+import { IntegrationInterface } from '@/infra/integrations/contracts';
 
 export class FindOneCustomerUseCase {
-    constructor(private repository: RepositoryInterface) {}
+    constructor(
+        private readonly repository: RepositoryInterface,
+        private readonly integration: IntegrationInterface
+    ) {}
 
     async execute(input: InputFindOneCustomerDto): Promise<OutputCustomerDto> {
         try {
-            const isValidId = validateMongoId(input.id);
-
-            if (!isValidId) {
-                throw new AppError('id do parâmetro inválido', 400);
-            }
-
             const entity = await this.repository.customer.findOneById(input.id);
 
             if (!entity) {

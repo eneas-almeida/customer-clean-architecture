@@ -1,8 +1,13 @@
 import { CustomerRepositoryInterface, RepositoryInterface } from '@/domain/@shared/contracts';
-import { CacheProviderInterface, ProviderInterface } from '@/infra/providers/@shared/contracts/provider';
-import { UpdateCustomerUseCase } from './update-customer.usecase';
 import { CustomerFactory } from '@/domain/customer/factory/customer.factory';
+import {
+    IntegrationInterface,
+    VittaIntegrationInterface,
+    VtexIntegrationInterface,
+} from '@/infra/integrations/contracts';
+import { CacheProviderInterface, ProviderInterface } from '@/infra/providers/contracts';
 import { CreateCustomerUseCase } from '../create/create-customer.usecase';
+import { UpdateCustomerUseCase } from './update-customer.usecase';
 
 const MockRepository = (): RepositoryInterface => {
     const customers = [
@@ -35,11 +40,32 @@ const MockProvider = (): ProviderInterface => {
     };
 };
 
+const MockIntegration = (): IntegrationInterface => {
+    const mockVittaIntegration: VittaIntegrationInterface = {
+        getAccessToken: jest.fn(async () => null),
+    };
+
+    const mockVtexIntegration: VtexIntegrationInterface = {
+        getUser: jest.fn(async () => null),
+        createUser: jest.fn(async () => null),
+    };
+
+    return {
+        vitta: mockVittaIntegration,
+        vtex: mockVtexIntegration,
+    };
+};
+
 describe('Update Customer Unity', () => {
     test('Should return a customer unity', async () => {
-        const createCustomerUseCase = new CreateCustomerUseCase(MockRepository(), MockProvider());
+        const createCustomerUseCase = new CreateCustomerUseCase(
+            MockRepository(),
+            MockProvider(),
+            MockIntegration()
+        );
 
         const inputCreateCustomerDto = {
+            device: 'mobile',
             id: '202020',
             document: 202020,
             name: 'Tiago Campos',
@@ -47,11 +73,16 @@ describe('Update Customer Unity', () => {
 
         await createCustomerUseCase.execute(inputCreateCustomerDto);
 
-        const updateCustomerUseCase = new UpdateCustomerUseCase(MockRepository(), MockProvider());
+        const updateCustomerUseCase = new UpdateCustomerUseCase(
+            MockRepository(),
+            MockProvider(),
+            MockIntegration()
+        );
 
         const id = '202020';
 
         const inputUpdateCustomerDto = {
+            device: 'mobile',
             document: 202020,
             name: 'Tiago de Freitas',
         };

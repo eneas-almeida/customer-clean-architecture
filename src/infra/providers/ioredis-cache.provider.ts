@@ -1,5 +1,5 @@
 import IORedis, { Redis } from 'ioredis';
-import { CacheProviderInterface } from '../@shared/contracts/provider';
+import { CacheProviderInterface } from './contracts';
 import { envs } from '@/main/configs';
 
 export class IoRedisCacheProvider implements CacheProviderInterface {
@@ -7,7 +7,6 @@ export class IoRedisCacheProvider implements CacheProviderInterface {
 
     constructor() {
         const { port, host, keyPrefix, password } = envs.redis;
-
         this.cache = new IORedis(port, host, { keyPrefix, password });
     }
 

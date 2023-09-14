@@ -1,16 +1,15 @@
 import { RepositoryInterface } from '@/domain/@shared/contracts';
-import { CustomerMapper } from '@/infra/mappers';
-import { ProviderInterface } from '@/infra/providers/@shared/contracts/provider';
-import { InputCreateCustomerDto, OutputCustomerDto } from '../@shared/contracts/customer.dto';
+import { IntegrationInterface } from '@/infra/integrations/contracts';
+import { ProviderInterface } from '@/infra/providers/contracts';
+import { CustomerMapper } from '@/main/mappers';
+import { InputCreateCustomerDto, OutputCustomerDto } from '../../contracts/customer';
 
 export class CreateCustomerUseCase {
-    private repository: RepositoryInterface;
-    private provider: ProviderInterface;
-
-    constructor(repository: RepositoryInterface, provider: ProviderInterface) {
-        this.repository = repository;
-        this.provider = provider;
-    }
+    constructor(
+        private readonly repository: RepositoryInterface,
+        private readonly provider: ProviderInterface,
+        private readonly integration: IntegrationInterface
+    ) {}
 
     async execute(input: InputCreateCustomerDto): Promise<OutputCustomerDto> {
         try {

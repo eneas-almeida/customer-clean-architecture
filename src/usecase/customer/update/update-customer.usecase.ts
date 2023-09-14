@@ -1,31 +1,23 @@
 import { RepositoryInterface } from '@/domain/@shared/contracts';
 import { AppError } from '@/domain/@shared/errors';
-import { CustomerMapper } from '@/infra/mappers';
-import { ProviderInterface } from '@/infra/providers/@shared/contracts/provider';
-import { validateMongoId } from '@/usecase/@shared/helper';
-import { InputUpdateCustomerDto, OutputCustomerDto } from '../@shared/contracts/customer.dto';
+import { IntegrationInterface } from '@/infra/integrations/contracts';
+import { ProviderInterface } from '@/infra/providers/contracts';
+import { CustomerMapper } from '@/main/mappers';
+import { InputUpdateCustomerDto, OutputCustomerDto } from '../../contracts/customer';
 
 export class UpdateCustomerUseCase {
-    private repository: RepositoryInterface;
-    private provider: ProviderInterface;
-
-    constructor(repository: RepositoryInterface, provider: ProviderInterface) {
-        this.repository = repository;
-        this.provider = provider;
-    }
+    constructor(
+        private readonly repository: RepositoryInterface,
+        private readonly provider: ProviderInterface,
+        private readonly integration: IntegrationInterface
+    ) {}
 
     async execute(id: string, input: InputUpdateCustomerDto): Promise<OutputCustomerDto> {
         try {
-            const isValidId = validateMongoId(id);
-
-            if (!isValidId) {
-                throw new AppError('id do parâmetro inválido', 400);
-            }
-
             const existsEntity = await this.repository.customer.findOneById(id);
 
             if (!existsEntity) {
-                throw new AppError('cliente inexistente', 204);
+                throw new AppError('cliente não encontrado', 204);
             }
 
             existsEntity.setDocument(input.document);

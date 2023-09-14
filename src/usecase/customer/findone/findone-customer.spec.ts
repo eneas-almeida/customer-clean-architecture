@@ -1,8 +1,13 @@
 import { CustomerRepositoryInterface, RepositoryInterface } from '@/domain/@shared/contracts';
-import { CacheProviderInterface, ProviderInterface } from '@/infra/providers/@shared/contracts/provider';
+import { CustomerFactory } from '@/domain/customer/factory/customer.factory';
+import {
+    IntegrationInterface,
+    VittaIntegrationInterface,
+    VtexIntegrationInterface,
+} from '@/infra/integrations/contracts';
+import { CacheProviderInterface, ProviderInterface } from '@/infra/providers/contracts';
 import { CreateCustomerUseCase } from '../create/create-customer.usecase';
 import { FindOneCustomerUseCase } from './findone-customer.usecase';
-import { CustomerFactory } from '@/domain/customer/factory/customer.factory';
 
 const MockRepository = (): RepositoryInterface => {
     const customers = [
@@ -35,14 +40,36 @@ const MockProvider = (): ProviderInterface => {
     };
 };
 
+const MockIntegration = (): IntegrationInterface => {
+    const mockVittaIntegration: VittaIntegrationInterface = {
+        getAccessToken: jest.fn(async () => null),
+    };
+
+    const mockVtexIntegration: VtexIntegrationInterface = {
+        getUser: jest.fn(async () => null),
+        createUser: jest.fn(async () => null),
+    };
+
+    return {
+        vitta: mockVittaIntegration,
+        vtex: mockVtexIntegration,
+    };
+};
+
 describe('FindOne Customer Unity', () => {
     test('Should return a customer unity', async () => {
         const mockRepository = MockRepository();
 
-        const createCustomerUseCase = new CreateCustomerUseCase(mockRepository, MockProvider());
-        const findOneCustomerUseCase = new FindOneCustomerUseCase(mockRepository);
+        const createCustomerUseCase = new CreateCustomerUseCase(
+            mockRepository,
+            MockProvider(),
+            MockIntegration()
+        );
+
+        const findOneCustomerUseCase = new FindOneCustomerUseCase(mockRepository, MockIntegration());
 
         const input = {
+            device: 'mobile',
             id: '0x0230x100',
             document: 111111,
             name: 'Marcos Santos',
@@ -50,7 +77,7 @@ describe('FindOne Customer Unity', () => {
 
         await createCustomerUseCase.execute(input);
 
-        const output = await findOneCustomerUseCase.execute({ id: input.id });
+        const output = await findOneCustomerUseCase.execute(input);
 
         expect(output.name).toEqual(input.name);
     });

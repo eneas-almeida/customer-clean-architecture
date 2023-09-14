@@ -9,7 +9,7 @@ export interface OutputTokenDto {
 }
 
 export interface TokenProviderInterface {
-    getAccessToken(): Promise<OutputTokenDto>;
+    generateToken(): Promise<OutputTokenDto>;
 }
 
 export interface CacheProviderInterface {

@@ -2,11 +2,12 @@ import { CustomerInterface } from '@/domain/@shared/contracts';
 import { CustomerFactory } from '@/domain/customer/factory/customer.factory';
 import { envs } from '@/main/configs';
 import { api } from '@/main/utils';
-import { InputCreateCustomerDto, OutputCustomerDto } from '@/usecase/customer/@shared/contracts/customer.dto';
+import { InputCreateCustomerDto, OutputCustomerDto } from '@/usecase/contracts';
 
 export class CustomerMapper {
-    static dataToDto(data: any): InputCreateCustomerDto {
+    static dataToDto(data: any, headers: any): InputCreateCustomerDto {
         return {
+            device: headers.device,
             document: data.document,
             name: data.name,
         };

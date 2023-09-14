@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { AppError } from '@/domain/@shared/errors';
-import { CacheProviderInterface, TokenProviderInterface } from '@/infra/providers/@shared/contracts/provider';
 import { envs } from '@/main/configs';
+import { CacheProviderInterface, TokenProviderInterface } from '@/infra/providers/contracts';
 
 export class AuthorizationMiddleware {
     private readonly tokenProvider: TokenProviderInterface;
@@ -29,7 +29,7 @@ export class AuthorizationMiddleware {
 
     private async getTokenWithoutCache(): Promise<string | null> {
         try {
-            const token = await this.tokenProvider.getAccessToken();
+            const token = await this.tokenProvider.generateToken();
 
             if (!token || !token.access_token) return null;
 
@@ -45,7 +45,7 @@ export class AuthorizationMiddleware {
 
             if (existsToken) return existsToken;
 
-            const token = await this.tokenProvider.getAccessToken();
+            const token = await this.tokenProvider.generateToken();
 
             if (!token || !token.access_token) return null;
 

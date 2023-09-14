@@ -1,7 +1,12 @@
 import { CustomerRepositoryInterface, RepositoryInterface } from '@/domain/@shared/contracts';
-import { CacheProviderInterface, ProviderInterface } from '@/infra/providers/@shared/contracts/provider';
 import { CreateCustomerUseCase } from './create-customer.usecase';
 import { CustomerFactory } from '@/domain/customer/factory/customer.factory';
+import { CacheProviderInterface, ProviderInterface } from '@/infra/providers/contracts';
+import {
+    IntegrationInterface,
+    VittaIntegrationInterface,
+    VtexIntegrationInterface,
+} from '@/infra/integrations/contracts';
 
 const MockRepository = (): RepositoryInterface => {
     const customers = [
@@ -34,11 +39,32 @@ const MockProvider = (): ProviderInterface => {
     };
 };
 
+const MockIntegration = (): IntegrationInterface => {
+    const mockVittaIntegration: VittaIntegrationInterface = {
+        getAccessToken: jest.fn(async () => null),
+    };
+
+    const mockVtexIntegration: VtexIntegrationInterface = {
+        getUser: jest.fn(async () => null),
+        createUser: jest.fn(async () => null),
+    };
+
+    return {
+        vitta: mockVittaIntegration,
+        vtex: mockVtexIntegration,
+    };
+};
+
 describe('Create Customer Unity', () => {
     test('Should return a customer unity', async () => {
-        const createCustomerUseCase = new CreateCustomerUseCase(MockRepository(), MockProvider());
+        const createCustomerUseCase = new CreateCustomerUseCase(
+            MockRepository(),
+            MockProvider(),
+            MockIntegration()
+        );
 
         const input = {
+            device: 'mobile',
             id: '202020',
             document: 202020,
             name: 'Tiago Campos',

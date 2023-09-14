@@ -1,4 +1,4 @@
-import { CustomerMapper } from '@/infra/mappers/customer.mapper';
+import { CustomerMapper } from '@/main/mappers/customer.mapper';
 import { CustomerInterface, CustomerRepositoryInterface } from '@/domain/@shared/contracts';
 import { CustomerSchema } from '../schemas';
 

@@ -1,10 +1,11 @@
 import { AxiosHttpClient } from '@/commons/clients/axios-http.client';
 import { RepositoryInterface } from '@/domain/@shared/contracts';
 import { CustomerMongodbRepository } from '@/infra/db/mongodb/repositories';
-import { ProviderInterface } from '@/infra/providers/@shared/contracts/provider';
-import { IoRedisCacheProvider } from '@/infra/providers/cache/ioredis-cache.provider';
-import { VittaTokenProvider } from '@/infra/providers/token/vitta-token.provider';
-import { CustomerControllerInterface } from '@/presentation/@shared/contracts';
+import { VittaIntegration, VtexIntegration } from '@/infra/integrations';
+import { IntegrationInterface } from '@/infra/integrations/contracts';
+import { IoRedisCacheProvider, JwtTokenProvider } from '@/infra/providers';
+import { ProviderInterface } from '@/infra/providers/contracts';
+import { CustomerControllerInterface } from '@/presentation/contracts';
 import { CustomerController } from '@/presentation/controllers/customer.controller';
 import { CreateCustomerUseCase, FindOneCustomerUseCase, UpdateCustomerUseCase } from '@/usecase/customer';
 
@@ -16,13 +17,18 @@ export const MakeCustomerController = async (): Promise<CustomerControllerInterf
     };
 
     const provider: ProviderInterface = {
-        token: new VittaTokenProvider(axiosInstance),
+        token: new JwtTokenProvider(),
         cache: new IoRedisCacheProvider(),
     };
 
-    const createCustomerUseCase = new CreateCustomerUseCase(repository, provider);
-    const updateCustomerUseCase = new UpdateCustomerUseCase(repository, provider);
-    const findOneCustomerUseCase = new FindOneCustomerUseCase(repository);
+    const integration: IntegrationInterface = {
+        vtex: new VtexIntegration(axiosInstance),
+        vitta: new VittaIntegration(axiosInstance),
+    };
+
+    const createCustomerUseCase = new CreateCustomerUseCase(repository, provider, integration);
+    const updateCustomerUseCase = new UpdateCustomerUseCase(repository, provider, integration);
+    const findOneCustomerUseCase = new FindOneCustomerUseCase(repository, integration);
 
     return new CustomerController(createCustomerUseCase, updateCustomerUseCase, findOneCustomerUseCase);
 };

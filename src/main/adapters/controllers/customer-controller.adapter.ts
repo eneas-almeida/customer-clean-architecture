@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
-import { CustomerMapper } from '@/infra/mappers';
-import { CustomerControllerInterface } from '@/presentation/@shared/contracts';
+import { CustomerMapper } from '@/main/mappers';
+import { CustomerControllerInterface } from '@/presentation/contracts';
+import { dataFindOneHelper } from '../../helpers/controllers.helper';
 
-export const createControllerAdapter = (controller: CustomerControllerInterface) => {
+export const customerCreateControllerAdapter = (controller: CustomerControllerInterface) => {
     return async (req: Request, res: Response) => {
-        const inputCreateCustomerDto = CustomerMapper.dataToDto(req.body);
+        const inputCreateCustomerDto = CustomerMapper.dataToDto(req.body, req.headers);
 
         const httpResponse = await controller.create(inputCreateCustomerDto);
 
@@ -12,23 +13,21 @@ export const createControllerAdapter = (controller: CustomerControllerInterface)
     };
 };
 
-export const updateControllerAdapter = (controller: CustomerControllerInterface) => {
+export const customerUpdateControllerAdapter = (controller: CustomerControllerInterface) => {
     return async (req: Request, res: Response) => {
-        const inputUpdateCustomerDto = CustomerMapper.dataToDto(req.body);
+        const inputUpdateCustomerDto = CustomerMapper.dataToDto(req.body, req.headers);
 
-        const { id } = req.params;
-
-        const httpResponse = await controller.update(id, inputUpdateCustomerDto);
+        const httpResponse = await controller.update(req.params.id, inputUpdateCustomerDto);
 
         res.status(httpResponse.statusCode).json(httpResponse.body);
     };
 };
 
-export const findOneControllerAdapter = (controller: CustomerControllerInterface) => {
+export const customerFindOneControllerAdapter = (controller: CustomerControllerInterface) => {
     return async (req: Request, res: Response) => {
-        const { id } = req.params;
+        const data = dataFindOneHelper(req.params, req.headers);
 
-        const httpResponse = await controller.findOne({ id });
+        const httpResponse = await controller.findOne(data);
 
         res.status(httpResponse.statusCode).json(httpResponse.body);
     };

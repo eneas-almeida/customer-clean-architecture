@@ -1,12 +1,13 @@
 import { AxiosInstance } from 'axios';
 import { envs } from '@/main/configs';
-import { OutputTokenDto } from '../providers/@shared/contracts/provider';
+import { OutputTokenDto } from '../providers/contracts';
+import { VittaIntegrationInterface } from './contracts';
 
 const ENDPOINTS = {
     generateToken: '/auth/realms/careers/protocol/openid-connect/token',
 };
 
-export class VittaService {
+export class VittaIntegration implements VittaIntegrationInterface {
     private readonly httpsClient: AxiosInstance;
 
     constructor(httpsClient: AxiosInstance) {

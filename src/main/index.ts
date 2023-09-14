@@ -20,6 +20,10 @@ export class Main {
         return this;
     }
 
+    initLogger() {
+        return this;
+    }
+
     async initDB() {
         await mongodbConfig();
         return this;

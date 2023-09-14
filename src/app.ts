@@ -4,6 +4,7 @@ const main = new Main();
 
 main.initBanner()
     .initEnvs()
+    .initLogger()
     .initDB()
     .then((res) => {
         res.initRoutes()

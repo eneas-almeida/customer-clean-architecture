@@ -3,8 +3,12 @@ import {
     InputFindOneCustomerDto,
     InputUpdateCustomerDto,
     OutputCustomerDto,
-} from '@/usecase/customer/@shared/contracts/customer.dto';
-import { HttpResponse } from './http';
+} from '@/usecase/contracts';
+
+export type HttpResponse<T = any> = {
+    statusCode: number;
+    body: T;
+};
 
 export interface CustomerControllerInterface {
     create: (input: InputCreateCustomerDto) => Promise<HttpResponse<OutputCustomerDto>>;

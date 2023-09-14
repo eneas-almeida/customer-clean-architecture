@@ -1,12 +1,12 @@
-import { CreateCustomerUseCase, FindOneCustomerUseCase, UpdateCustomerUseCase } from '@/usecase/customer';
 import {
     InputCreateCustomerDto,
     InputFindOneCustomerDto,
     InputUpdateCustomerDto,
     OutputCustomerDto,
-} from '@/usecase/customer/@shared/contracts/customer.dto';
-import { CustomerControllerInterface, HttpResponse } from '../@shared/contracts';
-import { create, ok, serverError } from '../@shared/helpers';
+} from '@/usecase/contracts';
+import { CreateCustomerUseCase, FindOneCustomerUseCase, UpdateCustomerUseCase } from '@/usecase/customer';
+import { CustomerControllerInterface, HttpResponse } from '../contracts';
+import { create, ok, serverError } from '../helpers';
 
 export class CustomerController implements CustomerControllerInterface {
     constructor(
