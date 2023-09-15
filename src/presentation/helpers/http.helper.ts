@@ -10,7 +10,7 @@ export const create = (body: any): HttpResponse => ({
     body,
 });
 
-export const ok = (body: any): HttpResponse => ({
+export const ok = (body?: any): HttpResponse => ({
     statusCode: 200,
     body,
 });
