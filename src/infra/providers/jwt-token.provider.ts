@@ -1,5 +1,5 @@
+import { AppError } from '@/main/errors';
 import { OutputTokenDto, TokenProviderInterface } from './contracts';
-import { AppError } from '@/domain/@shared/errors';
 
 export class JwtTokenProvider implements TokenProviderInterface {
     async generateToken(): Promise<OutputTokenDto> {
@@ -14,7 +14,7 @@ export class JwtTokenProvider implements TokenProviderInterface {
                 id_token: '',
             };
         } catch (e) {
-            throw new AppError('erro na geração do token', 500);
+            throw new AppError('generate token invalid', 400);
         }
     }
 }

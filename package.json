@@ -63,6 +63,7 @@
     "scripts": {
         "ci": "yarn install --frozen-lockfile",
         "dev": "npm-run-all dev:*",
+        "dev:composer": "docker-compose up -d",
         "dev:server": "ts-node-dev --trace-deprecation -r tsconfig-paths/register --transpile-only --ignore-watch node_modules ./src/app.ts",
         "start": "node ./src/app.js",
         "build": "tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",

@@ -19,6 +19,7 @@ const MockRepository = (): RepositoryInterface => {
         create: jest.fn().mockReturnValue(Promise.resolve(customers[0])),
         update: jest.fn().mockReturnValue(Promise.resolve(customers[0])),
         findOneById: jest.fn().mockReturnValue(Promise.resolve(customers[0])),
+        findOneByDocument: jest.fn().mockReturnValue(Promise.resolve(customers[1])),
     };
 
     return {

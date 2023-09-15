@@ -5,6 +5,6 @@ export interface HATEOS {
     pagination?: string;
 }
 
-export interface OutputDtoInterface {
+export interface OutputHateosDto {
     _links?: HATEOS[];
 }

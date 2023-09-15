@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { AppError } from '@/domain/@shared/errors';
 import { envs } from '@/main/configs';
 import { CacheProviderInterface, TokenProviderInterface } from '@/infra/providers/contracts';
+import { AppError } from '../errors';
 
 export class AuthorizationMiddleware {
     private readonly tokenProvider: TokenProviderInterface;
@@ -19,7 +19,7 @@ export class AuthorizationMiddleware {
             strategyToken === 'cache' ? await this.getTokenWithCache() : await this.getTokenWithoutCache();
 
         if (!token) {
-            throw new AppError('não autorizado', 401);
+            throw new AppError('not authorized', 401);
         }
 
         req.headers.Authorization = token;

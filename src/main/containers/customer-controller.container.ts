@@ -7,7 +7,7 @@ import { IoRedisCacheProvider, JwtTokenProvider } from '@/infra/providers';
 import { ProviderInterface } from '@/infra/providers/contracts';
 import { CustomerControllerInterface } from '@/presentation/contracts';
 import { CustomerController } from '@/presentation/controllers/customer.controller';
-import { CreateCustomerUseCase, FindOneCustomerUseCase, UpdateCustomerUseCase } from '@/usecase/customer';
+import { CreateCustomerUseCase, FindOneCustomerUseCase, UpdateCustomerUseCase } from '@/usecases/customer';
 
 export const MakeCustomerController = async (): Promise<CustomerControllerInterface> => {
     const axiosInstance = new AxiosHttpClient().getInstance();

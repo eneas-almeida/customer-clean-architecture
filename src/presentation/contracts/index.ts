@@ -3,7 +3,7 @@ import {
     InputFindOneCustomerDto,
     InputUpdateCustomerDto,
     OutputCustomerDto,
-} from '@/usecase/contracts';
+} from '@/usecases/contracts/customer';
 
 export type HttpResponse<T = any> = {
     statusCode: number;
@@ -12,6 +12,6 @@ export type HttpResponse<T = any> = {
 
 export interface CustomerControllerInterface {
     create: (input: InputCreateCustomerDto) => Promise<HttpResponse<OutputCustomerDto>>;
-    update: (id: string, input: InputUpdateCustomerDto) => Promise<HttpResponse<OutputCustomerDto>>;
+    update: (input: InputUpdateCustomerDto) => Promise<HttpResponse<OutputCustomerDto>>;
     findOne: (input: InputFindOneCustomerDto) => Promise<HttpResponse<OutputCustomerDto>>;
 }

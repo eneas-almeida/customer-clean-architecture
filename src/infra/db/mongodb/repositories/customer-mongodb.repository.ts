@@ -1,6 +1,7 @@
 import { CustomerMapper } from '@/main/mappers/customer.mapper';
 import { CustomerInterface, CustomerRepositoryInterface } from '@/domain/@shared/contracts';
 import { CustomerSchema } from '../schemas';
+import { ServerError } from '@/main/errors/server.error';
 
 export class CustomerMongodbRepository implements CustomerRepositoryInterface {
     async create(entity: CustomerInterface): Promise<CustomerInterface> {
@@ -13,7 +14,7 @@ export class CustomerMongodbRepository implements CustomerRepositoryInterface {
 
             return entity;
         } catch (e) {
-            throw e;
+            throw new ServerError(e.message);
         }
     }
 
@@ -25,7 +26,7 @@ export class CustomerMongodbRepository implements CustomerRepositoryInterface {
 
             return entity;
         } catch (e) {
-            throw e;
+            throw new ServerError(e.message);
         }
     }
 
@@ -35,7 +36,17 @@ export class CustomerMongodbRepository implements CustomerRepositoryInterface {
 
             return schema ? CustomerMapper.schemaToEntity(schema) : null;
         } catch (e) {
-            throw e;
+            throw new ServerError(e.message);
+        }
+    }
+
+    async findOneByDocument(document: number): Promise<CustomerInterface | null> {
+        try {
+            const schema = await CustomerSchema.findOne({ document });
+
+            return schema ? CustomerMapper.schemaToEntity(schema) : null;
+        } catch (e) {
+            throw new ServerError(e.message);
         }
     }
 }

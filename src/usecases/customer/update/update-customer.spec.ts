@@ -7,7 +7,7 @@ import {
 } from '@/infra/integrations/contracts';
 import { CacheProviderInterface, ProviderInterface } from '@/infra/providers/contracts';
 import { CreateCustomerUseCase } from '../create/create-customer.usecase';
-import { FindOneCustomerUseCase } from './findone-customer.usecase';
+import { UpdateCustomerUseCase } from './update-customer.usecase';
 
 const MockRepository = (): RepositoryInterface => {
     const customers = [
@@ -17,9 +17,10 @@ const MockRepository = (): RepositoryInterface => {
     ];
 
     const mockCustomerRepository: CustomerRepositoryInterface = {
-        create: jest.fn().mockReturnValue(Promise.resolve(customers[1])),
-        update: jest.fn().mockReturnValue(Promise.resolve(customers[1])),
-        findOneById: jest.fn().mockReturnValue(Promise.resolve(customers[1])),
+        create: jest.fn().mockReturnValue(Promise.resolve(customers[0])),
+        update: jest.fn().mockReturnValue(Promise.resolve(customers[0])),
+        findOneById: jest.fn().mockReturnValue(Promise.resolve(customers[0])),
+        findOneByDocument: jest.fn().mockReturnValue(Promise.resolve(customers[1])),
     };
 
     return {
@@ -56,29 +57,37 @@ const MockIntegration = (): IntegrationInterface => {
     };
 };
 
-describe('FindOne Customer Unity', () => {
+describe('Update Customer Unity', () => {
     test('Should return a customer unity', async () => {
-        const mockRepository = MockRepository();
-
         const createCustomerUseCase = new CreateCustomerUseCase(
-            mockRepository,
+            MockRepository(),
             MockProvider(),
             MockIntegration()
         );
 
-        const findOneCustomerUseCase = new FindOneCustomerUseCase(mockRepository, MockIntegration());
-
-        const input = {
+        const inputCreateCustomerDto = {
             device: 'mobile',
-            id: '0x0230x100',
-            document: 111111,
-            name: 'Marcos Santos',
+            id: '202020',
+            document: 202020,
+            name: 'Tiago Campos',
         };
 
-        await createCustomerUseCase.execute(input);
+        await createCustomerUseCase.execute(inputCreateCustomerDto);
 
-        const output = await findOneCustomerUseCase.execute(input);
+        const updateCustomerUseCase = new UpdateCustomerUseCase(
+            MockRepository(),
+            MockProvider(),
+            MockIntegration()
+        );
 
-        expect(output.name).toEqual(input.name);
+        const inputUpdateCustomerDto = {
+            id: '303030',
+            document: 202020,
+            name: 'Tiago de Freitas',
+        };
+
+        const output = await updateCustomerUseCase.execute(inputUpdateCustomerDto);
+
+        expect(output.name).toEqual(inputUpdateCustomerDto.name);
     });
 });

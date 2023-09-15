@@ -1,9 +1,9 @@
 import { RepositoryInterface } from '@/domain/@shared/contracts';
-import { AppError } from '@/domain/@shared/errors';
 import { IntegrationInterface } from '@/infra/integrations/contracts';
 import { ProviderInterface } from '@/infra/providers/contracts';
+import { AppError } from '@/main/errors';
 import { CustomerMapper } from '@/main/mappers';
-import { InputUpdateCustomerDto, OutputCustomerDto } from '../../contracts/customer';
+import { InputUpdateCustomerDto, OutputCustomerDto } from '@/usecases/contracts/customer';
 
 export class UpdateCustomerUseCase {
     constructor(
@@ -12,12 +12,18 @@ export class UpdateCustomerUseCase {
         private readonly integration: IntegrationInterface
     ) {}
 
-    async execute(id: string, input: InputUpdateCustomerDto): Promise<OutputCustomerDto> {
+    async execute(input: InputUpdateCustomerDto): Promise<OutputCustomerDto> {
         try {
-            const existsEntity = await this.repository.customer.findOneById(id);
+            let existsEntity = await this.repository.customer.findOneById(input.id);
 
             if (!existsEntity) {
-                throw new AppError('cliente não encontrado', 204);
+                throw new AppError('customer not found', 204);
+            }
+
+            const existsAnotherEntity = await this.repository.customer.findOneByDocument(input.document);
+
+            if (existsAnotherEntity && existsEntity.id !== existsAnotherEntity.id) {
+                throw new AppError('customer already exists with document', 412);
             }
 
             existsEntity.setDocument(input.document);

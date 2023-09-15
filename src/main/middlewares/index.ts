@@ -1,2 +1,2 @@
-export * from './exception.middleware';
+export * from './error.middleware';
 export * from './authorization.middleware';

@@ -13,11 +13,11 @@ export default async (router: Router): Promise<void> => {
 
     const base = '/customers';
 
-    router.post(base, authorization, customerCreateControllerAdapter(customerController));
-    router.put(`${base}/:id`, authorization, customerUpdateControllerAdapter(customerController));
-    router.get(`${base}/:id`, authorization, customerFindOneControllerAdapter(customerController));
+    router.post(base, customerCreateControllerAdapter(customerController));
+    router.put(`${base}/:id`, customerUpdateControllerAdapter(customerController));
+    router.get(`${base}/:id`, customerFindOneControllerAdapter(customerController));
 
-    console.log(`[ok] ${base} (POST) (AUTH)`);
-    console.log(`[ok] ${base}:id (PUT) (AUTH)`);
-    console.log(`[ok] ${base}:id (GET) (AUTH)`);
+    console.log(`[ok] ${base} (POST) (AUTH NO)`);
+    console.log(`[ok] ${base}:id (PUT) (AUTH NO)`);
+    console.log(`[ok] ${base}:id (GET) (AUTH NO)`);
 };

@@ -9,7 +9,7 @@ main.initBanner()
     .then((res) => {
         res.initRoutes()
             .then((res) => {
-                res.initException();
+                res.initError();
                 res.initServer();
             })
             .catch((e) => {

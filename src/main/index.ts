@@ -1,12 +1,11 @@
 import {
     app,
     envsValidate,
-    envs,
     bannerConfig,
     routesConfig,
     mongodbConfig,
     serverConfig,
-    exceptionConfig,
+    errorConfig,
 } from '@/main/configs';
 
 export class Main {
@@ -34,8 +33,8 @@ export class Main {
         return this;
     }
 
-    initException() {
-        exceptionConfig(app);
+    initError() {
+        errorConfig(app);
         return this;
     }
 
