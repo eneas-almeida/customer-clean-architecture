@@ -1,4 +1,4 @@
-import { AxiosHttpClient } from '@/framework/clients/axios-http.client';
+import { AxiosHttpClient } from '@/infra/http.clients/axios-http.client';
 import { RepositoryInterface } from '@/domain/@shared/contracts';
 import { CustomerMongodbRepository } from '@/infra/db/mongodb/repositories';
 import { VittaIntegration, VtexIntegration } from '@/framework/integrations';
