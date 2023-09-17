@@ -1,6 +1,6 @@
-import { CustomerInterface, CustomerRepositoryInterface } from '@/domain/@shared/contracts';
 import { CustomerMapper } from '@/data/mappers';
-import { ServerError } from '@/main/errors/server.error';
+import { CustomerInterface, CustomerRepositoryInterface } from '@/domain/@shared/contracts';
+import { ServerError } from '@/infra/main/errors';
 import { CustomerSchema } from '../schemas';
 
 export class CustomerMongodbRepository implements CustomerRepositoryInterface {

@@ -1,8 +1,8 @@
+import { CustomerMapper } from '@/data/mappers';
 import { RepositoryInterface } from '@/domain/@shared/contracts';
 import { IntegrationInterface } from '@/framework/integrations/contracts';
 import { ProviderInterface } from '@/framework/providers/contracts';
-import { AppError } from '@/main/errors';
-import { CustomerMapper } from '@/data/mappers';
+import { AppError } from '@/infra/main/errors';
 import { InputCreateCustomerDto, OutputCustomerDto } from '@/usecases/contracts/customer';
 
 export class CreateCustomerUseCase {

@@ -1,6 +1,6 @@
 import IORedis, { Redis } from 'ioredis';
 import { CacheProviderInterface } from './contracts';
-import { envs } from '@/main/configs';
+import { envs } from '@/infra/main/configs';
 
 export class IoRedisCacheProvider implements CacheProviderInterface {
     private readonly cache: Redis;

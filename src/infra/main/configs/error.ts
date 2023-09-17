@@ -1,5 +1,5 @@
 import { Express } from 'express';
-import { ErrorMiddleware } from '@/main/middlewares';
+import { ErrorMiddleware } from '@/infra/main/middlewares';
 
 export const errorConfig = (app: Express) => {
     const exception = new ErrorMiddleware();

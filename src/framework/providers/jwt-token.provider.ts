@@ -1,4 +1,4 @@
-import { AppError } from '@/main/errors';
+import { AppError } from '@/infra/main/errors';
 import { OutputTokenDto, TokenProviderInterface } from './contracts';
 
 export class JwtTokenProvider implements TokenProviderInterface {

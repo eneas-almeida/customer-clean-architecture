@@ -1,7 +1,7 @@
 import { Express, Router } from 'express';
 import { readdirSync } from 'fs';
 import { join } from 'path';
-import { envs } from '@/main/configs';
+import { envs } from '@/infra/main/configs';
 
 export const routesConfig = async (app: Express): Promise<void> => {
     try {

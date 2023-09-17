@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios';
-import { envs } from '@/main/configs';
+import { envs } from '@/infra/main/configs';
 import { OutputTokenDto } from '../providers/contracts';
 import { VittaIntegrationInterface } from './contracts';
 

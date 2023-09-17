@@ -1,5 +1,5 @@
 import { Express } from 'express';
-import { envs } from '@/main/configs';
+import { envs } from '@/infra/main/configs';
 
 export const serverConfig = (app: Express) => {
     const { port } = envs.api;

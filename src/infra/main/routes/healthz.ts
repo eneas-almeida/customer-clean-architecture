@@ -7,5 +7,6 @@ export default async (router: Router): Promise<void> => {
 
     router.get('/healthz', healthzGetControllerAdapter(makeHealthzController));
 
-    console.log(`[ok] /healthz (POST) (AUTH NO)`);
+    console.log(`\nHEALTHZ`);
+    console.log(`[ok] /healthz (GET) (AUTH NO)`);
 };

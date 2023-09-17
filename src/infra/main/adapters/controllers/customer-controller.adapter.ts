@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { CustomerMapper } from '@/data/mappers';
+import { dataFindOneHelper, dataUpdatedHelper } from '@/infra/main/helpers/controllers.helper';
 import { CustomerControllerInterface } from '@/presentation/contracts';
-import { dataFindOneHelper, dataUpdatedHelper } from '@/main/helpers/controllers.helper';
 
 export const customerCreateControllerAdapter = (controller: CustomerControllerInterface) => {
     return async (req: Request, res: Response) => {

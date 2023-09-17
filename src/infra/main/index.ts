@@ -6,7 +6,7 @@ import {
     mongodbConfig,
     serverConfig,
     errorConfig,
-} from '@/main/configs';
+} from '@/infra/main/configs';
 
 export class Main {
     initBanner() {

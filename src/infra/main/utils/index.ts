@@ -1,4 +1,4 @@
-import { envs } from '@/main/configs';
+import { envs } from '@/infra/main/configs';
 
 const { baseUrl, version, port } = envs.api;
 

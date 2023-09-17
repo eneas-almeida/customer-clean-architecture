@@ -1,4 +1,4 @@
-import { Main } from './main';
+import { Main } from './infra/main';
 
 const main = new Main();
 
