@@ -4,8 +4,8 @@ import {
     IntegrationInterface,
     VittaIntegrationInterface,
     VtexIntegrationInterface,
-} from '@/infra/integrations/contracts';
-import { CacheProviderInterface, ProviderInterface } from '@/infra/providers/contracts';
+} from '@/framework/integrations/contracts';
+import { CacheProviderInterface, ProviderInterface } from '@/framework/providers/contracts';
 import { CreateCustomerUseCase } from '../create/create-customer.usecase';
 import { FindOneCustomerUseCase } from './findone-customer.usecase';
 

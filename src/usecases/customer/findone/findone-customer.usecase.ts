@@ -1,5 +1,5 @@
 import { RepositoryInterface } from '@/domain/@shared/contracts';
-import { IntegrationInterface } from '@/infra/integrations/contracts';
+import { IntegrationInterface } from '@/framework/integrations/contracts';
 import { CustomerMapper } from '@/main/mappers';
 import { InputFindOneCustomerDto, OutputCustomerDto } from '@/usecases/contracts/customer';
 

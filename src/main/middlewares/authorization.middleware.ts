@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { envs } from '@/main/configs';
-import { CacheProviderInterface, TokenProviderInterface } from '@/infra/providers/contracts';
+import { CacheProviderInterface, TokenProviderInterface } from '@/framework/providers/contracts';
 import { AppError } from '../errors';
 
 export class AuthorizationMiddleware {

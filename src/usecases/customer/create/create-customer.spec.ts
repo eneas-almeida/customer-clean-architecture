@@ -1,12 +1,12 @@
 import { CustomerRepositoryInterface, RepositoryInterface } from '@/domain/@shared/contracts';
 import { CreateCustomerUseCase } from './create-customer.usecase';
 import { CustomerFactory } from '@/domain/customer/factory/customer.factory';
-import { CacheProviderInterface, ProviderInterface } from '@/infra/providers/contracts';
+import { CacheProviderInterface, ProviderInterface } from '@/framework/providers/contracts';
 import {
     IntegrationInterface,
     VittaIntegrationInterface,
     VtexIntegrationInterface,
-} from '@/infra/integrations/contracts';
+} from '@/framework/integrations/contracts';
 
 const MockRepository = (): RepositoryInterface => {
     const customers = [

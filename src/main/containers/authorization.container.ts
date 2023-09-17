@@ -1,4 +1,4 @@
-import { IoRedisCacheProvider, JwtTokenProvider } from '@/infra/providers';
+import { IoRedisCacheProvider, JwtTokenProvider } from '@/framework/providers';
 import { AuthorizationMiddleware } from '../middlewares/authorization.middleware';
 
 export const MakeAuthorization = (): any => {
