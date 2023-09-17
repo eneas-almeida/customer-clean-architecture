@@ -6,7 +6,8 @@
 
 ## Considerações iniciais
 
-1. Para tornar o microserviço mais didático, foi utilizado o mongodb como persistência de dados e o redis como estratégia de cache.
+1. Foi utilizado o mongodb como persistência de dados e o redis como estratégia de cache;<br />
+2. O padrão arquitetural utilizado é resultado é um compilado de técnicas utilizadas por Wesley Willians, Rodrigo Manguinhos e Diego Fernandes.
 
 ## Stack
 
@@ -76,25 +77,24 @@ A escolha do padrão **Clean Architecture** para um projeto de software pode tra
 
 -   👉 [Modelagem do domínio (DDD)](./src/domain/customer);
 -   Desenvolvimento guiado a contratos;
--   👉 [Tratamento de exceções personalizados utilizando middlewares](./src/main/middlewares/exception.ts);
+-   👉 [Tratamento de erros personalizados utilizando middlewares](./src/infra/main/middlewares/error.middleware.ts);
 -   👉 [Notification pattern para validação de entidades](./src/domain/@shared/notification/notification.ts);
--   👉 [Adapter pattern para o express](./src/main/adapters/controllers/customer-controller.adapter.ts);
+-   👉 [Adapter pattern para o express](./src/infra/main/adapters/controllers/customer-controller.adapter.ts);
 -   Barrel pattern para agilidade na importação dos pacotes e clareza do código;
--   👉 [Factory pattern para criar a árvore de depedências (injection/invesion dependecy)](./src/main/factories/customer-controller.factory.ts);
--   👉 [Build pattern para configurar o entrypoint da aplicação](./src/main/index.ts);
+-   👉 [Container pattern para criar a árvore de depedências (injection/invesion dependecy)](./src/infra/main/containers/customer-controller.container.ts);
+-   👉 [Build pattern para configurar o entrypoint da aplicação](./src/infra/main/index.ts);
 -   DTO;
--   👉 [Data Mapper pattern para realizar as conversões de dados, técnica bastante utilizada no java](./src/infra/mappers//customer.mapper.ts);
+-   👉 [Data Mapper pattern para realizar as conversões de dados, técnica bastante utilizada no java](./src/data/mappers/customer.mapper.ts);
 -   Fail first;
--   👉 [Estratégia de resiliência de chamadas http com o **axios retry**](./src/commons/clients/axios-http.client.ts);
--   👉 [Estratégia de melhor gerencimanto do pool de conexões com o **agentkeepalive**](./src/commons/clients/axios-http.client.ts);
+-   👉 [Estratégia de resiliência de chamadas http com o **axios retry**](./src/infra/httpclients/axios-httpclient.ts);
+-   👉 [Estratégia de melhor gerencimanto do pool de conexões com o **agentkeepalive**](./src/infra/httpclients/axios-httpclient.ts);
 -   TDD
 -   HATEOS
--   Testes de unidade utilizando mocks;
--   Indexes nas collections do mongo;
+-   [Testes de unidade utilizando mocks](./src/usecases/customer/create/create-customer.spec.ts);
+-   [Indexes nas collections do mongo](./src/infra/db/mongodb/schemas/customer-mongodb.schema.ts);
 -   Utilização do linter para padronizar o código;
 -   Utilização do pacote swc para transpilação mais rápida;
 -   Docker-compose para criação dos containers mongo e redis;
--   Modelagem da camada de providers para ilustração como acessar as camadas externas da aplicação;
 -   Makefile para criar aliases de command line;
 -   Padronização de commits (conventional commits);
 
@@ -323,10 +323,10 @@ cd customer-api
 
 # Passo 3: Cria o arquivo .env e edita
 # Atenção 1: Não esquecer de preencher todas as variáveis no arquivo .env que será criado
-cp -r .prod.env .env
+cp -r .env-example .env
 
-# Passo 4: Sobe os containers do docker
-docker-compose up -d
+# Passo 4: Sobe os containers do docker e roda o server
+yarn dev
 
 # Verifica se a api subiu corretamente no docker
 docker logs customer-dev-api
@@ -373,39 +373,20 @@ Tentando conexão com o mongodb...
 [ok] Banco de dados conectado na porta 27017
 ----------------------------------------
 Carregando rotas...
-[ok] /customers (POST)
-[ok] /customers/:id (PUT)
-[ok] /customers/:id (GET)
+
+CUSTOMERS
+[ok] /customers (POST) (AUTH NO)
+[ok] /customers:id (PUT) (AUTH NO)
+[ok] /customers:id (GET) (AUTH NO)
+
+HEALTHZ
+[ok] /healthz (GET) (AUTH NO)
 ----------------------------------------
 Escutando na porta 3000
 ----------------------------------------
 ```
 
 </details>
-
-### Production
-
-```bash
-# Passo 1: Clona o repositório
-git clone https://github.com/venzel/customer-api.git
-
-# Passo 2: Acessa a pasta do repositório clonado
-cd customer-api
-
-# Passo: 3 preenche todas as variáveis do arquivos .prod.env
-
-# Passo 4: cria o build da imagem
-docker build -t venzel/customer-api:latest -f Dockerfile.prod .
-
-# Paso 5: sobe os containers de prod
-docker-compose --env-file .prod.env -f docker-compose-prod.yml up -d
-#
-# Pronto, o projeto deve estar rodando nas seguintes portas:
-#
-# API: 3000
-# MONGO: 27017
-# REDIS: 6379
-```
 
 ## Testes de unidade
 
@@ -420,17 +401,14 @@ yarn teste
 ## Alias do Makefile
 
 ```bash
+# Cria o build
+make build
+
+# Roda os testes
+make test
+
 # Subir o ambiente de dev
-make up
-
-# Derrubar ambiente de dev
-make down
-
-# Subir ambient de prod
-make prod && make up/prod
-
-# Derrubar ambiente de prod
-make down/prod
+make dev
 
 # Add, Commit e Push na main
 make ammend
