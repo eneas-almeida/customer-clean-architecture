@@ -1,7 +1,7 @@
-import { CustomerMapper } from '@/main/mappers/customer.mapper';
 import { CustomerInterface, CustomerRepositoryInterface } from '@/domain/@shared/contracts';
-import { CustomerSchema } from '../schemas';
+import { CustomerMapper } from '@/data/mappers';
 import { ServerError } from '@/main/errors/server.error';
+import { CustomerSchema } from '../schemas';
 
 export class CustomerMongodbRepository implements CustomerRepositoryInterface {
     async create(entity: CustomerInterface): Promise<CustomerInterface> {

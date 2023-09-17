@@ -1,10 +1,10 @@
-import { AxiosHttpClient } from '@/infra/http.clients/axios-http.client';
 import { RepositoryInterface } from '@/domain/@shared/contracts';
-import { CustomerMongodbRepository } from '@/infra/db/mongodb/repositories';
 import { VittaIntegration, VtexIntegration } from '@/framework/integrations';
 import { IntegrationInterface } from '@/framework/integrations/contracts';
 import { IoRedisCacheProvider, JwtTokenProvider } from '@/framework/providers';
 import { ProviderInterface } from '@/framework/providers/contracts';
+import { CustomerMongodbRepository } from '@/infra/db/mongodb/repositories';
+import { AxiosHttpClient } from '@/infra/httpclients';
 import { CustomerControllerInterface } from '@/presentation/contracts';
 import { CustomerController } from '@/presentation/controllers/customer.controller';
 import { CreateCustomerUseCase, FindOneCustomerUseCase, UpdateCustomerUseCase } from '@/usecases/customer';

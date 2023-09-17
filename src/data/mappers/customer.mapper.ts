@@ -2,6 +2,7 @@ import { CustomerInterface } from '@/domain/@shared/contracts';
 import { CustomerFactory } from '@/domain/customer/factory/customer.factory';
 import { envs } from '@/main/configs';
 import { api } from '@/main/utils';
+
 import { InputCreateCustomerDto, OutputCustomerDto } from '@/usecases/contracts/customer';
 
 export class CustomerMapper {

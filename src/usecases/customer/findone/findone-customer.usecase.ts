@@ -1,6 +1,6 @@
 import { RepositoryInterface } from '@/domain/@shared/contracts';
 import { IntegrationInterface } from '@/framework/integrations/contracts';
-import { CustomerMapper } from '@/main/mappers';
+import { CustomerMapper } from '@/data/mappers';
 import { InputFindOneCustomerDto, OutputCustomerDto } from '@/usecases/contracts/customer';
 
 export class FindOneCustomerUseCase {
