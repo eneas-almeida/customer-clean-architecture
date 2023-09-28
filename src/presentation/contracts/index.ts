@@ -1,8 +1,9 @@
+import { HealthzOutputDto } from '@/usecases/contracts';
 import {
-    InputCreateCustomerDto,
-    InputFindOneCustomerDto,
-    InputUpdateCustomerDto,
-    OutputCustomerDto,
+    CustomerCreateInputDto,
+    CustomerFindOneInputDto,
+    CustomerUpdateInputDto,
+    CustomerOutputDto,
 } from '@/usecases/contracts/customer';
 
 export type HttpResponse<T = any> = {
@@ -11,11 +12,11 @@ export type HttpResponse<T = any> = {
 };
 
 export interface HealthzControllerInterface {
-    healthz: () => Promise<HttpResponse>;
+    handle: () => Promise<HttpResponse<HealthzOutputDto>>;
 }
 
 export interface CustomerControllerInterface {
-    create: (input: InputCreateCustomerDto) => Promise<HttpResponse<OutputCustomerDto>>;
-    update: (input: InputUpdateCustomerDto) => Promise<HttpResponse<OutputCustomerDto>>;
-    findOne: (input: InputFindOneCustomerDto) => Promise<HttpResponse<OutputCustomerDto>>;
+    create: (input: CustomerCreateInputDto) => Promise<HttpResponse<CustomerOutputDto>>;
+    findOne: (input: CustomerFindOneInputDto) => Promise<HttpResponse<CustomerOutputDto>>;
+    update: (input: CustomerUpdateInputDto) => Promise<HttpResponse<CustomerOutputDto>>;
 }

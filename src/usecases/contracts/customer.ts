@@ -1,26 +1,26 @@
-import { HATEOS, OutputHateosDto } from './base';
+import { Hateos, HateosOutputDto } from './hateos';
 
-export interface InputCreateCustomerDto {
+export interface CustomerCreateInputDto {
     document: number;
     name: string;
 }
 
-export interface InputUpdateCustomerDto {
+export interface CustomerUpdateInputDto {
     id: string;
     document: number;
     name: string;
 }
 
-export interface InputFindOneCustomerDto {
+export interface CustomerFindOneInputDto {
     device: string;
     id: string;
 }
 
-export interface OutputCustomerDto extends OutputHateosDto {
+export interface CustomerOutputDto extends HateosOutputDto {
     id: string;
     document: number;
     name: string;
     createdAt: Date;
     updatedAt: Date;
-    _links?: HATEOS[];
+    _links?: Hateos[];
 }

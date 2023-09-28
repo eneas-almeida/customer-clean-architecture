@@ -1,15 +1,8 @@
-export interface OutputVittaDto {}
+import { VittaIntegrationInterface } from './vitta';
+import { VtexIntegrationInterface } from './vtex';
 
-export interface OutputVtexDto {}
-
-export interface VittaIntegrationInterface {
-    getAccessToken(): Promise<OutputVittaDto>;
-}
-
-export interface VtexIntegrationInterface {
-    getUser(): Promise<OutputVtexDto>;
-    createUser(): Promise<OutputVtexDto>;
-}
+export * from './vitta';
+export * from './vtex';
 
 export interface IntegrationInterface {
     vitta?: VittaIntegrationInterface;

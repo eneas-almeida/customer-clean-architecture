@@ -1,23 +1,8 @@
-export interface OutputTokenDto {
-    access_token: string;
-    expires_in: number;
-    refresh_expires: number;
-    token_type: string;
-    'not-before-policy': number;
-    scope: string;
-    id_token: string;
-}
+import { CacheProviderInterface } from './cache';
+import { TokenProviderInterface } from './token';
 
-export interface TokenProviderInterface {
-    generateToken(): Promise<OutputTokenDto>;
-}
-
-export interface CacheProviderInterface {
-    save(key: string, value: string | boolean, timeToExpires: number): Promise<void>;
-    findByKey(key: string): Promise<string | null>;
-    invalidate(key: string): Promise<void>;
-    clearAllCacheByPrefix(prefix: string): Promise<void>;
-}
+export * from './cache';
+export * from './token';
 
 export interface ProviderInterface {
     token?: TokenProviderInterface;

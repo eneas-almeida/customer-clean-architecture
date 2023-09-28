@@ -48,7 +48,6 @@ const MockIntegration = (): IntegrationInterface => {
 
     const mockVtexIntegration: VtexIntegrationInterface = {
         getUser: jest.fn(async () => null),
-        createUser: jest.fn(async () => null),
     };
 
     return {

@@ -1,7 +1,7 @@
 import AgentKeepAlive from 'agentkeepalive';
 import axios, { AxiosInstance } from 'axios';
 import axiosRetry from 'axios-retry';
-import { envs } from '../main/configs';
+import { envs } from '@/main/configs';
 
 export class AxiosHttpClient {
     getInstance(): AxiosInstance {

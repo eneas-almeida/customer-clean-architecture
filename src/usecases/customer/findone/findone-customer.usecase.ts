@@ -1,7 +1,7 @@
 import { RepositoryInterface } from '@/domain/@shared/contracts';
 import { IntegrationInterface } from '@/framework/integrations/contracts';
 import { CustomerMapper } from '@/data/mappers';
-import { InputFindOneCustomerDto, OutputCustomerDto } from '@/usecases/contracts/customer';
+import { CustomerFindOneInputDto, CustomerOutputDto } from '@/usecases/contracts/customer';
 
 export class FindOneCustomerUseCase {
     constructor(
@@ -9,13 +9,9 @@ export class FindOneCustomerUseCase {
         private readonly integration: IntegrationInterface
     ) {}
 
-    async execute(input: InputFindOneCustomerDto): Promise<OutputCustomerDto | null> {
-        try {
-            const entity = await this.repository.customer.findOneById(input.id);
+    async execute(input: CustomerFindOneInputDto): Promise<CustomerOutputDto | null> {
+        const entity = await this.repository.customer.findOneById(input.id);
 
-            return CustomerMapper.entityToDto(entity);
-        } catch (e) {
-            throw e;
-        }
+        return CustomerMapper.entityToDto(entity);
     }
 }

@@ -1,6 +1,5 @@
 import { CustomerMapper } from '@/data/mappers';
 import { CustomerInterface, CustomerRepositoryInterface } from '@/domain/@shared/contracts';
-import { ServerError } from '@/infra/main/errors';
 import { CustomerSchema } from '../schemas';
 
 export class CustomerMongodbRepository implements CustomerRepositoryInterface {
@@ -14,7 +13,7 @@ export class CustomerMongodbRepository implements CustomerRepositoryInterface {
 
             return entity;
         } catch (e) {
-            throw new ServerError(e.message);
+            throw new Error(e.message);
         }
     }
 
@@ -26,7 +25,7 @@ export class CustomerMongodbRepository implements CustomerRepositoryInterface {
 
             return entity;
         } catch (e) {
-            throw new ServerError(e.message);
+            throw new Error(e.message);
         }
     }
 
@@ -36,7 +35,7 @@ export class CustomerMongodbRepository implements CustomerRepositoryInterface {
 
             return schema ? CustomerMapper.schemaToEntity(schema) : null;
         } catch (e) {
-            throw new ServerError(e.message);
+            throw new Error(e.message);
         }
     }
 
@@ -46,7 +45,7 @@ export class CustomerMongodbRepository implements CustomerRepositoryInterface {
 
             return schema ? CustomerMapper.schemaToEntity(schema) : null;
         } catch (e) {
-            throw new ServerError(e.message);
+            throw new Error(e.message);
         }
     }
 }

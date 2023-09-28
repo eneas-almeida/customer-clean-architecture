@@ -1,20 +1,20 @@
 import { AxiosInstance } from 'axios';
-import { envs } from '@/infra/main/configs';
-import { OutputTokenDto } from '../providers/contracts';
-import { VittaIntegrationInterface } from './contracts';
+import { envs } from '@/main/configs';
+import { VittaIntegrationInterface, VittaIntegrationOutputDto } from './contracts';
+import { toVittaIntegrationOutputDto } from './mappers/vitta-integration.mapper';
 
 const ENDPOINTS = {
     generateToken: '/auth/realms/careers/protocol/openid-connect/token',
 };
 
 export class VittaIntegration implements VittaIntegrationInterface {
-    private readonly httpsClient: AxiosInstance;
+    private readonly axios: AxiosInstance;
 
-    constructor(httpsClient: AxiosInstance) {
-        this.httpsClient = httpsClient;
+    constructor(axios: AxiosInstance) {
+        this.axios = axios;
     }
 
-    async getAccessToken(): Promise<OutputTokenDto | null> {
+    async getAccessToken(): Promise<VittaIntegrationOutputDto | null> {
         const { baseUrl, grantType, clientId, username, password, scope } = envs.vitta;
 
         const body = {
@@ -35,10 +35,10 @@ export class VittaIntegration implements VittaIntegrationInterface {
         const endpoint = `${baseUrl}${ENDPOINTS.generateToken}`;
 
         try {
-            const response = await this.httpsClient.post(endpoint, body, configs);
-            return response?.data as OutputTokenDto;
+            const { data } = await this.axios.post(endpoint, body, configs);
+            return data ? toVittaIntegrationOutputDto(data) : null;
         } catch (e) {
-            throw e;
+            throw new Error(e.message);
         }
     }
 }

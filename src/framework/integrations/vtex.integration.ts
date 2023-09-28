@@ -1,18 +1,14 @@
 import { AxiosInstance } from 'axios';
-import { OutputVtexDto, VtexIntegrationInterface } from './contracts';
+import { VtexIntegrationInterface, VtexIntegrationOutputDto } from './contracts';
 
 export class VtexIntegration implements VtexIntegrationInterface {
-    private readonly httpsClient: AxiosInstance;
+    private readonly axios: AxiosInstance;
 
-    constructor(httpsClient: AxiosInstance) {
-        this.httpsClient = httpsClient;
+    constructor(axios: AxiosInstance) {
+        this.axios = axios;
     }
 
-    async getUser(): Promise<OutputVtexDto> {
-        throw new Error('Method not implemented.');
-    }
-
-    async createUser(): Promise<OutputVtexDto> {
-        throw new Error('Method not implemented.');
+    async getUser(): Promise<VtexIntegrationOutputDto | null> {
+        return null;
     }
 }

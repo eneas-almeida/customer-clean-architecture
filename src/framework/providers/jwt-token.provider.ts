@@ -1,8 +1,8 @@
-import { AppError } from '@/infra/main/errors';
-import { OutputTokenDto, TokenProviderInterface } from './contracts';
+import { AppError } from '@/main/errors';
+import { TokenProviderInterface, TokenProviderOutputDto } from './contracts';
 
 export class JwtTokenProvider implements TokenProviderInterface {
-    async generateToken(): Promise<OutputTokenDto> {
+    async generateToken(): Promise<TokenProviderOutputDto> {
         try {
             return {
                 access_token: '',

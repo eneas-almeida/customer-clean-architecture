@@ -1,8 +1,8 @@
 import {
-    InputCreateCustomerDto,
-    InputFindOneCustomerDto,
-    InputUpdateCustomerDto,
-    OutputCustomerDto,
+    CustomerCreateInputDto,
+    CustomerFindOneInputDto,
+    CustomerUpdateInputDto,
+    CustomerOutputDto,
 } from '@/usecases/contracts/customer';
 import { CreateCustomerUseCase, FindOneCustomerUseCase, UpdateCustomerUseCase } from '@/usecases/customer';
 import { CustomerControllerInterface, HttpResponse } from '../contracts';
@@ -15,27 +15,15 @@ export class CustomerController implements CustomerControllerInterface {
         private readonly findOneCustomerUseCase: FindOneCustomerUseCase
     ) {}
 
-    async create(input: InputCreateCustomerDto): Promise<HttpResponse<OutputCustomerDto>> {
-        try {
-            return create(await this.createCustomerUseCase.execute(input));
-        } catch (e) {
-            throw e;
-        }
+    async create(input: CustomerCreateInputDto): Promise<HttpResponse<CustomerOutputDto>> {
+        return create(await this.createCustomerUseCase.execute(input));
     }
 
-    async update(input: InputUpdateCustomerDto): Promise<HttpResponse<OutputCustomerDto>> {
-        try {
-            return ok(await this.updateCustomerUseCase.execute(input));
-        } catch (e) {
-            throw e;
-        }
+    async update(input: CustomerUpdateInputDto): Promise<HttpResponse<CustomerOutputDto>> {
+        return ok(await this.updateCustomerUseCase.execute(input));
     }
 
-    async findOne(input: InputFindOneCustomerDto): Promise<HttpResponse<OutputCustomerDto>> {
-        try {
-            return ok(await this.findOneCustomerUseCase.execute(input));
-        } catch (e) {
-            throw e;
-        }
+    async findOne(input: CustomerFindOneInputDto): Promise<HttpResponse<CustomerOutputDto>> {
+        return ok(await this.findOneCustomerUseCase.execute(input));
     }
 }

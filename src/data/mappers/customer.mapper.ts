@@ -1,26 +1,26 @@
 import { CustomerInterface } from '@/domain/@shared/contracts';
 import { CustomerFactory } from '@/domain/customer/factory/customer.factory';
-import { envs } from '@/infra/main/configs';
-import { api } from '@/infra/main/utils';
+import { envs } from '@/main/configs';
+import { api } from '@/main/utils';
 
-import { InputCreateCustomerDto, OutputCustomerDto } from '@/usecases/contracts/customer';
+import { CustomerCreateInputDto, CustomerOutputDto } from '@/usecases/contracts/customer';
 
 export class CustomerMapper {
-    static dataToDto(data: any): InputCreateCustomerDto {
+    static dataToDto(data: any): CustomerCreateInputDto {
         return {
             document: data.document,
             name: data.name,
         };
     }
 
-    static dtoToEntity(input: InputCreateCustomerDto): CustomerInterface {
+    static dtoToEntity(input: CustomerCreateInputDto): CustomerInterface {
         return CustomerFactory.create(input.document, input.name);
     }
 
-    static entityToDto(entity: CustomerInterface): OutputCustomerDto {
+    static entityToDto(entity: CustomerInterface): CustomerOutputDto {
         const url = `${api}/customers`;
 
-        const output: OutputCustomerDto = {
+        const output: CustomerOutputDto = {
             id: entity.id,
             document: entity.document,
             name: entity.name,

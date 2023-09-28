@@ -2,8 +2,8 @@ import { CustomerMapper } from '@/data/mappers';
 import { RepositoryInterface } from '@/domain/@shared/contracts';
 import { IntegrationInterface } from '@/framework/integrations/contracts';
 import { ProviderInterface } from '@/framework/providers/contracts';
-import { AppError } from '@/infra/main/errors';
-import { InputUpdateCustomerDto, OutputCustomerDto } from '@/usecases/contracts/customer';
+import { AppError } from '@/main/errors';
+import { CustomerUpdateInputDto, CustomerOutputDto } from '@/usecases/contracts/customer';
 
 export class UpdateCustomerUseCase {
     constructor(
@@ -12,29 +12,25 @@ export class UpdateCustomerUseCase {
         private readonly integration: IntegrationInterface
     ) {}
 
-    async execute(input: InputUpdateCustomerDto): Promise<OutputCustomerDto> {
-        try {
-            let existsEntity = await this.repository.customer.findOneById(input.id);
+    async execute(input: CustomerUpdateInputDto): Promise<CustomerOutputDto> {
+        let existsEntity = await this.repository.customer.findOneById(input.id);
 
-            if (!existsEntity) {
-                throw new AppError('customer not found', 204);
-            }
-
-            const existsAnotherEntity = await this.repository.customer.findOneByDocument(input.document);
-
-            if (existsAnotherEntity && existsEntity.id !== existsAnotherEntity.id) {
-                throw new AppError('customer already exists with document', 412);
-            }
-
-            existsEntity.setDocument(input.document);
-            existsEntity.setName(input.name);
-            existsEntity.validate();
-
-            const entity = await this.repository.customer.update(existsEntity);
-
-            return CustomerMapper.entityToDto(entity);
-        } catch (e) {
-            throw e;
+        if (!existsEntity) {
+            throw new AppError('customer not found', 204);
         }
+
+        const existsAnotherEntity = await this.repository.customer.findOneByDocument(input.document);
+
+        if (existsAnotherEntity && existsEntity.id !== existsAnotherEntity.id) {
+            throw new AppError('customer already exists with document', 412);
+        }
+
+        existsEntity.setDocument(input.document);
+        existsEntity.setName(input.name);
+        existsEntity.validate();
+
+        const entity = await this.repository.customer.update(existsEntity);
+
+        return CustomerMapper.entityToDto(entity);
     }
 }

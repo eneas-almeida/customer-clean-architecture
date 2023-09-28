@@ -279,6 +279,8 @@ yarn add agentkeepalive \
     morgan \
     reflect-metadata \
     uuid \
+    winston \
+    winston-elasticsearch \
     yup
 
 # Development

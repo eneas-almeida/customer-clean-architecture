@@ -1,12 +1,12 @@
 import { CustomerRepositoryInterface, RepositoryInterface } from '@/domain/@shared/contracts';
-import { CreateCustomerUseCase } from './create-customer.usecase';
 import { CustomerFactory } from '@/domain/customer/factory/customer.factory';
-import { CacheProviderInterface, ProviderInterface } from '@/framework/providers/contracts';
 import {
     IntegrationInterface,
     VittaIntegrationInterface,
     VtexIntegrationInterface,
 } from '@/framework/integrations/contracts';
+import { CacheProviderInterface, ProviderInterface } from '@/framework/providers/contracts';
+import { CreateCustomerUseCase } from './create-customer.usecase';
 
 const MockRepository = (): RepositoryInterface => {
     const customers = [
@@ -47,7 +47,6 @@ const MockIntegration = (): IntegrationInterface => {
 
     const mockVtexIntegration: VtexIntegrationInterface = {
         getUser: jest.fn(async () => null),
-        createUser: jest.fn(async () => null),
     };
 
     return {

@@ -1,6 +1,6 @@
-import { Main } from './infra/main';
+import { MainBuild } from './main';
 
-const main = new Main();
+const main = new MainBuild();
 
 main.initBanner()
     .initEnvs()
