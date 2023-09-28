@@ -48,15 +48,17 @@ export class CustomerMapper {
         };
     }
 
-    static schemaToEntity(model: any): CustomerInterface {
-        const entity = CustomerFactory.create(model.document, model.name);
-        entity.setId(model.id);
-        entity.setCreatedAt(model.createdAt);
-        entity.setUpdatedAt(model.updatedAt);
+    static schemaToEntity(schema: any): CustomerInterface {
+        const entity = CustomerFactory.create(schema.document, schema.name);
+
+        entity.setId(schema.id);
+        entity.setCreatedAt(schema.createdAt);
+        entity.setUpdatedAt(schema.updatedAt);
+
         return entity;
     }
 
-    static schemasToEntities(models: any[]): CustomerInterface[] {
-        return models.map((model) => CustomerMapper.schemaToEntity(model));
+    static schemasToEntities(schemas: any[]): CustomerInterface[] {
+        return schemas.map((schema) => CustomerMapper.schemaToEntity(schema));
     }
 }

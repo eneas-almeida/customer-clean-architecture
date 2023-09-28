@@ -281,7 +281,8 @@ yarn add agentkeepalive \
     uuid \
     winston \
     winston-elasticsearch \
-    yup
+    yup \
+    youch
 
 # Development
 yarn add @swc/cli \

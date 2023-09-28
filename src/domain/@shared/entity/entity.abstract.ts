@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Notification } from '../notification/notification';
-import { Id } from '../types/id.type';
+import { Notification } from '../notification';
+import { Id } from '../contracts';
 
-export abstract class Entity {
+export abstract class EntityAbstract {
     protected _id: string;
     protected _createdAt: Date;
     protected _updatedAt: Date;

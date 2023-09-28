@@ -1,4 +1,4 @@
-import { Notification } from '../notification/notification';
+import { Notification } from '../notification';
 
 export interface CustomerInterface {
     get id(): string;

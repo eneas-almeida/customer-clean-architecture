@@ -1,4 +1,4 @@
-import { NotificationErrorProps } from '../notification/notification';
+import { NotificationErrorProps } from '../notification';
 
 export class NotificationError {
     public readonly statusCode: number;

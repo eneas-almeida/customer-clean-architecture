@@ -1,9 +1,8 @@
-import { CustomerInterface } from '@/domain/@shared/contracts';
-import { Entity } from '@/domain/@shared/entity/entity.abstract';
-import { Id } from '@/domain/@shared/types/id.type';
-import { CustomerValidatorFactory } from '../factory/customer-validator.factory';
+import { CustomerInterface, Id } from '@/domain/@shared/contracts';
+import { EntityAbstract } from '@/domain/@shared/entity';
+import { CustomerValidatorFactory } from '../factory';
 
-export class Customer extends Entity implements CustomerInterface {
+export class CustomerEntity extends EntityAbstract implements CustomerInterface {
     private _name: string;
     private _document: number;
 

@@ -30,6 +30,7 @@
         "uuid": "^9.0.0",
         "winston": "^3.10.0",
         "winston-elasticsearch": "^0.17.4",
+        "youch": "^3.3.2",
         "yup": "^1.2.0"
     },
     "devDependencies": {
