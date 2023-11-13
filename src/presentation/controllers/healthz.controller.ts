@@ -1,4 +1,4 @@
-import { HealthzOutputDto } from '@/usecases/contracts';
+import { HealthzOutputDto } from '@/application/contracts';
 import { name, version } from '../../../package.json';
 import { HealthzControllerInterface, HttpResponse } from '../contracts';
 import { ok } from '../helpers';

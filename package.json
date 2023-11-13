@@ -1,10 +1,10 @@
 {
-    "name": "customer-api",
+    "name": "customer-clean-architecture",
     "version": "1.0.0",
     "main": "index.js",
     "license": "MIT",
     "author": "Enéas Almeida",
-    "repository": "github:venzel/customer-api",
+    "repository": "github:venzel/customer-clean-architecture",
     "engines": {
         "node": "18.x"
     },

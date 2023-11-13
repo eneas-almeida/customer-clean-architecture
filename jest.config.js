@@ -11,7 +11,7 @@ module.exports = {
     collectCoverageFrom: [
         '<rootDir>/src/domain/@shared/notification/notification.ts',
         '<rootDir>/src/domain/**/entity/*entity.ts',
-        '<rootDir>/src/usecase/**/**/*usecase.ts',
+        '<rootDir>/src/application/usecases/**/**/*usecase.ts',
     ],
     coverageDirectory: 'coverage',
     coverageReporters: ['text-summary', 'lcov'],
@@ -19,7 +19,7 @@ module.exports = {
     testMatch: [
         '<rootDir>/src/domain/@shared/notification/*spec.ts',
         '<rootDir>/src/domain/**/entity/*spec.ts',
-        '<rootDir>/src/usecase/**/**/*spec.ts',
+        '<rootDir>/src/application/usecases/**/**/*spec.ts',
     ],
     moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
         prefix: '<rootDir>/src/',

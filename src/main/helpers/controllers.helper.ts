@@ -1,4 +1,4 @@
-import { CustomerFindOneInputDto, CustomerUpdateInputDto } from '@/usecases/contracts/customer';
+import { CustomerFindOneInputDto, CustomerUpdateInputDto } from '@/application/contracts/customer';
 
 export const dataFindOneHelper = (params: any) => {
     const { id } = params;

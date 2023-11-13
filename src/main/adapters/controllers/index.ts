@@ -1,2 +1,2 @@
-export * from './customer-controller.adapter';
+export * from './customers-controller.adapter';
 export * from './healthz-controller.adapter';

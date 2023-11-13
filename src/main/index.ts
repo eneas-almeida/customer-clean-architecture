@@ -33,7 +33,7 @@ export class MainBuild {
         return this;
     }
 
-    initError() {
+    initErrorHandler() {
         errorConfig(app);
         return this;
     }

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { healthzGetControllerAdapter } from '../adapters/controllers';
 import { envs } from '../configs';
-import { MakeHealthzControllerContainer } from '../containers/healthz-controller.container';
+import { MakeHealthzControllerContainer } from '../factories/healthz-controller.factory';
 
 export default async (router: Router): Promise<void> => {
     const makeHealthzController = await MakeHealthzControllerContainer();

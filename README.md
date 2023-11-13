@@ -1,4 +1,4 @@
-# Customer API (Microserviço)
+# Customer Clean Architecture (Microserviço)
 
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/venzel/customer-api/blob/master/LICENSE)
 
@@ -319,16 +319,19 @@ yarn add @swc/cli \
 
 ```bash
 # Passo 1: Clona o repositório
-git clone https://github.com/venzel/customer-api.git
+git clone https://github.com/venzel/customer-clean-architecture.git
 
 # Passo 2: Acessa a pasta do repositório clonado
-cd customer-api
+cd customer-clean-architecture
 
 # Passo 3: Cria o arquivo .env e edita
 # Atenção 1: Não esquecer de preencher todas as variáveis no arquivo .env que será criado
 cp -r .env-example .env
 
-# Passo 4: Sobe os containers do docker e roda o server
+# Passo 4: Instala os pacotes
+yarn install
+
+# Passo 5: Sobe os containers do docker e roda o server
 yarn dev
 
 # Verifica se a api subiu corretamente no docker

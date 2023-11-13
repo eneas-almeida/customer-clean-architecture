@@ -9,8 +9,7 @@ main.initBanner()
     .then((res) => {
         res.initRoutes()
             .then((res) => {
-                res.initError();
-                res.initServer();
+                res.initErrorHandler().initServer();
             })
             .catch((e) => {
                 throw new Error(e);

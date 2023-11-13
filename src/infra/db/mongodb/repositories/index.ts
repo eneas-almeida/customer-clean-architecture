@@ -1,1 +1,1 @@
-export * from './customer-mongodb.repository';
+export * from './customers-mongodb.repository';

@@ -1,6 +1,6 @@
 import { Notification } from '../notification';
 
-export interface CustomerInterface {
+export interface CustomersEntityInterface {
     get id(): string;
     get document(): number;
     get name(): string;

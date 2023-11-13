@@ -9,5 +9,5 @@ export interface TokenProviderOutputDto {
 }
 
 export interface TokenProviderInterface {
-    generateToken(): Promise<TokenProviderOutputDto>;
+    generateToken?(): Promise<TokenProviderOutputDto>;
 }

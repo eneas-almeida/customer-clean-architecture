@@ -1,10 +1,10 @@
-import { HealthzOutputDto } from '@/usecases/contracts';
+import { HealthzOutputDto } from '@/application/contracts';
 import {
-    CustomerCreateInputDto,
-    CustomerFindOneInputDto,
-    CustomerUpdateInputDto,
-    CustomerOutputDto,
-} from '@/usecases/contracts/customer';
+    CustomersCreateInputDto,
+    CustomersFindOneInputDto,
+    CustomersUpdateInputDto,
+    CustomersOutputDto,
+} from '@/application/contracts/customers';
 
 export type HttpResponse<T = any> = {
     statusCode: number;
@@ -15,8 +15,8 @@ export interface HealthzControllerInterface {
     handle: () => Promise<HttpResponse<HealthzOutputDto>>;
 }
 
-export interface CustomerControllerInterface {
-    create: (input: CustomerCreateInputDto) => Promise<HttpResponse<CustomerOutputDto>>;
-    findOne: (input: CustomerFindOneInputDto) => Promise<HttpResponse<CustomerOutputDto>>;
-    update: (input: CustomerUpdateInputDto) => Promise<HttpResponse<CustomerOutputDto>>;
+export interface CustomersControllerInterface {
+    create: (input: CustomersCreateInputDto) => Promise<HttpResponse<CustomersOutputDto>>;
+    findOne: (input: CustomersFindOneInputDto) => Promise<HttpResponse<CustomersOutputDto>>;
+    update: (input: CustomersUpdateInputDto) => Promise<HttpResponse<CustomersOutputDto>>;
 }

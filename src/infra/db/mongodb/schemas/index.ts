@@ -1,1 +1,1 @@
-export * from './customer-mongodb.schema';
+export * from './customers-mongodb.schema';
