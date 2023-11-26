@@ -1,5 +1,5 @@
 import { CustomersEntityInterface } from '@/domain/@shared/contracts';
-import { VittaIntegrationInterface, VtexIntegrationInterface } from '@/framework/integrations/contracts';
+import { VittaIntegrationInterface } from '@/framework/integrations/contracts';
 import { CacheProviderInterface, TokenProviderInterface } from '@/framework/providers/contracts';
 import { Hateos, HateosOutputDto, PaginationOutputDto } from './custom';
 
@@ -52,7 +52,6 @@ export interface CustomersCommonsInterface {
         customer?: CustomersRepositoryInterface;
     };
     integrations: {
-        vtex?: VtexIntegrationInterface;
         vitta?: VittaIntegrationInterface;
     };
     providers: {

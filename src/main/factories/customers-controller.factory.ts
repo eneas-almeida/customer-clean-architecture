@@ -1,4 +1,4 @@
-import { VittaIntegration, VtexIntegration } from '@/framework/integrations';
+import { VittaIntegration } from '@/framework/integrations';
 import { IoRedisCacheProvider, JwtTokenProvider } from '@/framework/providers';
 import { CustomersMongodbRepository } from '@/infra/db/mongodb/repositories';
 import { AxiosHttpClient } from '@/infra/httpclients';
@@ -25,7 +25,6 @@ export const MakeCustomerControllerContainer = async (): Promise<CustomersContro
             customer: new CustomersMongodbRepository(),
         },
         integrations: {
-            vtex: new VtexIntegration(axiosInstance),
             vitta: new VittaIntegration(axiosInstance),
         },
         providers: {

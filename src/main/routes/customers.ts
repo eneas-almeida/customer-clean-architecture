@@ -19,7 +19,7 @@ export default async (router: Router): Promise<void> => {
     const baseRoute = `${envs.api.version}/${basePath}`;
 
     console.log(`${basePath.toUpperCase()}`);
-    console.log(`[ok] /${baseRoute} (POST) (AUTH NO)`);
-    console.log(`[ok] /${baseRoute}:id (GET) (AUTH NO)`);
-    console.log(`[ok] /${baseRoute}:id (PUT) (AUTH NO)`);
+    console.log(`[ok] ${baseRoute} (POST) (AUTH NO)`);
+    console.log(`[ok] ${baseRoute}:id (GET) (AUTH NO)`);
+    console.log(`[ok] ${baseRoute}:id (PUT) (AUTH NO)`);
 };

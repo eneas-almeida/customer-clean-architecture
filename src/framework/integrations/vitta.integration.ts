@@ -3,8 +3,8 @@ import { envs } from '@/main/configs';
 import { VittaIntegrationInterface, VittaIntegrationOutputDto } from './contracts';
 import { toVittaIntegrationOutputDto } from './mappers/vitta-integration.mapper';
 
-const ENDPOINTS = {
-    generateToken: '/auth/realms/careers/protocol/openid-connect/token',
+const RESOURCES = {
+    GENERATE_TOKEN: '/auth/realms/careers/protocol/openid-connect/token',
 };
 
 export class VittaIntegration implements VittaIntegrationInterface {
@@ -32,13 +32,12 @@ export class VittaIntegration implements VittaIntegrationInterface {
             },
         };
 
-        const endpoint = `${baseUrl}${ENDPOINTS.generateToken}`;
+        const endpoint = baseUrl.concat(RESOURCES.GENERATE_TOKEN);
 
-        try {
-            const { data } = await this.axios.post(endpoint, body, configs);
-            return data ? toVittaIntegrationOutputDto(data) : null;
-        } catch (e) {
-            throw new Error(e.message);
-        }
+        const response = await this.axios.post(endpoint, body, configs);
+
+        if (!response || !response.data) return null;
+
+        return toVittaIntegrationOutputDto(response.data);
     }
 }

@@ -1,7 +1,6 @@
-import { AppError } from '@/main/errors';
 import { TokenProviderInterface, TokenProviderOutputDto } from './contracts';
 
-export class JwtTokenProvider implements TokenProviderInterface {
+export class VittaTokenProvider implements TokenProviderInterface {
     async generateToken(): Promise<TokenProviderOutputDto> {
         return {
             access_token: '',

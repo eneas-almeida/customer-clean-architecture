@@ -1,13 +1,9 @@
-import { CustomersRepositoryInterface, RepositoryInterface } from '@/domain/@shared/contracts';
 import { CustomersFactory } from '@/domain/customers/factory/customers.factory';
-import {
-    IntegrationInterface,
-    VittaIntegrationInterface,
-    VtexIntegrationInterface,
-} from '@/framework/integrations/contracts';
+import { IntegrationInterface, VittaIntegrationInterface } from '@/framework/integrations/contracts';
 import { CacheProviderInterface, ProviderInterface } from '@/framework/providers/contracts';
 import { CreateCustomerUseCase } from '../create/create-customer.usecase';
 import { FindOneCustomerUseCase } from './findone-customer.usecase';
+import { CustomersRepositoryInterface } from '@/application/contracts';
 
 const MockRepository = (): RepositoryInterface => {
     const customers = [
@@ -46,13 +42,8 @@ const MockIntegration = (): IntegrationInterface => {
         getAccessToken: jest.fn(async () => null),
     };
 
-    const mockVtexIntegration: VtexIntegrationInterface = {
-        getUser: jest.fn(async () => null),
-    };
-
     return {
         vitta: mockVittaIntegration,
-        vtex: mockVtexIntegration,
     };
 };
 
@@ -60,11 +51,7 @@ describe('FindOne Customer Unity', () => {
     test('Should return a customer unity', async () => {
         const mockRepository = MockRepository();
 
-        const createCustomerUseCase = new CreateCustomerUseCase(
-            mockRepository,
-            MockProvider(),
-            MockIntegration()
-        );
+        const createCustomerUseCase = new CreateCustomerUseCase(mockRepository, MockIntegration());
 
         const findOneCustomerUseCase = new FindOneCustomerUseCase(mockRepository, MockIntegration());
 

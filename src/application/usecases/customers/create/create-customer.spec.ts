@@ -1,4 +1,4 @@
-import { VittaIntegrationInterface, VtexIntegrationInterface } from '@/framework/integrations/contracts';
+import { VittaIntegrationInterface } from '@/framework/integrations/contracts';
 import { CacheProviderInterface, TokenProviderInterface } from '@/framework/providers/contracts';
 import { CreateCustomerUseCase } from './create-customer.usecase';
 import { CustomersCommonsInterface, CustomersRepositoryInterface } from '@/application/contracts';
@@ -37,10 +37,6 @@ const MockVittaIntegration = (): VittaIntegrationInterface => ({
     getAccessToken: jest.fn(async () => null),
 });
 
-const MockVtexIntegration = (): VtexIntegrationInterface => ({
-    getUser: jest.fn(async () => null),
-});
-
 /* Commons */
 
 const MockCommons = (): CustomersCommonsInterface => ({
@@ -49,7 +45,6 @@ const MockCommons = (): CustomersCommonsInterface => ({
     },
     integrations: {
         vitta: MockVittaIntegration(),
-        vtex: MockVtexIntegration(),
     },
     providers: {
         cache: MockCacheProvider(),
