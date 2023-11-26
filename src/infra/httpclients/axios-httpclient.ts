@@ -18,15 +18,10 @@ export class AxiosHttpClient {
 
         axiosRetry(axiosInstance, {
             retries: envs.axios.retryQtty,
-            retryDelay: this.exponentialBackoff,
+            retryDelay: axiosRetry.exponentialDelay,
             retryCondition: axiosRetry.isNetworkOrIdempotentRequestError,
         });
 
         return axiosInstance;
-    }
-
-    private exponentialBackoff(retryAttemps: number) {
-        const { baseDelay, maxDelay } = envs.axios;
-        return Math.min(baseDelay * 2 ** retryAttemps, maxDelay);
     }
 }

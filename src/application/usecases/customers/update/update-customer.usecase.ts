@@ -5,7 +5,7 @@ import {
     CustomersCustomOutputDto,
 } from '@/application/contracts/customers';
 import { CustomersCommonsInterface } from '@/application/contracts';
-import { customOutputDto } from '@/application/helpers';
+import { customersCustomOutputDto } from '@/application/helpers';
 
 export class UpdateCustomerUseCase {
     constructor(private readonly commons: CustomersCommonsInterface) {}
@@ -31,6 +31,6 @@ export class UpdateCustomerUseCase {
 
         const output = await this.commons.repositories.customer.update(existsEntity);
 
-        return customOutputDto(output);
+        return customersCustomOutputDto(output);
     }
 }

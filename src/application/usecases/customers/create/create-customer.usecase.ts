@@ -6,7 +6,7 @@ import {
     CustomersCustomOutputDto,
     CustomersOutputDto,
 } from '@/application/contracts/customers';
-import { customOutputDto } from '@/application/helpers';
+import { customersCustomOutputDto } from '@/application/helpers';
 
 export class CreateCustomerUseCase {
     constructor(private readonly commons: CustomersCommonsInterface) {}
@@ -22,6 +22,6 @@ export class CreateCustomerUseCase {
 
         output = await this.commons.repositories.customer.create(output);
 
-        return customOutputDto(output);
+        return customersCustomOutputDto(output);
     }
 }

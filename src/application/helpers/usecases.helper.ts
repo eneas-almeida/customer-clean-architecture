@@ -2,7 +2,7 @@ import { envs } from '@/main/configs';
 import { api } from '@/main/utils';
 import { CustomersCustomOutputDto, CustomersOutputDto } from '../contracts';
 
-export const customOutputDto = <T extends CustomersOutputDto | CustomersOutputDto[]>(
+export const customersCustomOutputDto = <T extends CustomersOutputDto | CustomersOutputDto[]>(
     data: T
 ): CustomersCustomOutputDto<T> => {
     const output: CustomersCustomOutputDto<T> = {

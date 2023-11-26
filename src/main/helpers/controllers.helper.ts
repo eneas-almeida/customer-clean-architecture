@@ -1,12 +1,12 @@
-import { CustomerFindOneInputDto, CustomerUpdateInputDto } from '@/application/contracts/customer';
+import { CustomersFindOneInputDto, CustomersUpdateInputDto } from '@/application/contracts';
 
 export const dataFindOneHelper = (params: any) => {
     const { id } = params;
-    return { id } as CustomerFindOneInputDto;
+    return { id } as CustomersFindOneInputDto;
 };
 
 export const dataUpdatedHelper = (params: any, body: any) => {
     const { id } = params;
     const { document, name } = body;
-    return { id, document, name } as CustomerUpdateInputDto;
+    return { id, document, name } as CustomersUpdateInputDto;
 };
