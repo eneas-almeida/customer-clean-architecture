@@ -1,5 +1,5 @@
 import {
-    CustomersCommonsInterface,
+    CustomersContainerInterface,
     CustomersCustomOutputDto,
     CustomersFindOneInputDto,
     CustomersOutputDto,
@@ -7,10 +7,10 @@ import {
 import { customersCustomOutputDto } from '@/application/helpers';
 
 export class FindOneCustomerUseCase {
-    constructor(private readonly commons: CustomersCommonsInterface) {}
+    constructor(private readonly container: CustomersContainerInterface) {}
 
     async execute(input: CustomersFindOneInputDto): Promise<CustomersCustomOutputDto<CustomersOutputDto>> {
-        const output = await this.commons.repositories.customer.findOneById(input.id);
+        const output = await this.container.repositories.customers.findOneById(input.id);
 
         return customersCustomOutputDto(output);
     }

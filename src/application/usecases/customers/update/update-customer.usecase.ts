@@ -4,20 +4,20 @@ import {
     CustomersOutputDto,
     CustomersCustomOutputDto,
 } from '@/application/contracts/customers';
-import { CustomersCommonsInterface } from '@/application/contracts';
+import { CustomersContainerInterface } from '@/application/contracts';
 import { customersCustomOutputDto } from '@/application/helpers';
 
 export class UpdateCustomerUseCase {
-    constructor(private readonly commons: CustomersCommonsInterface) {}
+    constructor(private readonly container: CustomersContainerInterface) {}
 
     async execute(input: CustomersUpdateInputDto): Promise<CustomersCustomOutputDto<CustomersOutputDto>> {
-        let existsEntity = await this.commons.repositories.customer.findOneById(input.id);
+        let existsEntity = await this.container.repositories.customers.findOneById(input.id);
 
         if (!existsEntity) {
             throw new AppError('customer not found', 204);
         }
 
-        const existsAnotherEntity = await this.commons.repositories.customer.findOneByDocument(
+        const existsAnotherEntity = await this.container.repositories.customers.findOneByDocument(
             input.document
         );
 
@@ -29,7 +29,7 @@ export class UpdateCustomerUseCase {
         existsEntity.setName(input.name);
         existsEntity.validate();
 
-        const output = await this.commons.repositories.customer.update(existsEntity);
+        const output = await this.container.repositories.customers.update(existsEntity);
 
         return customersCustomOutputDto(output);
     }

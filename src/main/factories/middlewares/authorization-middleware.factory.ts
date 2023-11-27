@@ -1,7 +1,7 @@
 import { IoRedisCacheProvider, JwtTokenProvider } from '@/framework/providers';
-import { AuthorizationMiddleware } from '../middlewares/authorization.middleware';
+import { AuthorizationMiddleware } from '@/main/middlewares';
 
-export const MakeAuthorizationContainer = (): any => {
+export const MakeAuthorizationMiddleware = () => {
     const vittaTokenProvider = new JwtTokenProvider();
     const ioRedisCacheProvider = new IoRedisCacheProvider();
 

@@ -1,18 +1,18 @@
-import { CustomersMapper } from '@/application/mappers';
-import { AppError } from '@/main/errors';
 import {
-    CustomersCommonsInterface,
+    CustomersContainerInterface,
     CustomersCreateInputDto,
     CustomersCustomOutputDto,
     CustomersOutputDto,
 } from '@/application/contracts/customers';
 import { customersCustomOutputDto } from '@/application/helpers';
+import { CustomersMapper } from '@/application/mappers';
+import { AppError } from '@/main/errors';
 
 export class CreateCustomerUseCase {
-    constructor(private readonly commons: CustomersCommonsInterface) {}
+    constructor(private readonly container: CustomersContainerInterface) {}
 
     async execute(input: CustomersCreateInputDto): Promise<CustomersCustomOutputDto<CustomersOutputDto>> {
-        const existsEntity = await this.commons.repositories.customer.findOneByDocument(input.document);
+        const existsEntity = await this.container.repositories.customers.findOneByDocument(input.document);
 
         if (existsEntity) {
             throw new AppError('customer already exists with document', 412);
@@ -20,7 +20,7 @@ export class CreateCustomerUseCase {
 
         let output = CustomersMapper.dtoToEntity(input);
 
-        output = await this.commons.repositories.customer.create(output);
+        output = await this.container.repositories.customers.create(output);
 
         return customersCustomOutputDto(output);
     }

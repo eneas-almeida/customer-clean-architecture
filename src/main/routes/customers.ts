@@ -4,22 +4,14 @@ import {
     customersFindOneControllerAdapter,
     customersUpdateControllerAdapter,
 } from '../adapters/controllers/customers-controller.adapter';
-import { envs } from '../configs';
-import { MakeCustomerControllerContainer } from '../factories';
+import { MakeCustomersController } from '../factories/controllers';
 
 export default async (router: Router): Promise<void> => {
-    const makeCustomerController = await MakeCustomerControllerContainer();
+    const customersControllerFactory = await MakeCustomersController();
 
     const basePath = 'customers';
 
-    router.post(`/${basePath}`, customersCreateControllerAdapter(makeCustomerController));
-    router.put(`/${basePath}/:id`, customersUpdateControllerAdapter(makeCustomerController));
-    router.get(`/${basePath}/:id`, customersFindOneControllerAdapter(makeCustomerController));
-
-    const baseRoute = `${envs.api.version}/${basePath}`;
-
-    console.log(`${basePath.toUpperCase()}`);
-    console.log(`[ok] ${baseRoute} (POST) (AUTH NO)`);
-    console.log(`[ok] ${baseRoute}:id (GET) (AUTH NO)`);
-    console.log(`[ok] ${baseRoute}:id (PUT) (AUTH NO)`);
+    router.post(`/${basePath}`, customersCreateControllerAdapter(customersControllerFactory));
+    router.put(`/${basePath}/:id`, customersUpdateControllerAdapter(customersControllerFactory));
+    router.get(`/${basePath}/:id`, customersFindOneControllerAdapter(customersControllerFactory));
 };

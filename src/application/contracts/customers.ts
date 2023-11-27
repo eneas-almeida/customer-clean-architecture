@@ -47,14 +47,14 @@ export interface CustomersUseCaseInterface {
     update?(input: CustomersUpdateInputDto): Promise<CustomersCustomOutputDto<CustomersOutputDto>>;
 }
 
-export interface CustomersCommonsInterface {
-    repositories: {
-        customer?: CustomersRepositoryInterface;
+export interface CustomersContainerInterface {
+    repositories?: {
+        customers?: CustomersRepositoryInterface;
     };
-    integrations: {
+    integrations?: {
         vitta?: VittaIntegrationInterface;
     };
-    providers: {
+    providers?: {
         token?: TokenProviderInterface;
         cache?: CacheProviderInterface;
     };

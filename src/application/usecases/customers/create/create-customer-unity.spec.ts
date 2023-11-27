@@ -1,7 +1,7 @@
+import { CustomersContainerInterface, CustomersRepositoryInterface } from '@/application/contracts';
 import { VittaIntegrationInterface } from '@/framework/integrations/contracts';
 import { CacheProviderInterface, TokenProviderInterface } from '@/framework/providers/contracts';
 import { CreateCustomerUseCase } from './create-customer.usecase';
-import { CustomersCommonsInterface, CustomersRepositoryInterface } from '@/application/contracts';
 
 const input = {
     body: {
@@ -39,9 +39,9 @@ const MockVittaIntegration = (): VittaIntegrationInterface => ({
 
 /* Commons */
 
-const MockCommons = (): CustomersCommonsInterface => ({
+const MockCommons = (): CustomersContainerInterface => ({
     repositories: {
-        customer: MockCustomersRepository(),
+        customers: MockCustomersRepository(),
     },
     integrations: {
         vitta: MockVittaIntegration(),
