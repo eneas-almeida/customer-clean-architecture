@@ -7,7 +7,7 @@ import {
 import { MakeCustomersController } from '../factories/controllers';
 
 export default async (router: Router): Promise<void> => {
-    const customersControllerFactory = await MakeCustomersController();
+    const customersControllerFactory = MakeCustomersController();
 
     const basePath = 'customers';
 
