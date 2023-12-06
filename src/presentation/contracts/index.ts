@@ -16,7 +16,7 @@ export interface HealthzControllerInterface {
 }
 
 export interface CustomersControllerInterface {
-    create: (input: CustomersCreateInputDto) => Promise<HttpResponse<CustomersOutputDto>>;
+    create: (input: CustomersCreateInputDto) => Promise<HttpResponse>;
     findOne: (input: CustomersFindOneInputDto) => Promise<HttpResponse<CustomersOutputDto>>;
     update: (input: CustomersUpdateInputDto) => Promise<HttpResponse<CustomersOutputDto>>;
 }

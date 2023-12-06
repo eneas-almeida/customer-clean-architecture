@@ -9,7 +9,7 @@ import { CustomersMapper } from '@/application/mappers';
 import { AppError } from '@/main/errors';
 
 export class CreateCustomerUseCase {
-    constructor(private readonly container: CustomersContainerInterface) {}
+    constructor(public readonly container: CustomersContainerInterface) {}
 
     async execute(input: CustomersCreateInputDto): Promise<CustomersCustomOutputDto<CustomersOutputDto>> {
         const existsEntity = await this.container.repositories.customers.findOneByDocument(input.document);
@@ -18,12 +18,12 @@ export class CreateCustomerUseCase {
             throw new AppError('customer already exists with document', 412);
         }
 
-        let output = CustomersMapper.dtoToEntity(input);
+        let entity = CustomersMapper.dtoToEntity(input);
 
-        output = await this.container.repositories.customers.create(output);
+        entity = await this.container.repositories.customers.create(entity);
 
-        // this.container.providers.queue.send('meutopico', { key: 'consumerApi', value: output });
+        const output = customersCustomOutputDto(entity);
 
-        return customersCustomOutputDto(output);
+        return output;
     }
 }

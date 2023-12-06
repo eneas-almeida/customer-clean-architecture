@@ -12,5 +12,6 @@ export const MakeCustomersUseCase = () => {
         create: new CreateCustomerUseCase(customersContainer),
         update: new UpdateCustomerUseCase(customersContainer),
         findOne: new FindOneCustomerUseCase(customersContainer),
+        container: customersContainer,
     };
 };

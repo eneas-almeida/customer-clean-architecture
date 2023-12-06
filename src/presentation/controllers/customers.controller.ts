@@ -3,19 +3,32 @@ import {
     CustomersFindOneInputDto,
     CustomersOutputDto,
     CustomersUpdateInputDto,
+    CustomersUseCaseInterface,
 } from '@/application/contracts/customers';
+import { QueueServiceInterface } from '@/main/contracts/queue';
+import { AppError } from '@/main/errors';
 import { CustomersControllerInterface, HttpResponse } from '../contracts';
 import { ok } from '../helpers';
-import { EventDispatcherInterface } from '@/main/events/contracts/event-dispatcher.interface';
 
 export class CustomersController implements CustomersControllerInterface {
-    constructor(private readonly dispatcher: EventDispatcherInterface) {}
+    constructor(
+        private readonly usecase: CustomersUseCaseInterface,
+        private readonly queue: QueueServiceInterface
+    ) {}
 
     async create(input: CustomersCreateInputDto): Promise<HttpResponse> {
-        this.dispatcher.notify('CreateCustomerEvent', { dataTimeOccurred: new Date(), eventData: input });
+        const existsEntity = await this.usecase.container.repositories.customers.findOneByDocument(
+            input.document
+        );
+
+        if (existsEntity) {
+            throw new AppError('Customer already exists');
+        }
+
+        this.queue.onMessage('meutopico', this.usecase.create, input);
 
         return ok({
-            message: 'Customer created successfully',
+            message: 'Customer queued successfully',
         });
     }
 
@@ -24,6 +37,7 @@ export class CustomersController implements CustomersControllerInterface {
     }
 
     async findOne(input: CustomersFindOneInputDto): Promise<HttpResponse<CustomersOutputDto>> {
-        return ok();
+        const output = await this.usecase.findOne(input);
+        return ok(output);
     }
 }
