@@ -6,6 +6,7 @@ import { Hateos, HateosOutputDto, PaginationOutputDto } from './custom';
 export interface CustomersCreateInputDto {
     document: number;
     name: string;
+    createdAt?: Date;
 }
 
 export interface CustomersUpdateInputDto {

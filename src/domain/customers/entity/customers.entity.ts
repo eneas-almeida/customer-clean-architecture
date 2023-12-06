@@ -6,8 +6,8 @@ export class CustomersEntity extends EntityAbstract implements CustomersEntityIn
     private _name: string;
     private _document: number;
 
-    constructor(id: string, document: number, name: string) {
-        super(id);
+    constructor(id: string, document: number, name: string, createdAt: Date) {
+        super(id, createdAt);
         this._document = document;
         this._name = name;
         this.validate();

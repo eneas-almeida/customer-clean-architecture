@@ -1,14 +1,17 @@
 import { Consumer, Kafka, Producer } from 'kafkajs';
 import { QueueServiceInterface } from '../contracts/queue';
+import { CustomersUseCaseInterface } from '@/application/contracts';
 
 export class KafkaQueueService implements QueueServiceInterface {
     private kafka: Kafka;
     private producer: Producer;
     private consumer: Consumer;
-    private callback: Function;
+
+    constructor(private readonly customersUseCase: CustomersUseCaseInterface) {}
 
     init() {
         this.kafka = new Kafka({
+            logLevel: 1,
             clientId: 'customer-clean-architecture',
             brokers: ['127.0.0.1:19092', '127.0.0.1:29092', '127.0.0.1:39092'],
             retry: {
@@ -54,16 +57,11 @@ export class KafkaQueueService implements QueueServiceInterface {
                 throw e;
             });
 
-        this.consumer
+        await this.consumer
             .run({
-                eachMessage: async ({ message }) => {
+                eachMessage: async ({ topic, message }) => {
                     const data = JSON.parse(message.value.toString());
-
-                    this.callback(data)
-                        .then(() => console.log('Consumer message processed'))
-                        .catch((e: Error) => {
-                            console.log(e.message);
-                        });
+                    await this.handle(topic, data);
                 },
             })
             .then(() => console.log('Consumer running'))
@@ -74,12 +72,24 @@ export class KafkaQueueService implements QueueServiceInterface {
         return this;
     }
 
-    onMessage(topic: string, callback: any, data: any): void {
-        this.callback = callback;
-
+    emit(topic: string, data: any): void {
         this.producer.send({
             topic,
             messages: [{ key: 'fixed', value: JSON.stringify(data) }],
         });
+    }
+
+    async handle(topic: string, data: any) {
+        try {
+            const map: any = {
+                meutopico: async () => await this.customersUseCase.create(data),
+            };
+
+            await map[topic]();
+
+            console.log(`Customer created: ${JSON.stringify(data)}`);
+        } catch (e) {
+            console.log(e.message);
+        }
     }
 }

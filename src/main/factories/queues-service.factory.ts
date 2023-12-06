@@ -1,7 +1,10 @@
+import { CustomersUseCaseAdapter } from '../adapters/usecases/customers-usecase.adapter';
 import { KafkaQueueService } from '../services/kafka-queue.service';
 
-export const MakeQueuesProvider = async () => {
-    const queue = new KafkaQueueService();
+export const MakeQueuesService = async () => {
+    const usecases = CustomersUseCaseAdapter();
+
+    const queue = new KafkaQueueService(usecases);
 
     queue.init();
 

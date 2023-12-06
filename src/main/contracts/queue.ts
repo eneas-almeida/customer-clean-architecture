@@ -3,5 +3,6 @@ export interface QueueServiceInterface {
     setProducer(): Promise<this>;
     setConsumer(groupId: string): Promise<this>;
     setTopic(topic: string, fromBeginning?: boolean): Promise<this>;
-    onMessage(topic: string, callback: Function, data: any): void;
+    emit(topic: string, data: any): void;
+    handle(topic: string, data: any): void;
 }

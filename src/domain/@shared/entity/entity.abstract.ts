@@ -7,10 +7,11 @@ export abstract class EntityAbstract {
     protected _updatedAt: Date;
     protected _notification: Notification;
 
-    constructor(id: string) {
+    constructor(id: string, createdAt: Date) {
+        const registrationDate = createdAt || new Date();
         this._id = id || uuidv4();
-        this._createdAt = new Date();
-        this._updatedAt = new Date();
+        this._createdAt = registrationDate;
+        this._updatedAt = registrationDate;
         this._notification = new Notification();
     }
 
