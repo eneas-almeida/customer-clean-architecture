@@ -1,11 +1,11 @@
 import {
     app,
-    envsValidate,
     bannerConfig,
-    routesConfig,
-    mongodbConfig,
-    serverConfig,
+    envsValidate,
     errorConfig,
+    mongodbConfig,
+    routesConfig,
+    serverConfig,
 } from '@/main/configs';
 
 export class MainBuild {

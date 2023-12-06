@@ -3,23 +3,27 @@ import {
     CustomersFindOneInputDto,
     CustomersOutputDto,
     CustomersUpdateInputDto,
-    CustomersUseCaseInterface,
 } from '@/application/contracts/customers';
 import { CustomersControllerInterface, HttpResponse } from '../contracts';
-import { create, ok } from '../helpers';
+import { ok } from '../helpers';
+import { EventDispatcherInterface } from '@/main/events/contracts/event-dispatcher.interface';
 
 export class CustomersController implements CustomersControllerInterface {
-    constructor(private readonly useCases: CustomersUseCaseInterface) {}
+    constructor(private readonly dispatcher: EventDispatcherInterface) {}
 
-    async create(input: CustomersCreateInputDto): Promise<HttpResponse<CustomersOutputDto>> {
-        return create(await this.useCases.create(input));
+    async create(input: CustomersCreateInputDto): Promise<HttpResponse> {
+        this.dispatcher.notify('CreateCustomerEvent', { dataTimeOccurred: new Date(), eventData: input });
+
+        return ok({
+            message: 'Customer created successfully',
+        });
     }
 
     async update(input: CustomersUpdateInputDto): Promise<HttpResponse<CustomersOutputDto>> {
-        return ok(await this.useCases.update(input));
+        return ok();
     }
 
     async findOne(input: CustomersFindOneInputDto): Promise<HttpResponse<CustomersOutputDto>> {
-        return ok(await this.useCases.findOne(input));
+        return ok();
     }
 }

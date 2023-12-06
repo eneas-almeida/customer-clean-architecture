@@ -7,11 +7,11 @@ import {
 import { MakeCustomersController } from '../factories/controllers';
 
 export default async (router: Router): Promise<void> => {
-    const customersControllerFactory = MakeCustomersController();
+    const customersControllerFactory = await MakeCustomersController();
 
-    const basePath = 'customers';
+    const base = 'customers';
 
-    router.post(`/${basePath}`, customersCreateControllerAdapter(customersControllerFactory));
-    router.put(`/${basePath}/:id`, customersUpdateControllerAdapter(customersControllerFactory));
-    router.get(`/${basePath}/:id`, customersFindOneControllerAdapter(customersControllerFactory));
+    router.post(`/${base}`, customersCreateControllerAdapter(customersControllerFactory));
+    router.put(`/${base}/:id`, customersUpdateControllerAdapter(customersControllerFactory));
+    router.get(`/${base}/:id`, customersFindOneControllerAdapter(customersControllerFactory));
 };

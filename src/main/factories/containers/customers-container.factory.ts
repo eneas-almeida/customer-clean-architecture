@@ -16,8 +16,8 @@ export const MakeCustomersContainer = (): CustomersContainerInterface => {
             vitta,
         },
         providers: {
-            token,
             cache,
+            token,
         },
     };
 };

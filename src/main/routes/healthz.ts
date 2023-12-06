@@ -9,9 +9,4 @@ export default async (router: Router): Promise<void> => {
     const basePath = 'healthz';
 
     router.get(`/${basePath}`, healthzGetControllerAdapter(makeHealthzController));
-
-    const baseRoute = `${envs.api.version}/${basePath}`;
-
-    console.log(`${basePath.toUpperCase()}`);
-    console.log(`[ok] ${baseRoute} (GET) (AUTH NO)`);
 };

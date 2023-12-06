@@ -22,6 +22,8 @@ export class CreateCustomerUseCase {
 
         output = await this.container.repositories.customers.create(output);
 
+        // this.container.providers.queue.send('meutopico', { key: 'consumerApi', value: output });
+
         return customersCustomOutputDto(output);
     }
 }

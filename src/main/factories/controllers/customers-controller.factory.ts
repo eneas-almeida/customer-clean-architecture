@@ -1,7 +1,9 @@
-import { customersUseCaseAdapter } from '@/main/adapters/usecases/customers-usecase.adapter';
 import { CustomersControllerInterface } from '@/presentation/contracts';
 import { CustomersController } from '@/presentation/controllers/customers.controller';
+import { MakeEvents } from '../events.factory';
 
-export const MakeCustomersController = (): CustomersControllerInterface => {
-    return new CustomersController(customersUseCaseAdapter());
+export const MakeCustomersController = async (): Promise<CustomersControllerInterface> => {
+    const events = MakeEvents();
+
+    return new CustomersController(events);
 };

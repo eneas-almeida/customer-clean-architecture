@@ -310,6 +310,7 @@ yarn add @swc/cli \
     ts-node-dev \
     tsconfig-paths \
     tscpaths \
+    kafkajs \
     typescript -D
 ```
 
