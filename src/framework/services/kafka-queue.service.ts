@@ -1,13 +1,11 @@
 import { Consumer, Kafka, Producer } from 'kafkajs';
-import { QueueServiceInterface } from '../contracts/queue';
-import { CustomersUseCaseInterface } from '@/application/contracts';
+import { QueueHandlerInterface, QueueServiceInterface } from './contracts';
 
 export class KafkaQueueService implements QueueServiceInterface {
     private kafka: Kafka;
     private producer: Producer;
     private consumer: Consumer;
-
-    constructor(private readonly customersUseCase: CustomersUseCaseInterface) {}
+    private handlers: QueueHandlerInterface[];
 
     init() {
         this.kafka = new Kafka({
@@ -19,6 +17,8 @@ export class KafkaQueueService implements QueueServiceInterface {
                 retries: 10,
             },
         });
+
+        this.handlers = [];
 
         return this;
     }
@@ -49,19 +49,33 @@ export class KafkaQueueService implements QueueServiceInterface {
         return this;
     }
 
-    async setTopic(topic: string, fromBeginning: boolean = true) {
+    async setTopic(topic: string, fromBeginning: boolean, callback: Function) {
         await this.consumer
             .subscribe({ topic, fromBeginning })
-            .then(() => console.log(`Consumer subscribed to ${topic}`))
+            .then(() => {
+                this.handlers.push({ topic, callback });
+                console.log(`Consumer subscribed to ${topic}`);
+            })
             .catch((e) => {
                 throw e;
             });
 
-        await this.consumer
+        this.consumer
             .run({
                 eachMessage: async ({ topic, message }) => {
-                    const data = JSON.parse(message.value.toString());
-                    await this.handle(topic, data);
+                    if (!topic || !message || !message.value) return;
+
+                    const existsHandler = this.handlers.find((item) => item.topic === topic);
+
+                    if (!existsHandler) return;
+
+                    try {
+                        const data = JSON.parse(message.value.toString());
+                        await existsHandler.callback(data);
+                        console.log(`Consumer received and processed message from ${topic}`);
+                    } catch (e) {
+                        console.error(e.message);
+                    }
                 },
             })
             .then(() => console.log('Consumer running'))
@@ -73,23 +87,11 @@ export class KafkaQueueService implements QueueServiceInterface {
     }
 
     emit(topic: string, data: any): void {
+        data.createdAt = new Date();
+
         this.producer.send({
             topic,
             messages: [{ key: 'fixed', value: JSON.stringify(data) }],
         });
-    }
-
-    async handle(topic: string, data: any) {
-        try {
-            const map: any = {
-                meutopico: async () => await this.customersUseCase.create(data),
-            };
-
-            await map[topic]();
-
-            console.log(`Customer created: ${JSON.stringify(data)}`);
-        } catch (e) {
-            console.log(e.message);
-        }
     }
 }

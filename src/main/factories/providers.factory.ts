@@ -1,8 +1,8 @@
-import { IoRedisCacheProvider, VittaTokenProvider } from '@/framework/providers';
+import { VittaTokenProvider } from '@/framework/providers';
+import { ProviderInterface } from '@/framework/providers/contracts';
 
-export const MakeProviders = () => {
+export const MakeProviders = (): ProviderInterface => {
     return {
-        cache: new IoRedisCacheProvider(),
         token: new VittaTokenProvider(),
     };
 };

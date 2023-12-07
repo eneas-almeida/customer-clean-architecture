@@ -4,7 +4,7 @@ import {
     CustomersUpdateInputDto,
     CustomersUseCaseInterface,
 } from '@/application/contracts/customers';
-import { QueueServiceInterface } from '@/main/contracts/queue';
+import { QueueServiceInterface } from '@/framework/services/contracts';
 import { CustomersControllerInterface, HttpResponse } from '../contracts';
 import { ok } from '../helpers';
 
@@ -23,7 +23,8 @@ export class CustomersController implements CustomersControllerInterface {
     }
 
     async update(input: CustomersUpdateInputDto): Promise<HttpResponse> {
-        return ok();
+        const output = await this.usecase.update(input);
+        return ok(output);
     }
 
     async findOne(input: CustomersFindOneInputDto): Promise<HttpResponse> {

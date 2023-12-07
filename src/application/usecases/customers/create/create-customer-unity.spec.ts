@@ -4,15 +4,15 @@ import { CacheProviderInterface, TokenProviderInterface } from '@/framework/prov
 import { CreateCustomerUseCase } from './create-customer.usecase';
 
 const input = {
-    body: {
-        name: 'Tiago Campos',
-    },
+    id: '202020',
+    document: 202020,
+    name: 'Tiago Campos',
 };
 
 /* Repositories */
 
 const MockCustomersRepository = (): CustomersRepositoryInterface => ({
-    create: jest.fn().mockReturnValue(Promise.resolve(input.body)),
+    create: jest.fn().mockReturnValue(Promise.resolve(input)),
     update: jest.fn(),
     findOneById: jest.fn(),
     findOneByDocument: jest.fn(),
@@ -57,13 +57,6 @@ const MockCommons = (): CustomersContainerInterface => ({
 describe('Create Customer Unity', () => {
     test('Should return a customer unity', async () => {
         const createCustomerUseCase = new CreateCustomerUseCase(MockCommons());
-
-        const input = {
-            device: 'mobile',
-            id: '202020',
-            document: 202020,
-            name: 'Tiago Campos',
-        };
 
         const output = await createCustomerUseCase.execute(input);
 

@@ -3,7 +3,7 @@ import {
     customersCreateControllerAdapter,
     customersFindOneControllerAdapter,
     customersUpdateControllerAdapter,
-} from '../adapters/controllers/customers-controller.adapter';
+} from '../adapters/controllers';
 import { MakeCustomersController } from '../factories/controllers';
 
 export default async (router: Router): Promise<void> => {

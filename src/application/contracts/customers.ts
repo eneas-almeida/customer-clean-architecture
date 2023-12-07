@@ -6,7 +6,7 @@ import { Hateos, HateosOutputDto, PaginationOutputDto } from './custom';
 export interface CustomersCreateInputDto {
     document: number;
     name: string;
-    createdAt?: Date;
+    createdAt?: Date | null;
 }
 
 export interface CustomersUpdateInputDto {
@@ -16,7 +16,6 @@ export interface CustomersUpdateInputDto {
 }
 
 export interface CustomersFindOneInputDto {
-    device: string;
     id: string;
 }
 
@@ -46,7 +45,6 @@ export interface CustomersUseCaseInterface {
     create?(input: CustomersCreateInputDto): Promise<CustomersCustomOutputDto<CustomersOutputDto>>;
     findOne?(input: CustomersFindOneInputDto): Promise<CustomersCustomOutputDto<CustomersOutputDto>>;
     update?(input: CustomersUpdateInputDto): Promise<CustomersCustomOutputDto<CustomersOutputDto>>;
-    container?: CustomersContainerInterface;
 }
 
 export interface CustomersContainerInterface {

@@ -10,10 +10,15 @@ export class CustomersMapper {
         return {
             document: data.document,
             name: data.name,
+            createdAt: data.createdAt,
         };
     }
 
     static dtoToEntity(input: CustomersCreateInputDto): CustomersEntityInterface {
+        if (input.createdAt) {
+            return CustomersFactory.createWithCreatedAt(input.document, input.name, input.createdAt);
+        }
+
         return CustomersFactory.create(input.document, input.name);
     }
 
@@ -45,6 +50,8 @@ export class CustomersMapper {
         return {
             document: entity.document,
             name: entity.name,
+            createdAt: entity.createdAt,
+            updatedAt: entity.updatedAt,
         };
     }
 
