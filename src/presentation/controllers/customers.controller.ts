@@ -15,7 +15,7 @@ export class CustomersController implements CustomersControllerInterface {
     ) {}
 
     async create(input: CustomersCreateInputDto): Promise<HttpResponse> {
-        this.queue.emit('meutopico', input);
+        this.queue.emit('createcustomer', 'customeraccount', input);
 
         return ok({
             message: 'Customer queued successfully',

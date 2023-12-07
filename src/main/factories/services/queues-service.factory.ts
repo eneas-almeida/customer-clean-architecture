@@ -11,7 +11,7 @@ export const MakeQueuesService = async () => {
 
     const usecases = CustomersUseCaseAdapter();
 
-    await queue.setTopic('meutopico', true, usecases.create);
+    await queue.setTopic('createcustomer', true, usecases.create);
 
     return queue;
 };

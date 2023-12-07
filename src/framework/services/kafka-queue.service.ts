@@ -60,7 +60,7 @@ export class KafkaQueueService implements QueueServiceInterface {
                 throw e;
             });
 
-        this.consumer
+        await this.consumer
             .run({
                 eachMessage: async ({ topic, message }) => {
                     if (!topic || !message || !message.value) return;
@@ -86,12 +86,23 @@ export class KafkaQueueService implements QueueServiceInterface {
         return this;
     }
 
-    emit(topic: string, data: any): void {
+    emit(topic: string, key: string, data: any): void {
         data.createdAt = new Date();
 
-        this.producer.send({
+        const payload: any = {
             topic,
-            messages: [{ key: 'fixed', value: JSON.stringify(data) }],
-        });
+            acks: -1,
+            messages: [],
+        };
+
+        const message: any = {
+            value: JSON.stringify(data),
+        };
+
+        if (key) message['key'] = key;
+
+        payload.messages.push(message);
+
+        this.producer.send(payload);
     }
 }
