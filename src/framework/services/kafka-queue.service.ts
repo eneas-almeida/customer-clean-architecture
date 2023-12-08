@@ -5,7 +5,7 @@ export class KafkaQueueService implements QueueServiceInterface {
     private kafka: Kafka;
     private producer: Producer;
     private consumer: Consumer;
-    private handlers: QueueHandlerInterface[];
+    private handlers: QueueHandlerInterface;
 
     init() {
         this.kafka = new Kafka({
@@ -14,11 +14,9 @@ export class KafkaQueueService implements QueueServiceInterface {
             brokers: ['127.0.0.1:19092', '127.0.0.1:29092', '127.0.0.1:39092'],
             retry: {
                 initialRetryTime: 300,
-                retries: 10,
+                retries: 3,
             },
         });
-
-        this.handlers = [];
 
         return this;
     }
@@ -49,11 +47,11 @@ export class KafkaQueueService implements QueueServiceInterface {
         return this;
     }
 
-    async setTopic(topic: string, fromBeginning: boolean, callback: Function) {
+    async setTopic(topic: string, fromBeginning: boolean, handlers: QueueHandlerInterface) {
         await this.consumer
             .subscribe({ topic, fromBeginning })
             .then(() => {
-                this.handlers.push({ topic, callback });
+                this.handlers = handlers;
                 console.log(`Consumer subscribed to ${topic}`);
             })
             .catch((e) => {
@@ -63,15 +61,19 @@ export class KafkaQueueService implements QueueServiceInterface {
         await this.consumer
             .run({
                 eachMessage: async ({ topic, message }) => {
-                    if (!topic || !message || !message.value) return;
+                    if (!topic || !message || !message.value || !message.headers) return;
 
-                    const existsHandler = this.handlers.find((item) => item.topic === topic);
+                    const { keyHandler } = message.headers;
 
-                    if (!existsHandler) return;
+                    if (!keyHandler) return;
+
+                    const fnHandle = this.handlers[keyHandler.toString()];
+
+                    if (!fnHandle) return;
 
                     try {
-                        const data = JSON.parse(message.value.toString());
-                        await existsHandler.callback(data);
+                        const dataMessage = JSON.parse(message.value.toString());
+                        await fnHandle(dataMessage);
                         console.log(`Consumer received and processed message from ${topic}`);
                     } catch (e) {
                         console.error(e.message);
@@ -86,22 +88,22 @@ export class KafkaQueueService implements QueueServiceInterface {
         return this;
     }
 
-    emit(topic: string, key: string, data: any): void {
+    emit(topic: string, key: string, keyHandler: string, data: any): void {
         data.createdAt = new Date();
 
         const payload: any = {
             topic,
-            acks: -1,
-            messages: [],
+            acks: -1, // -1 is default
+            messages: [
+                {
+                    value: JSON.stringify(data),
+                    key,
+                    headers: {
+                        keyHandler,
+                    },
+                },
+            ],
         };
-
-        const message: any = {
-            value: JSON.stringify(data),
-        };
-
-        if (key) message['key'] = key;
-
-        payload.messages.push(message);
 
         this.producer.send(payload);
     }

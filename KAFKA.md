@@ -1,6 +1,9 @@
 # Kafka
 
-Documentação: https://kafka.js.org/docs/getting-started
+Documentação:
+
+-   [kafjajs](https://kafka.js.org/docs/getting-started)
+-   [Cofluent examples](https://github.com/confluentinc/cp-docker-images/tree/5.3.3-post/examples)
 
 ## Perguntas
 
@@ -147,11 +150,21 @@ No caso demonstrado acima, temos um tópico com 3 partições e um consumidor le
 
 ### Grupos de consumidores
 
-<img src="./media/kafka/kafka-12-1.png" />
+<img src="./media/kafka/kafka-12-2.png" />
 
 Como demonstrado acima, foi criado um grupo chamado de **Grupo X**, com 2 consumidores e o Kafka se encarrega de realizar a distribuição das leituras.
 
 **Observação:** Caso contenha um terceiro consumidor (c) sem estar dentro do Grupo X, irá ler das 3 partições.
+
+<img src="./media/kafka/kafka-12-3.png" />
+
+No caso acima, cada consumiror ler uma partição, esse é o melhor caso.
+
+<img src="./media/kafka/kafka-12-4.png" />
+
+**Observação 1:** Caso contenha um quarto consumidor (d), não vai poder ler nenhuma partição, como demonstrado na imagem acima.
+
+**Observação 2:** Não há possibilidade de 2 consumidores em um mesmo grupo, ler a mesma partição.
 
 ## Kafka vs RabbitMQ
 
@@ -160,6 +173,66 @@ O Kafka não trabalha igual ao RabbitMQ, ele salva as mensagens em disco, o Rabb
 ## Recomendações mínimas
 
 -   Um cluster com 3 brokers.
+
+## Command line
+
+### Subindo e acessando o container
+
+```bash
+# Subindo os containers
+docker-compose up -d
+
+# Acessando o container para criar o tópico
+docker exec -it customer-clean-architecture_kafka-1_1 bash
+```
+
+### Tópicos
+
+```bash
+# Listando os tópicos existentes
+kafka-topics --list --bootstrap-server localhost:29092
+
+# Criando o tópico
+kafka-topics --create --bootstrap-server localhost:29092 --replication-factor 3 --partitions 3 --topic topic-customer-k
+
+# Exibindo informações do tópico, partições, líderes e réplicas
+kafka-topics --describe --bootstrap-server localhost:29092 --topic topic-customer-k
+
+# Deletando um tópico
+kafka-topics --bootstrap-server localhost:29092 --delete --topic topic-customer-k
+```
+
+### Produtor
+
+```bash
+# Criando um produtor para um tópico existente (topic-customer-k)
+# Após criar, digite as mensagens a serrem enviadas
+# ctrl + c para sair
+kafka-console-producer --broker-list localhost:29092 --topic topic-customer-k
+```
+
+### Consumidor
+
+```bash
+# Criando um consumidor para um tópico existente (topic-customer-k)
+# --from-beginning (pega as mensagens do início do tópico criado)
+# ctrl + c para sair
+kafka-console-consumer --bootstrap-server localhost:29092 --from-beginning --topic topic-customer-k
+
+# Criando um consumidor para o tópico existente com grupo
+# ctrl + c para sair
+kafka-console-consumer --bootstrap-server localhost:29092 --from-beginning --topic topic-customer-k --group group-clean-k
+```
+
+### Grupos
+
+```bash
+# Listar grupos
+kafka-consumer-groups --bootstrap-server localhost:29092 --list
+
+# Exibindo informações sobre os consumidores conetados, patições, offset e lag
+kafka-consumer-groups --bootstrap-server localhost:29092 --group group-clean-k --describe
+```
 
 <hr />
 

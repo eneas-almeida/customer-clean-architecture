@@ -2,11 +2,10 @@ export interface QueueServiceInterface {
     init(): this;
     setProducer(): Promise<this>;
     setConsumer(groupId: string): Promise<this>;
-    setTopic(topic: string, fromBeginning: boolean, callback: Function): Promise<this>;
-    emit(topic: string, key: string, data: any): void;
+    setTopic(topic: string, fromBeginning: boolean, context: any): Promise<this>;
+    emit(topic: string, key: string, handler: string, data: any): void;
 }
 
 export interface QueueHandlerInterface {
-    topic: string;
-    callback: Function;
+    [key: string]: Function;
 }

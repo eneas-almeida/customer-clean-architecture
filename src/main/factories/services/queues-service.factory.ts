@@ -7,11 +7,16 @@ export const MakeQueuesService = async () => {
     queue.init();
 
     await queue.setProducer();
-    await queue.setConsumer('customer-clean-architecture');
+    await queue.setConsumer('group-clean');
 
-    const usecases = CustomersUseCaseAdapter();
+    const customersUseCase = CustomersUseCaseAdapter();
 
-    await queue.setTopic('createcustomer', true, usecases.create);
+    const handlers = {
+        'handler-create-customer': customersUseCase.create,
+        'handler-findone-customer': customersUseCase.findOne,
+    };
+
+    await queue.setTopic('topic-customer', true, handlers);
 
     return queue;
 };
