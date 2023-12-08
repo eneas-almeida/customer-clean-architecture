@@ -33,7 +33,7 @@ Documentação: https://kafka.js.org/docs/getting-started
 
 ## Como funciona?
 
--   O produto, envia uma mensagem para o Kafka, fica armazenado em um broker, que possui um banco de dados próprio, o consumidor ler as mensagens dos brokers.
+-   O produtor envia uma mensagem para o Kafka, que fica armazenado em um broker, que possui um banco de dados próprio, o consumidor por sua vez, realiza a leitura das mensagens nos brokers.
 
 <img src="./media/kafka/kafka-1.png" />
 
@@ -43,20 +43,20 @@ São canais de comunicações responsáveis por receber e disponibilizar os dado
 
 <img src="./media/kafka/kafka-2.png" />
 
-Os tópicos podem ser lidos por multiplos sistemas, diferentemente do RabbitMQ que ao ler um tópico, a mensagem desaparece, não podendo ser lido por multiplos sistemas.
+Os tópicos podem ser lidos por multiplos sistemas, diferentemente do RabbitMQ que ao ler um tópico, a mensagem é perdida, não podendo ser lido por multiplos sistemas.
 
 <img src="./media/kafka/kafka-3.png" />
 
-Quando é enviado uma mensagem, através de um tópico, vai sendo armazenada de forma enfileirada e quando é armazenada, a mensagem ganha um tipo de id, chamado de offset, com isso a mensagem pode ser reprocesada, exemplo, voltar no offset 2 e reprocessar.
+Quando o produtor envia uma mensagem através de um tópico, um id (offset) é atribuido a mensagem e vai sendo salva em disco de forma enfileirada, dessa forma, a mensagem pode ser reprocesada, exemplo, voltar no offset 2 e reprocessar.
 
 ### Anatomia de uma mensagem
 
-A mensagem **(offset)** é composta por 4 partes:
+A mensagem é composta por 4 partes:
 
-    - Cabeçalho: pode ser metadados;
-    - Key: contexto da mensagem, garante a ordem de entrega da mensagem;
-    - Value: payload, o próprio JSON;
-    - Timestamp.
+-   **Cabeçalho:** metadados
+-   **Key:** contexto da mensagem, garante a ordem de entrega da mensagem
+-   **Value:** payload, o próprio JSON
+-   **Timestamp**
 
 <img src="./media/kafka/kafka-4.png" />
 
@@ -66,9 +66,9 @@ Como demonstrado abaixo, cada tópico pode ter uma ou mais partições, garantin
 
 <img src="./media/kafka/kafka-5.png" />
 
-Quando uma mensagem é enviada, através de um tópico, é enviada para uma das 3 partições (round-robin), como ilustrada na imagem acima, isso garante diversas estratégias para o cosumidor, diminuindo o risco da mensagem ser entregue e aumentando a quantidade de consumidores.
+Quando uma mensagem é enviada, através de um tópico, o destino é uma das 3 partições, de acordo com o algoritmo do Kafka (round-robin), como ilustrada na imagem acima, isso garante diversas estratégias para o cosumidor, diminuindo o risco da mensagem ser entregue e aumentando a quantidade de consumidores.
 
-**Exemplo:** uma hipótese de envio de 1500 mensangens, é possível enviar 500 mensagens para a partição 1, 500 para partição 2 e 500 para partição 3, fica mais rápido a leitura em determinadas partições.
+**Exemplo:** uma hipótese de envio de 1500 mensangens, é possível enviar 500 mensagens para a partição 1, 500 para partição 2 e 500 para partição 3, fica mais rápido a leitura pelo consumidor em determinadas partições.
 
 ### Partições distribuídas
 
@@ -101,19 +101,59 @@ As **keys garantem as ordens de entregas**, alocando as mensagens em uma mesma p
 
 <img src="./media/kafka/kafka-9-1.png" />
 
-Quando é enviado uma mensagem, sempre é recebido pelo **Leaader**, dentro da mensagem é pasado um parametro **Ack**.
+Quando é enviado uma mensagem, sempre é recebido pelo **Leader**, dentro da mensagem é pasado um parametro **Ack**.
 
--   **Ack=0**: O producer não recebe uma confirmação do Kafka que a mensagem foi gravada, entretanto, como o Kafka não fica a todo tempo notifiando o producer, se torna mais rápido o processamento de mensagens, é importante estar ciente que pode perder a mensagem e não vai fazer falta.
+-   **Ack=0**: O produtor não recebe uma confirmação do Kafka que a mensagem foi salva, entretanto, como o Kafka não fica a todo tempo notifiando o produtor, se torna mais rápido o processamento de mensagens, é importante estar ciente que ao perder mensagem, ela não não irá fazer falta.
 
 <img src="./media/kafka/kafka-9-2.png" />
 
--   **Ack=1:**: O producer recebe uma confirmação do Kafka que a mensagem foi gravada, entretanto se o broker A (Leader) cai e não teve tempo hábil de replicar para os **followers**, o Producer acredita que a mensagem foi guarda, entretanto, a mensagem é perdida.
+-   **Ack=1:**: O produtor recebe uma confirmação do Kafka que a mensagem foi salva, entretanto se o broker A (Leader) cai e não teve tempo hábil de replicar para os **Followers**, o produtor acredita que a mensagem foi salva, entretanto, a mensagem é perdida.
 
 <img src="./media/kafka/kafka-9-3.png" />
 
--   **Ack=-1:**: O Producer recebe uma confirmação do Kafka que a mensagem foi gravada pelo Leader, que por sua vez, o Leader replica as mensagens para os Followers, que por sua vez, os Followers notifica ao Leader que as mensagens foram salvas, que por sua vez, o Leader notifica o Producer que a mensagem foi gravada, essa é a opção mais segura, entretanto é a mais custosa.
+-   **Ack=-1:**: O produtor recebe uma confirmação do Kafka que a mensagem foi salva pelo Leader, que por sua vez, replica as mensagens para os Followers, que por sua vez, notifica ao Leader que as mensagens foram salvas, que por sua vez, notifica ao produtor que a mensagem foi salva, essa é a opção mais segura, entretanto é a mais custosa.
 
-## Informações
+#### Melhor performance
+
+<img src="./media/kafka/kafka-10-1.png" />
+
+-   **At most once:** Quando as mensagens são enviadas, pode ocorrer perdas de mensages nesse tipo de configuração.
+
+#### Performance moderada
+
+<img src="./media/kafka/kafka-10-2.png" />
+
+-   **At least once:** Quando as mensagens são enviadas, pode haver duplicações de mensagens, nesse caso há uma necessidade da aplicação realizar o tratamento das duplicações.
+
+#### Pior performance
+
+<img src="./media/kafka/kafka-10-3.png" />
+
+-   **Exacly once:** Nesse tipo de configuração o Kafka garante que não vai ocorrer perdas e duplicações.
+
+### Indepotência do produtor
+
+<img src="./media/kafka/kafka-11.png" />
+
+-   **OFF:** O caso acima demonstrado, no envio 4, ocorre uma falha de comunicação de rede e o produtor vai enviar a mensagem novamente, dessa forma, duplicando a mensagem.
+
+-   **ON:** Quando configurado como indepotência on, o Kafka vai perceber o problema e não vai enviar a mensagem novamente, dessa forma, descarta a mensagem e garante a ordem a sua ordem na fila.
+
+## Consumers
+
+<img src="./media/kafka/kafka-12-1.png" />
+
+No caso demonstrado acima, temos um tópico com 3 partições e um consumidor lendo das 3 partições, quando um consumidor não está em um grupo, o Kafka considera que esse comsumidor é o próprio grupo.
+
+### Grupos de consumidores
+
+<img src="./media/kafka/kafka-12-1.png" />
+
+Como demonstrado acima, foi criado um grupo chamado de **Grupo X**, com 2 consumidores e o Kafka se encarrega de realizar a distribuição das leituras.
+
+**Observação:** Caso contenha um terceiro consumidor (c) sem estar dentro do Grupo X, irá ler das 3 partições.
+
+## Kafka vs RabbitMQ
 
 O Kafka não trabalha igual ao RabbitMQ, ele salva as mensagens em disco, o RabbitMQ em memória.
 
@@ -121,4 +161,9 @@ O Kafka não trabalha igual ao RabbitMQ, ele salva as mensagens em disco, o Rabb
 
 -   Um cluster com 3 brokers.
 
-## Zookeeper
+<hr />
+
+<div>
+  <img align="left" src="https://imgur.com/k8HFd0F.png" width=35 alt="Profile"/>
+  <sub>Made with 💙 by <a href="https://github.com/venzel">Enéas Almeida</a></sub>
+</div>
