@@ -1,4 +1,4 @@
-import { Consumer, Kafka, Producer } from 'kafkajs';
+import { Consumer, Kafka, Partitioners, Producer } from 'kafkajs';
 import { QueueHandlerInterface, QueueServiceInterface } from './contracts';
 
 export class KafkaQueueService implements QueueServiceInterface {
@@ -21,6 +21,11 @@ export class KafkaQueueService implements QueueServiceInterface {
         return this;
     }
 
+    async setHandlers(handlers: QueueHandlerInterface) {
+        this.handlers = handlers;
+        return this;
+    }
+
     async setProducer() {
         this.producer = this.kafka.producer();
 
@@ -34,8 +39,10 @@ export class KafkaQueueService implements QueueServiceInterface {
         return this;
     }
 
-    async setConsumer(groupId: string) {
-        this.consumer = this.kafka.consumer({ groupId });
+    async setConsumer(topic: string, fromBeginning: boolean, groupId: string) {
+        this.consumer = this.kafka.consumer({
+            groupId,
+        });
 
         await this.consumer
             .connect()
@@ -44,14 +51,9 @@ export class KafkaQueueService implements QueueServiceInterface {
                 throw e;
             });
 
-        return this;
-    }
-
-    async setTopic(topic: string, fromBeginning: boolean, handlers: QueueHandlerInterface) {
         await this.consumer
             .subscribe({ topic, fromBeginning })
             .then(() => {
-                this.handlers = handlers;
                 console.log(`Consumer subscribed to ${topic}`);
             })
             .catch((e) => {
@@ -93,7 +95,7 @@ export class KafkaQueueService implements QueueServiceInterface {
 
         const payload: any = {
             topic,
-            acks: -1, // -1 is default
+            acks: -1, // default is -1
             messages: [
                 {
                     value: JSON.stringify(data),

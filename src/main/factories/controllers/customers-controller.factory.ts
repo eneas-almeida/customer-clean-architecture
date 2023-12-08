@@ -1,10 +1,10 @@
 import { CustomersControllerInterface } from '@/presentation/contracts';
 import { CustomersController } from '@/presentation/controllers';
-import { MakeQueuesService } from '../services/queues-service.factory';
+import { MakeQueueService } from '../services/queues-service.factory';
 import { CustomersUseCaseAdapter } from '@/main/adapters/usecases/customers-usecase.adapter';
 
 export const MakeCustomersController = async (): Promise<CustomersControllerInterface> => {
-    const queue = await MakeQueuesService();
+    const queue = await MakeQueueService();
     const usecase = CustomersUseCaseAdapter();
 
     return new CustomersController(usecase, queue);

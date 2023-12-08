@@ -193,35 +193,35 @@ docker exec -it customer-clean-architecture_kafka-1_1 bash
 kafka-topics --list --bootstrap-server localhost:29092
 
 # Criando o tópico
-kafka-topics --create --bootstrap-server localhost:29092 --replication-factor 3 --partitions 3 --topic topic-customer-k
+kafka-topics --create --bootstrap-server localhost:29092 --replication-factor 2 --partitions 2 --topic topic-customer
 
 # Exibindo informações do tópico, partições, líderes e réplicas
-kafka-topics --describe --bootstrap-server localhost:29092 --topic topic-customer-k
+kafka-topics --describe --bootstrap-server localhost:29092 --topic topic-customer
 
 # Deletando um tópico
-kafka-topics --bootstrap-server localhost:29092 --delete --topic topic-customer-k
+kafka-topics --bootstrap-server localhost:29092 --delete --topic topic-customer
 ```
 
 ### Produtor
 
 ```bash
-# Criando um produtor para um tópico existente (topic-customer-k)
+# Criando um produtor para um tópico existente (topic-customer)
 # Após criar, digite as mensagens a serrem enviadas
 # ctrl + c para sair
-kafka-console-producer --broker-list localhost:29092 --topic topic-customer-k
+kafka-console-producer --broker-list localhost:29092 --topic topic-customer
 ```
 
 ### Consumidor
 
 ```bash
-# Criando um consumidor para um tópico existente (topic-customer-k)
+# Criando um consumidor para um tópico existente (topic-customer)
 # --from-beginning (pega as mensagens do início do tópico criado)
 # ctrl + c para sair
-kafka-console-consumer --bootstrap-server localhost:29092 --from-beginning --topic topic-customer-k
+kafka-console-consumer --bootstrap-server localhost:29092 --from-beginning --topic topic-customer
 
 # Criando um consumidor para o tópico existente com grupo
 # ctrl + c para sair
-kafka-console-consumer --bootstrap-server localhost:29092 --from-beginning --topic topic-customer-k --group group-clean-k
+kafka-console-consumer --bootstrap-server localhost:29092 --from-beginning --topic topic-customer --group group-clean
 ```
 
 ### Grupos
@@ -231,7 +231,7 @@ kafka-console-consumer --bootstrap-server localhost:29092 --from-beginning --top
 kafka-consumer-groups --bootstrap-server localhost:29092 --list
 
 # Exibindo informações sobre os consumidores conetados, patições, offset e lag
-kafka-consumer-groups --bootstrap-server localhost:29092 --group group-clean-k --describe
+kafka-consumer-groups --bootstrap-server localhost:29092 --group group-clean --describe
 ```
 
 <hr />
