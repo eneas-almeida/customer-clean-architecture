@@ -4,18 +4,18 @@ import {
     CustomersUpdateInputDto,
     CustomersUseCaseInterface,
 } from '@/application/contracts/customers';
-import { QueueServiceInterface } from '@/framework/services/contracts';
+import { ServicesInterface } from '@/framework/services/contracts';
 import { CustomersControllerInterface, HttpResponse } from '../contracts';
 import { ok } from '../helpers';
 
 export class CustomersController implements CustomersControllerInterface {
     constructor(
-        private readonly usecase: CustomersUseCaseInterface,
-        private readonly queue: QueueServiceInterface
+        private readonly services: ServicesInterface,
+        private readonly useCases: CustomersUseCaseInterface
     ) {}
 
     async create(input: CustomersCreateInputDto): Promise<HttpResponse> {
-        this.queue.emit('topic-customer', 'key-customer', 'handler-create-customer', input);
+        this.services.queue.emit('topic-customer', 'key-customer', 'handler-create-customer', input);
 
         return ok({
             message: 'Customer queued successfully',
@@ -23,12 +23,12 @@ export class CustomersController implements CustomersControllerInterface {
     }
 
     async update(input: CustomersUpdateInputDto): Promise<HttpResponse> {
-        const output = await this.usecase.update(input);
+        const output = await this.useCases.update(input);
         return ok(output);
     }
 
     async findOne(input: CustomersFindOneInputDto): Promise<HttpResponse> {
-        const output = await this.usecase.findOne(input);
+        const output = await this.useCases.findOne(input);
         return ok(output);
     }
 }

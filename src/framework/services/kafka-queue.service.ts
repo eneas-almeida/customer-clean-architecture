@@ -1,11 +1,16 @@
-import { Consumer, Kafka, Partitioners, Producer } from 'kafkajs';
-import { QueueHandlerInterface, QueueServiceInterface } from './contracts';
+/**
+ * @author Enéas Almeida <eneas.eng@yahoo.com>
+ * @description A classe é responsável por criar um serviços de filas utilizando o Kafka.
+ */
+
+import { Consumer, Kafka, Producer } from 'kafkajs';
+import { QueueHandler, QueueServiceInterface } from './contracts';
 
 export class KafkaQueueService implements QueueServiceInterface {
     private kafka: Kafka;
     private producer: Producer;
     private consumer: Consumer;
-    private handlers: QueueHandlerInterface;
+    private handlers: QueueHandler[];
 
     init() {
         this.kafka = new Kafka({
@@ -18,11 +23,14 @@ export class KafkaQueueService implements QueueServiceInterface {
             },
         });
 
+        this.handlers = [];
+
         return this;
     }
 
-    async setHandlers(handlers: QueueHandlerInterface) {
-        this.handlers = handlers;
+    async setHandlers(handlers?: QueueHandler[]) {
+        if (!handlers) return this;
+        this.handlers.push(...handlers);
         return this;
     }
 
@@ -69,13 +77,15 @@ export class KafkaQueueService implements QueueServiceInterface {
 
                     if (!keyHandler) return;
 
-                    const fnHandle = this.handlers[keyHandler.toString()];
+                    const handler = this.handlers.find((item) => item.key === keyHandler.toString());
 
-                    if (!fnHandle) return;
+                    if (!handler) return;
 
                     try {
-                        const dataMessage = JSON.parse(message.value.toString());
-                        await fnHandle(dataMessage);
+                        const messageValue = JSON.parse(message.value.toString());
+
+                        await handler.fn(messageValue);
+
                         console.log(`Consumer received and processed message from ${topic}`);
                     } catch (e) {
                         console.error(e.message);
@@ -91,6 +101,8 @@ export class KafkaQueueService implements QueueServiceInterface {
     }
 
     emit(topic: string, key: string, keyHandler: string, data: any): void {
+        if (!this.handlers.length) throw new Error('No handlers defined');
+
         data.createdAt = new Date();
 
         const payload: any = {

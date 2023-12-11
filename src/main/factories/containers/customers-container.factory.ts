@@ -1,12 +1,12 @@
 import { CustomersContainerInterface } from '@/application/contracts';
-import { MakeIntegrations } from '../integrations.factory';
-import { MakeProviders } from '../providers.factory';
-import { MakeRepositories } from '../repositories.factory';
+import IntegrationsSingletonFactory from '../integrations-singleton.factory';
+import ProvidersSingletonFactory from '../providers-singleton.factory';
+import RepositoriesSingletonFactory from '../repositories-singleton.factory';
 
 export const MakeCustomersContainer = (): CustomersContainerInterface => {
-    const { customers } = MakeRepositories();
-    const { vitta } = MakeIntegrations();
-    const { cache, token } = MakeProviders();
+    const { customers } = RepositoriesSingletonFactory;
+    const { vitta } = IntegrationsSingletonFactory;
+    const { cache, token } = ProvidersSingletonFactory;
 
     return {
         repositories: {

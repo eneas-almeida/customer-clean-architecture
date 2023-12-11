@@ -1,7 +1,7 @@
 import {
     CreateCustomerUseCase,
-    UpdateCustomerUseCase,
     FindOneCustomerUseCase,
+    UpdateCustomerUseCase,
 } from '@/application/usecases/customers';
 import { MakeCustomersContainer } from '../containers/customers-container.factory';
 

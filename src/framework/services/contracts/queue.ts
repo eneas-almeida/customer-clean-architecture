@@ -1,7 +1,9 @@
 export interface QueueServiceInterface {
+    setHandlers(handlers?: QueueHandler[]): void;
     emit(topic: string, key: string, handler: string, data: any): void;
 }
 
-export interface QueueHandlerInterface {
-    [key: string]: Function;
+export interface QueueHandler {
+    key: string;
+    fn: Function;
 }
