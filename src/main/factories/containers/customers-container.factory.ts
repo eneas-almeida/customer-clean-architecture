@@ -1,23 +1,21 @@
 import { CustomersContainerInterface } from '@/application/contracts';
-import IntegrationsSingletonFactory from '../integrations-singleton.factory';
-import ProvidersSingletonFactory from '../providers-singleton.factory';
-import RepositoriesSingletonFactory from '../repositories-singleton.factory';
+import { IntegartionsSingletonFactory, ProvidersSingletonFactory, RepositoriesSingletonFactory } from '../';
 
-export const MakeCustomersContainer = (): CustomersContainerInterface => {
-    const { customers } = RepositoriesSingletonFactory;
-    const { vitta } = IntegrationsSingletonFactory;
-    const { cache, token } = ProvidersSingletonFactory;
+export const MakeCustomersContainer = async (): Promise<CustomersContainerInterface> => {
+    const { vitta } = await IntegartionsSingletonFactory.getInstance();
+    const { cache, token } = await ProvidersSingletonFactory.getInstance();
+    const { customers } = await RepositoriesSingletonFactory.getInstance();
 
     return {
-        repositories: {
-            customers,
-        },
         integrations: {
             vitta,
         },
         providers: {
             cache,
             token,
+        },
+        repositories: {
+            customers,
         },
     };
 };

@@ -1,16 +1,18 @@
 import { CustomersRepositoryInterface } from '@/application/contracts';
 import { CustomersMongodbRepository } from '@/infra/db/mongodb/repositories';
 
-class RepositoriesSingletonFactory {
-    public customers: CustomersRepositoryInterface;
+export class RepositoriesSingletonFactory {
+    private static instance: Promise<RepositoriesSingletonFactory> | null;
 
-    constructor() {
-        this.make();
-    }
+    private constructor(public readonly customers: CustomersRepositoryInterface) {}
 
-    make() {
-        this.customers = new CustomersMongodbRepository();
+    public static async getInstance(): Promise<RepositoriesSingletonFactory> {
+        if (!RepositoriesSingletonFactory.instance) {
+            const customers = new CustomersMongodbRepository();
+
+            return new RepositoriesSingletonFactory(customers);
+        }
+
+        return RepositoriesSingletonFactory.instance;
     }
 }
-
-export default new RepositoriesSingletonFactory();

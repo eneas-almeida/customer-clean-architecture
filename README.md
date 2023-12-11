@@ -2,7 +2,7 @@
 
 [![NPM](https://img.shields.io/npm/l/react)](https://github.com/venzel/customer-api/blob/master/LICENSE)
 
-> **Customer API** é um microserviço que utiliza um padrão arquitetural Clean Architecture e modelagem de entidade utilizando conceitos de DDD.
+> **Customer API** é um microserviço que utiliza um padrão arquitetural Clean Architecture e modelagem de entidade utilizando conceitos de DDD e filas com o Kafka para processar casos de uso.
 
 ## Considerações iniciais
 
@@ -97,6 +97,14 @@ A escolha do padrão **Clean Architecture** para um projeto de software pode tra
 -   Docker-compose para criação dos containers mongo e redis;
 -   Makefile para criar aliases de command line;
 -   Padronização de commits (conventional commits);
+
+## Kafka
+
+Foi utilizado o Kafka para processamento de casos de uso.
+
+<p align="center">
+    <img src="https://github.com/venzel/venzel/blob/master/images/kafka.jpg" width="300px" />
+</p>
 
 ## O que poderia utilizar
 

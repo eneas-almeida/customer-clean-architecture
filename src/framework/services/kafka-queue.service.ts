@@ -12,6 +12,10 @@ export class KafkaQueueService implements QueueServiceInterface {
     private consumer: Consumer;
     private handlers: QueueHandler[];
 
+    constructor() {
+        this.init();
+    }
+
     init() {
         this.kafka = new Kafka({
             logLevel: 1,
@@ -24,8 +28,6 @@ export class KafkaQueueService implements QueueServiceInterface {
         });
 
         this.handlers = [];
-
-        return this;
     }
 
     async setHandlers(handlers?: QueueHandler[]) {

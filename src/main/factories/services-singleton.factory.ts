@@ -1,5 +1,5 @@
 import { QueueServiceInterface } from '@/framework/services/contracts';
-import { KafkaQueueConfig } from '../configs';
+import { KafkaQueueService } from '@/framework/services';
 
 export class ServicesSingletonFactory {
     private static instance: Promise<ServicesSingletonFactory> | null;
@@ -8,7 +8,9 @@ export class ServicesSingletonFactory {
 
     public static async getInstance(): Promise<ServicesSingletonFactory> {
         if (!ServicesSingletonFactory.instance) {
-            const queue = await KafkaQueueConfig();
+            const queue = new KafkaQueueService();
+            await queue.setProducer();
+            await queue.setConsumer('topic-customer', true, 'group-clean');
 
             return new ServicesSingletonFactory(queue);
         }

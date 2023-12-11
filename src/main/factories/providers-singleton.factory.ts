@@ -1,18 +1,22 @@
 import { IoRedisCacheProvider, VittaTokenProvider } from '@/framework/providers';
 import { CacheProviderInterface, TokenProviderInterface } from '@/framework/providers/contracts';
 
-class ProvidersSingletonFactory {
-    public token: TokenProviderInterface;
-    public cache: CacheProviderInterface;
+export class ProvidersSingletonFactory {
+    private static instance: Promise<ProvidersSingletonFactory> | null;
 
-    constructor() {
-        this.make();
-    }
+    private constructor(
+        public readonly token: TokenProviderInterface,
+        public readonly cache: CacheProviderInterface
+    ) {}
 
-    make() {
-        this.token = new VittaTokenProvider();
-        this.cache = new IoRedisCacheProvider();
+    public static async getInstance(): Promise<ProvidersSingletonFactory> {
+        if (!ProvidersSingletonFactory.instance) {
+            const token = new VittaTokenProvider();
+            const cache = new IoRedisCacheProvider();
+
+            return new ProvidersSingletonFactory(token, cache);
+        }
+
+        return ProvidersSingletonFactory.instance;
     }
 }
-
-export default new ProvidersSingletonFactory();
