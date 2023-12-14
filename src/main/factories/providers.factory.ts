@@ -1,9 +1,6 @@
-import { IoRedisCacheProvider, VittaTokenProvider } from '@/framework/providers';
-import {
-    CacheProviderInterface,
-    ProvidersInterface,
-    TokenProviderInterface,
-} from '@/framework/providers/contracts';
+import { IoRedisCacheProvider, ProvidersInterface, VittaTokenProvider } from '@/framework/providers';
+import { CacheProviderInterface } from '@/framework/providers/cache/contracts';
+import { TokenProviderInterface } from '@/framework/providers/token/contracts';
 
 export const MakeTokenProvider = async (): Promise<TokenProviderInterface> => {
     const token = new VittaTokenProvider();

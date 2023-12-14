@@ -1,4 +1,5 @@
-import { CacheProviderInterface, TokenProviderInterface } from '@/framework/providers/contracts';
+import { CacheProviderInterface } from '@/framework/providers/cache/contracts';
+import { TokenProviderInterface } from '@/framework/providers/token/contracts';
 import { MakeProviders } from '../factories';
 
 export class ProvidersSingleton {

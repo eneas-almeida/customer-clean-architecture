@@ -1,6 +1,17 @@
-import { KafkaQueueService } from '@/framework/services';
-import { QueueServiceInterface, ServicesInterface } from '@/framework/services/contracts';
-import { RabbitQueueService } from '@/framework/services/rabbit-queue.service';
+import { AxiosInstance } from 'axios';
+import {
+    AxiosHttpClientService,
+    KafkaQueueService,
+    RabbitQueueService,
+    ServicesInterface,
+} from '@/framework/services';
+import { QueueServiceInterface } from '@/framework/services/queue/contracts';
+
+export const MakeHttpClientService = async (): Promise<AxiosInstance> => {
+    const httpClient = new AxiosHttpClientService();
+    const instance = await httpClient.getInstance();
+    return instance;
+};
 
 export const MakeKafkaQueueService = async (): Promise<QueueServiceInterface> => {
     const kafka = new KafkaQueueService();
@@ -18,5 +29,6 @@ export const MakeRabbitQueueService = async (): Promise<QueueServiceInterface> =
 
 export const MakeServices = async (): Promise<ServicesInterface> => {
     const queue = await MakeKafkaQueueService();
-    return { queue };
+    const httpClient = await MakeHttpClientService();
+    return { queue, httpClient };
 };

@@ -1,6 +1,7 @@
 import { CustomersContainerInterface, CustomersRepositoryInterface } from '@/application/contracts';
 import { VittaIntegrationInterface } from '@/framework/integrations/contracts';
-import { CacheProviderInterface, TokenProviderInterface } from '@/framework/providers/contracts';
+import { CacheProviderInterface } from '@/framework/providers/cache/contracts';
+import { TokenProviderInterface } from '@/framework/providers/token/contracts';
 import { FindOneCustomerUseCase } from './findone-customer.usecase';
 
 const input = {

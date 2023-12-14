@@ -8,11 +8,7 @@ const RESOURCES = {
 };
 
 export class VittaIntegration implements VittaIntegrationInterface {
-    private readonly axios: AxiosInstance;
-
-    constructor(axios: AxiosInstance) {
-        this.axios = axios;
-    }
+    constructor(private readonly httpClient: AxiosInstance) {}
 
     async getAccessToken(): Promise<VittaIntegrationOutputDto | null> {
         const { baseUrl, grantType, clientId, username, password, scope } = envs.vitta;
@@ -34,7 +30,7 @@ export class VittaIntegration implements VittaIntegrationInterface {
 
         const endpoint = baseUrl.concat(RESOURCES.GENERATE_TOKEN);
 
-        const response = await this.axios.post(endpoint, body, configs);
+        const response = await this.httpClient.post(endpoint, body, configs);
 
         if (!response || !response.data) return null;
 

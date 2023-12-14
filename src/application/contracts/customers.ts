@@ -1,6 +1,7 @@
 import { CustomersEntityInterface } from '@/domain/@shared/contracts';
 import { VittaIntegrationInterface } from '@/framework/integrations/contracts';
-import { CacheProviderInterface, TokenProviderInterface } from '@/framework/providers/contracts';
+import { CacheProviderInterface } from '@/framework/providers/cache/contracts';
+import { TokenProviderInterface } from '@/framework/providers/token/contracts';
 import { Hateos, HateosOutputDto, PaginationOutputDto } from './custom';
 
 export interface CustomersCreateInputDto {

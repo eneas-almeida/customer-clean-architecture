@@ -4,7 +4,7 @@ import {
     CustomersUpdateInputDto,
     CustomersUseCaseInterface,
 } from '@/application/contracts/customers';
-import { ServicesInterface } from '@/framework/services/contracts';
+import { ServicesInterface } from '@/framework/services';
 import { CustomersControllerInterface, HttpResponse } from '../contracts';
 import { ok } from '../helpers';
 
