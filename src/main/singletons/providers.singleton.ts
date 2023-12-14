@@ -1,4 +1,3 @@
-import { CacheServiceInterface } from '@/infra/services/cache/contracts';
 import { TokenProviderInterface } from '@/framework/providers/token/contracts';
 import { MakeProviders } from '../factories';
 

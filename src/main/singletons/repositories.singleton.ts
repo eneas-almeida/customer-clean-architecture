@@ -9,6 +9,7 @@ export class RepositoriesSingleton {
     public static async getInstance(): Promise<RepositoriesSingleton> {
         if (!RepositoriesSingleton.instance) {
             const { customers } = await MakeRepositories();
+
             return new RepositoriesSingleton(customers);
         }
 
