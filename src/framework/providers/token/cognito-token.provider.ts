@@ -1,14 +1,14 @@
-import { VittaIntegrationInterface } from '@/framework/integrations/contracts';
+import { CognitoIntegrationInterface } from '@/framework/integrations/contracts/cognito';
 import { TokenProviderInterface, TokenProviderOutputDto } from './contracts';
 
 export class CognitoTokenProvider implements TokenProviderInterface {
-    constructor(private readonly vittaIntegration: VittaIntegrationInterface) {}
+    constructor(private readonly cognitoIntegration: CognitoIntegrationInterface) {}
 
     async generate(): Promise<TokenProviderOutputDto> {
-        return this.vittaIntegration.getToken();
+        return this.cognitoIntegration.getToken();
     }
 
     async validate(token: string): Promise<boolean> {
-        return this.vittaIntegration.validate(token);
+        return this.cognitoIntegration.validate(token);
     }
 }
