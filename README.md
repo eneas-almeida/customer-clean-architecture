@@ -275,6 +275,7 @@ No código atual, foi implementado a estratégia do cenário 1.
 
 ```bash
 yarn add agentkeepalive \
+    amqplib \
     axios \
     axios-retry \
     dotenv \
@@ -298,6 +299,7 @@ yarn add @swc/cli \
     @swc/jest \
     @types/express \
     @types/jest \
+    @types/amqplib \
     @types/jsonwebtoken \
     @types/morgan \
     @types/node \

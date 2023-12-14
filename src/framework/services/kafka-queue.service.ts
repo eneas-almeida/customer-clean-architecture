@@ -33,7 +33,6 @@ export class KafkaQueueService implements QueueServiceInterface {
     async setHandlers(handlers?: QueueHandler[]) {
         if (!handlers) return this;
         this.handlers.push(...handlers);
-        return this;
     }
 
     async setProducer() {
@@ -45,8 +44,6 @@ export class KafkaQueueService implements QueueServiceInterface {
             .catch((e) => {
                 throw e;
             });
-
-        return this;
     }
 
     async setConsumer(topic: string, fromBeginning: boolean, groupId: string) {
@@ -98,8 +95,6 @@ export class KafkaQueueService implements QueueServiceInterface {
             .catch((e) => {
                 throw e;
             });
-
-        return this;
     }
 
     emit(topic: string, key: string, keyHandler: string, data: any): void {
