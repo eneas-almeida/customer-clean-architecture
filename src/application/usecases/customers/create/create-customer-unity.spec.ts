@@ -31,13 +31,14 @@ const MockCacheService = (): CacheServiceInterface => ({
 /* Providers */
 
 const MockTokenProvider = (): TokenProviderInterface => ({
-    generateToken: jest.fn(async () => null),
+    generate: jest.fn(async () => null),
 });
 
 /* Integrations */
 
 const MockVittaIntegration = (): VittaIntegrationInterface => ({
-    getAccessToken: jest.fn(async () => null),
+    getToken: jest.fn(async () => null),
+    validate: jest.fn(async () => null),
 });
 
 /* Commons */

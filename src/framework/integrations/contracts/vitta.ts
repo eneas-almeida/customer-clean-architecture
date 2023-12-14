@@ -1,12 +1,14 @@
 export interface VittaIntegrationOutputDto {
-    grantType: string;
-    clientId: string;
-    clientSecret: string;
-    username: string;
-    password: string;
+    access_token: string;
+    expires_in: number;
+    refresh_expires: number;
+    token_type: string;
+    'not-before-policy': number;
     scope: string;
+    id_token: string;
 }
 
 export interface VittaIntegrationInterface {
-    getAccessToken(): Promise<VittaIntegrationOutputDto | null>;
+    getToken(): Promise<VittaIntegrationOutputDto | null>;
+    validate(token: string): Promise<boolean>;
 }

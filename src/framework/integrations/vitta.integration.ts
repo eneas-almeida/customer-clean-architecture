@@ -10,7 +10,7 @@ const RESOURCES = {
 export class VittaIntegration implements VittaIntegrationInterface {
     constructor(private readonly httpClient: AxiosInstance) {}
 
-    async getAccessToken(): Promise<VittaIntegrationOutputDto | null> {
+    async getToken(): Promise<VittaIntegrationOutputDto | null> {
         const { baseUrl, grantType, clientId, username, password, scope } = envs.vitta;
 
         const body = {
@@ -35,5 +35,9 @@ export class VittaIntegration implements VittaIntegrationInterface {
         if (!response || !response.data) return null;
 
         return toVittaIntegrationOutputDto(response.data);
+    }
+
+    async validate(token: string): Promise<boolean> {
+        throw new Error('Method not implemented.');
     }
 }

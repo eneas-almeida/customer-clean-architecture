@@ -31,7 +31,7 @@ const MockCacheService = (): CacheServiceInterface => ({
 /* Providers */
 
 const MockTokenProvider = (): TokenProviderInterface => ({
-    generateToken: jest.fn(async () => null),
+    generate: jest.fn(async () => null),
 });
 
 /* Integrations */

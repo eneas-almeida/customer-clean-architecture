@@ -1,17 +1,14 @@
-import { CacheServiceInterface } from '@/infra/services/cache/contracts';
 import { TokenProviderInterface } from '@/framework/providers/token/contracts';
+import { CacheServiceInterface } from '@/infra/services/cache/contracts';
 import { envs } from '@/main/configs';
 import { NextFunction, Request, Response } from 'express';
 import { AppError } from '../errors';
 
 export class AuthorizationMiddleware {
-    private readonly tokenProvider: TokenProviderInterface;
-    private readonly cacheProvider: CacheServiceInterface;
-
-    constructor(tokenProvider: TokenProviderInterface, cacheProvider: CacheServiceInterface) {
-        this.tokenProvider = tokenProvider;
-        this.cacheProvider = cacheProvider;
-    }
+    constructor(
+        private readonly tokenProvider: TokenProviderInterface,
+        private readonly cacheService: CacheServiceInterface
+    ) {}
 
     async handle(req: Request, _: Response, next: NextFunction): Promise<void> {
         const strategyToken = envs.strategy.token;
@@ -29,34 +26,26 @@ export class AuthorizationMiddleware {
     }
 
     private async getTokenWithoutCache(): Promise<string | null> {
-        try {
-            const token = await this.tokenProvider.generateToken();
+        const token = await this.tokenProvider.generate();
 
-            if (!token || !token.access_token) return null;
+        if (!token || !token.access_token) return null;
 
-            return token.access_token;
-        } catch (e) {
-            throw e;
-        }
+        return token.access_token;
     }
 
     private async getTokenWithCache(): Promise<string | null> {
-        try {
-            const existsToken = await this.cacheProvider.findByKey('token');
+        const existsToken = await this.cacheService.findByKey('token');
 
-            if (existsToken) return existsToken;
+        if (existsToken) return existsToken;
 
-            const token = await this.tokenProvider.generateToken();
+        const token = await this.tokenProvider.generate();
 
-            if (!token || !token.access_token) return null;
+        if (!token || !token.access_token) return null;
 
-            const { access_token, expires_in } = token;
+        const { access_token, expires_in } = token;
 
-            await this.cacheProvider.save('token', access_token, expires_in);
+        await this.cacheService.save('token', access_token, expires_in);
 
-            return access_token;
-        } catch (e) {
-            throw e;
-        }
+        return access_token;
     }
 }
