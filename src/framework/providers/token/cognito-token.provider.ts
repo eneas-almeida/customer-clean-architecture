@@ -1,6 +1,6 @@
 import { TokenProviderInterface, TokenProviderOutputDto } from './contracts';
 
-export class JwtTokenProvider implements TokenProviderInterface {
+export class CognitoTokenProvider implements TokenProviderInterface {
     async generateToken(): Promise<TokenProviderOutputDto> {
         return {
             access_token: '',

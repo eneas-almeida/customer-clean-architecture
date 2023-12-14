@@ -1,4 +1,4 @@
-export interface CacheProviderInterface {
+export interface CacheServiceInterface {
     save?(key: string, value: string | boolean, timeToExpires: number): Promise<void>;
     findByKey?(key: string): Promise<string | null>;
     invalidate?(key: string): Promise<void>;

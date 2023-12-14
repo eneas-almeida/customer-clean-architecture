@@ -1,8 +1,8 @@
 import { envs } from '@/main/configs';
 import IORedis, { Redis } from 'ioredis';
-import { CacheProviderInterface } from './contracts';
+import { CacheServiceInterface } from './contracts';
 
-export class IoRedisCacheProvider implements CacheProviderInterface {
+export class IoRedisCacheService implements CacheServiceInterface {
     private readonly cache: Redis;
 
     constructor() {

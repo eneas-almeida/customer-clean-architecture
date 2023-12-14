@@ -1,4 +1,4 @@
-import { CacheProviderInterface } from '@/framework/providers/cache/contracts';
+import { CacheServiceInterface } from '@/infra/services/cache/contracts';
 import { TokenProviderInterface } from '@/framework/providers/token/contracts';
 import { envs } from '@/main/configs';
 import { NextFunction, Request, Response } from 'express';
@@ -6,9 +6,9 @@ import { AppError } from '../errors';
 
 export class AuthorizationMiddleware {
     private readonly tokenProvider: TokenProviderInterface;
-    private readonly cacheProvider: CacheProviderInterface;
+    private readonly cacheProvider: CacheServiceInterface;
 
-    constructor(tokenProvider: TokenProviderInterface, cacheProvider: CacheProviderInterface) {
+    constructor(tokenProvider: TokenProviderInterface, cacheProvider: CacheServiceInterface) {
         this.tokenProvider = tokenProvider;
         this.cacheProvider = cacheProvider;
     }

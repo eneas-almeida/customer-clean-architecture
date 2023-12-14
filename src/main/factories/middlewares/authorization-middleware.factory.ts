@@ -1,9 +1,9 @@
-import { IoRedisCacheProvider, JwtTokenProvider } from '@/framework/providers';
+import { IoRedisCacheService, CognitoTokenProvider } from '@/framework/providers';
 import { AuthorizationMiddleware } from '@/main/middlewares';
 
 export const MakeAuthorizationMiddleware = () => {
-    const vittaTokenProvider = new JwtTokenProvider();
-    const ioRedisCacheProvider = new IoRedisCacheProvider();
+    const vittaTokenProvider = new CognitoTokenProvider();
+    const ioRedisCacheProvider = new IoRedisCacheService();
 
     const middleware = new AuthorizationMiddleware(vittaTokenProvider, ioRedisCacheProvider);
 

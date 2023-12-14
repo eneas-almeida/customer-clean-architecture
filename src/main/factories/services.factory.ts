@@ -1,11 +1,18 @@
-import { AxiosInstance } from 'axios';
 import {
     AxiosHttpClientService,
+    CacheServiceInterface,
+    IoRedisCacheService,
     KafkaQueueService,
     RabbitQueueService,
     ServicesInterface,
-} from '@/framework/services';
-import { QueueServiceInterface } from '@/framework/services/queue/contracts';
+} from '@/infra/services';
+import { QueueServiceInterface } from '@/infra/services/queue/contracts';
+import { AxiosInstance } from 'axios';
+
+export const MakeCacheProvider = async (): Promise<CacheServiceInterface> => {
+    const cache = new IoRedisCacheService();
+    return cache;
+};
 
 export const MakeHttpClientService = async (): Promise<AxiosInstance> => {
     const httpClient = new AxiosHttpClientService();
