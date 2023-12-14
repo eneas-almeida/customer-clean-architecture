@@ -2,6 +2,6 @@ import { VittaIntegrationInterface } from './vitta';
 
 export * from './vitta';
 
-export interface IntegrationInterface {
+export interface IntegrationsInterface {
     vitta?: VittaIntegrationInterface;
 }

@@ -1,5 +1,5 @@
 import { CustomersRepositoryInterface } from '@/application/contracts';
 
-export interface RepositoryInterface {
+export interface RepositoriesInterface {
     customers?: CustomersRepositoryInterface;
 }

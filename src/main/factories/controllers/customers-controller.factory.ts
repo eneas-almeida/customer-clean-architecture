@@ -1,10 +1,10 @@
 import { CustomersUseCaseAdapter } from '@/main/adapters/usecases/customers-usecase.adapter';
+import { ServicesSingleton } from '@/main/singletons/services.singleton';
 import { CustomersControllerInterface } from '@/presentation/contracts';
 import { CustomersController } from '@/presentation/controllers';
-import { ServicesSingletonFactory } from '../';
 
 export const MakeCustomersController = async (): Promise<CustomersControllerInterface> => {
-    const services = await ServicesSingletonFactory.getInstance();
+    const services = await ServicesSingleton.getInstance();
     const customersUseCase = await CustomersUseCaseAdapter();
 
     const handlers = [
