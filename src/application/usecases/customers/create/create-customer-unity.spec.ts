@@ -1,6 +1,7 @@
 import { CustomersContainerInterface, CustomersRepositoryInterface } from '@/application/contracts';
 import { VittaIntegrationInterface } from '@/framework/integrations/contracts';
-import { CacheProviderInterface, TokenProviderInterface } from '@/framework/providers/contracts';
+import { CacheServiceInterface } from '@/infra/services/cache/contracts';
+import { TokenProviderInterface } from '@/framework/providers/token/contracts';
 import { CreateCustomerUseCase } from './create-customer.usecase';
 
 const input = {
@@ -18,23 +19,26 @@ const MockCustomersRepository = (): CustomersRepositoryInterface => ({
     findOneByDocument: jest.fn(),
 });
 
-/* Providers */
+/* Services */
 
-const MockCacheProvider = (): CacheProviderInterface => ({
+const MockCacheService = (): CacheServiceInterface => ({
     save: jest.fn(async (value, timeToExpires) => null),
     findByKey: jest.fn(async (key) => null),
     invalidate: jest.fn(async (key) => null),
     clearAllCacheByPrefix: jest.fn(async (prefix) => null),
 });
 
+/* Providers */
+
 const MockTokenProvider = (): TokenProviderInterface => ({
-    generateToken: jest.fn(async () => null),
+    generate: jest.fn(async () => null),
 });
 
 /* Integrations */
 
 const MockVittaIntegration = (): VittaIntegrationInterface => ({
-    getAccessToken: jest.fn(async () => null),
+    getToken: jest.fn(async () => null),
+    validate: jest.fn(async () => null),
 });
 
 /* Commons */
@@ -47,7 +51,6 @@ const MockCommons = (): CustomersContainerInterface => ({
         vitta: MockVittaIntegration(),
     },
     providers: {
-        cache: MockCacheProvider(),
         token: MockTokenProvider(),
     },
 });

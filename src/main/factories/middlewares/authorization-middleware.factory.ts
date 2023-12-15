@@ -1,11 +1,11 @@
-import { IoRedisCacheProvider, JwtTokenProvider } from '@/framework/providers';
 import { AuthorizationMiddleware } from '@/main/middlewares';
+import { ProvidersSingleton, ServicesSingleton } from '@/main/singletons';
 
-export const MakeAuthorizationMiddleware = () => {
-    const vittaTokenProvider = new JwtTokenProvider();
-    const ioRedisCacheProvider = new IoRedisCacheProvider();
+export const MakeAuthorizationMiddleware = async () => {
+    const { token } = await ProvidersSingleton.getInstance();
+    const { cache } = await ServicesSingleton.getInstance();
 
-    const middleware = new AuthorizationMiddleware(vittaTokenProvider, ioRedisCacheProvider);
+    const middleware = new AuthorizationMiddleware(token, cache);
 
     return middleware.handle.bind(middleware);
 };

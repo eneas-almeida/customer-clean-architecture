@@ -1,7 +1,9 @@
 import { CustomersEntityInterface } from '@/domain/@shared/contracts';
 import { VittaIntegrationInterface } from '@/framework/integrations/contracts';
-import { CacheProviderInterface, TokenProviderInterface } from '@/framework/providers/contracts';
+import { TokenProviderInterface } from '@/framework/providers/token/contracts';
 import { Hateos, HateosOutputDto, PaginationOutputDto } from './custom';
+import { CacheServiceInterface } from '@/infra/services';
+import { AxiosInstance } from 'axios';
 
 export interface CustomersCreateInputDto {
     document: number;
@@ -56,6 +58,9 @@ export interface CustomersContainerInterface {
     };
     providers?: {
         token?: TokenProviderInterface;
-        cache?: CacheProviderInterface;
+    };
+    services?: {
+        cache?: CacheServiceInterface;
+        httpClient?: AxiosInstance;
     };
 }

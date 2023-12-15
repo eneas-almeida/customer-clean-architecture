@@ -1,4 +1,4 @@
-export interface VittaIntegrationOutputDto {
+export interface CognitoIntegrationOutputDto {
     access_token: string;
     expires_in: number;
     refresh_expires: number;
@@ -8,7 +8,7 @@ export interface VittaIntegrationOutputDto {
     id_token: string;
 }
 
-export interface VittaIntegrationInterface {
-    getToken(): Promise<VittaIntegrationOutputDto | null>;
+export interface CognitoIntegrationInterface {
+    getToken(): Promise<CognitoIntegrationOutputDto | null>;
     validate(token: string): Promise<boolean>;
 }

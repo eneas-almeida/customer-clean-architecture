@@ -1,22 +1,14 @@
-import { IoRedisCacheProvider, VittaTokenProvider } from '@/framework/providers';
-import {
-    CacheProviderInterface,
-    ProvidersInterface,
-    TokenProviderInterface,
-} from '@/framework/providers/contracts';
+import { ProvidersInterface, VittaTokenProvider } from '@/framework/providers';
+import { TokenProviderInterface } from '@/framework/providers/token/contracts';
+import { IntegrationsSingleton } from '../singletons';
 
 export const MakeTokenProvider = async (): Promise<TokenProviderInterface> => {
-    const token = new VittaTokenProvider();
+    const { vitta } = await IntegrationsSingleton.getInstance();
+    const token = new VittaTokenProvider(vitta);
     return token;
-};
-
-export const MakeCacheProvider = async (): Promise<CacheProviderInterface> => {
-    const cache = new IoRedisCacheProvider();
-    return cache;
 };
 
 export const MakeProviders = async (): Promise<ProvidersInterface> => {
     const token = await MakeTokenProvider();
-    const cache = await MakeCacheProvider();
-    return { token, cache };
+    return { token };
 };

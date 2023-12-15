@@ -1,3 +1,8 @@
-export * from './ioredis-cache.provider';
-export * from './jwt-token.provider';
-export * from './vitta-token.provider';
+import { TokenProviderInterface } from './token/contracts';
+
+export * from './token/cognito-token.provider';
+export * from './token/vitta-token.provider';
+
+export interface ProvidersInterface {
+    token?: TokenProviderInterface;
+}

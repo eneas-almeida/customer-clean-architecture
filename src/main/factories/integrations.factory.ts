@@ -1,9 +1,9 @@
 import { VittaIntegration } from '@/framework/integrations';
-import { IntegrationsInterface, VittaIntegrationInterface } from '@/framework/integrations/contracts';
-import { AxiosHttpClient } from '@/infra/httpclients';
+import { VittaIntegrationInterface, IntegrationsInterface } from '@/framework/integrations/contracts';
+import { ServicesSingleton } from '../singletons';
 
 export const MakeVittaIntegration = async (): Promise<VittaIntegrationInterface> => {
-    const httpClient = new AxiosHttpClient().getInstance();
+    const { httpClient } = await ServicesSingleton.getInstance();
     const vitta = new VittaIntegration(httpClient);
     return vitta;
 };
